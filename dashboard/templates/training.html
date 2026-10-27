@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="budget-bar" id="trainBudget"></div>
+<div class="note" id="widthNote" hidden></div>
+
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Test accuracy — MNIST classification</div>
+    <div class="card-sub">Held-out accuracy after training with each simulator's own native learning rule. Chance on ten classes is 10%.</div>
+    <div class="chart-wrap"><canvas id="accChart" height="230"></canvas></div>
+    <div class="fig-table" id="accChartTable"></div>
+    <div class="chart-result" id="accResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Accuracy against cost per epoch</div>
+    <div class="card-sub">Each point is one backend: accuracy (y) against training cost (x, log seconds per epoch).</div>
+    <div class="chart-wrap"><canvas id="costAccChart" height="230"></canvas></div>
+    <div class="fig-table" id="costAccChartTable"></div>
+    <div class="chart-result" id="costAccResult"></div>
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Did it learn?</div>
+    <div class="card-sub">
+      Of the backends in the current selection, how many reached an accuracy
+      beyond chance on ten digit classes (10%) versus how many did not.
+    </div>
+    <div class="chart-wrap"><canvas id="learnedDonut" height="210"></canvas></div>
+    <div class="fig-table" id="learnedDonutTable"></div>
+    <div class="chart-result" id="learnedResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What each simulator actually did</div>
+    <div class="card-sub">
+      These rows are deliberately not running the same algorithm. Each uses
+      the learning mechanism it was built for, which is the fair comparison;
+      forcing one shared algorithm onto all of them would measure how well
+      each simulator imitates the others.
+    </div>
+    <div class="note" style="max-width:none;margin-bottom:10px">
+      <b>Reading &ldquo;Did it learn?&rdquo;.</b> A row marked
+      <span class="tag tag-bad">no — no better than guessing</span> scored at
+      or below the 10% chance rate: it produced output, but the output
+      carried no information about which digit was shown.
+    </div>
+    <div class="empty" id="trainEmpty" hidden>No training rows for the selected simulators.</div>
+    <div class="caveat" id="chanceCaveat" hidden></div>
+  </div>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Full training results table, with mechanism notes</summary>
+  <div class="disclosure-card-body">
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>Backend</th><th class="num">Accuracy %</th><th>Did it learn?</th>
+        <th class="num">Hidden</th><th class="num">Train</th><th class="num">Test</th>
+        <th class="num">Epochs</th><th class="num">s / epoch</th><th>Mechanism</th>
+      </tr></thead>
+      <tbody id="trainTable"></tbody>
+    </table></div>
+    <div style="margin-top:13px"><a class="action" href="/api/export/training.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    <div class="caveat">
+      <strong>Accuracy is not comparable across learning rules; cost per
+      epoch is.</strong> A surrogate-gradient result at three epochs and a
+      plasticity result at three epochs are snapshots of two different
+      convergence curves. The sample budget each row used is printed in the
+      table for exactly this reason.
+    </div>
+  </div>
+</details>
+{% endblock %}

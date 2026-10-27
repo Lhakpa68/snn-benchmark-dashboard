@@ -1,0 +1,16 @@
+=== install NEST attempt-ceiling patch ===
+when : 2026-09-12T18:02:06+10:00
+
+--- stopping the current run (parent first) ---
+stopped cleanly on attempt 1
+
+--- installing the patched runner ---
+   backed up the current runner.py
+   installed
+   verified: chunk=300s timeout=900s max_attempts=1000 -> ceiling 83 h
+
+--- checkpoints kept (timing accumulates inside them) ---
+   ckpt_nest_threads2.pkl  1626546 bytes
+   ckpt_nest_threads4.pkl  1626607 bytes
+
+--- restarting ---

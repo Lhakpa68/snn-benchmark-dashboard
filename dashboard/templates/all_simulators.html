@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="scope-note">
+  Every simulator that produced an eligible measurement is listed below for
+  each KPI, ranked best to worst — not just the winner. The internal reference
+  and any compile-dominated backend are excluded from every ranking, for the
+  same reason the KPI tiles on the Dashboard page exclude them: neither is a
+  simulator this comparison is ranking. This page always shows the full
+  field regardless of the selector above; use that selector on the other
+  pages to narrow what you are looking at there. Experiment 2 was run at two
+  sample budgets, so the training ranking is shown for one budget at a time —
+  ranking a simulator trained on 60,000 images against one trained on 6,000
+  would not be a controlled comparison.
+</div>
+
+<div class="budget-bar" id="rankBudget"></div>
+
+<div class="kpi-rank-grid">
+
+  <div class="card kpi-rank-card">
+    <div class="card-title">Fastest inference</div>
+    <div class="card-sub">Median wall-clock time for one run at the reference network size, fastest first.</div>
+    <div class="rank-list" id="rankInference"></div>
+  </div>
+
+  <div class="card kpi-rank-card">
+    <div class="card-title">Lowest peak memory</div>
+    <div class="card-sub">Peak resident-set size at the largest network size in the scalability sweep, lowest first.</div>
+    <div class="rank-list" id="rankMemory"></div>
+  </div>
+
+  <div class="card kpi-rank-card">
+    <div class="card-title">Flattest scaling</div>
+    <div class="card-sub">Fitted scaling exponent k across the five swept network sizes (well-fitted curves only, r&sup2; &ge; 0.25), flattest first.</div>
+    <div class="rank-list" id="rankScaling"></div>
+  </div>
+
+  <div class="card kpi-rank-card">
+    <div class="card-title">Best training accuracy</div>
+    <div class="card-sub">Held-out MNIST test accuracy after training with each simulator's own native learning rule, highest first.</div>
+    <div class="rank-list" id="rankTraining"></div>
+  </div>
+
+</div>
+{% endblock %}

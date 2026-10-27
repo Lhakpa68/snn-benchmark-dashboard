@@ -1,0 +1,167 @@
+{% if not suppress_answer %}{% include "optimization_answer.html" %}{% endif %}
+{% if opt.ok %}
+<div class="opt-highlight card">
+  <div class="card-sub">Best-supported measured backend for the selected preferences</div>
+  <div class="opt-winner">{{ opt.winner.id }}{% if opt.answer %} <span class="rb-friendly">{{ opt.answer.winner }}</span>{% endif %}</div>
+  {% if opt.tie and opt.tie.is_tie %}<p class="rb-tienote" role="note"><span class="rb-tag rb-tag-T" aria-hidden="true">T</span> Tied with <b>{{ opt.tie.others|join(', ') }}</b> — shown first because of {{ opt.tie.reason }} (tie rule).{% if opt.tie.all_tied %} All {{ opt.tie.ids|length }} eligible backends have the same score under these priorities.{% endif %}</p>{% endif %}
+  <div class="opt-kpis">
+    <div><b>{{ '%.5f'|format(opt.winner.runtime_s) }} s</b><span>Inference runtime</span></div>
+    <div><b>{{ '%.1f'|format(opt.winner.memory_mb) }} MB</b><span>Peak process RSS (growth {{ '%.1f'|format(opt.winner.memory_growth_mb) }} MB)</span></div>
+    <div><b>{{ '%.3f'|format(opt.winner.scaling_k) }}</b><span>Scaling exponent k</span></div>
+    <div><b>{{ ('%.2f'|format(opt.winner.accuracy_pct) ~ '%') if opt.winner.accuracy_pct is not none else 'Not measured' }}</b><span>Native MNIST accuracy*</span></div>
+  </div>
+  <p class="opt-small"><b>{{ 'Exploratory four-criterion scenario' if opt.exploratory else 'Primary three-criterion scenario' }}.</b> Weights actually used: inference {{ '%.1f'|format(opt.weights.inference*100) }}%, memory {{ '%.1f'|format(opt.weights.memory*100) }}%, scalability {{ '%.1f'|format(opt.weights.scalability*100) }}%, accuracy {{ '%.1f'|format(opt.weights.accuracy*100) }}%. Lower score is preferred under these particular assumptions, not universally. {{ opt.message if opt.exploratory else 'Accuracy is displayed for context but does not influence this recommendation.' }}</p>
+</div>
+{% set ST = opt.stability %}
+{% if ST %}
+<div class="card rb-stability" id="stabilityNote">
+  <div class="card-title">Stability of this recommendation</div>
+  <ul class="rb-checks">
+    {% for c in ST.checks %}<li class="rb-{{ c.status }}"><span class="rb-mark" aria-hidden="true">{{ {'same':'✓','changes':'✗','becomes_tie':'≈','resolves':'≈','n/a':'–'}[c.status] }}</span> {{ c.text }}</li>{% endfor %}
+    {% if ST.margin %}<li class="rb-margin"><span class="rb-mark" aria-hidden="true">Δ</span> Margin to runner-up ({{ ST.margin.runner_up }}): <b>{{ '%.4f'|format(ST.margin.value) }}</b> ({{ ST.margin.note }})</li>{% endif %}
+  </ul>
+  <p class="opt-small">{{ ST.note }} <a href="/robustness">Robustness page</a></p>
+</div>
+{% endif %}
+<div class="opt-two-charts">
+  <div class="card">
+    <div class="card-title">Weighted ranking: where each score comes from</div>
+    <div class="card-sub">Shorter stacked bars are better. Each segment is that criterion's normalised cost multiplied by its relative weight; not an absolute performance percentage.</div>
+    <p class="rb-sowhat"><b>In plain words:</b> a shorter bar is a better overall score. The colours show which criterion costs each backend the most.</p>
+    <div class="opt-legend">
+      {% for name, label in [('inference','Inference'),('memory','Memory'),('scalability','Scalability'),('accuracy','Accuracy*')] %}<span><i class="opt-dot opt-{{ name }}"></i>{{ label }}</span>{% endfor %}
+    </div>
+    <div class="opt-bars" role="img" aria-label="Weighted cost comparison bar chart by simulator backend">
+      {% for r in opt.rows %}
+      <div class="opt-bar-row" title="{{ r.id }} · weighted score {{ '%.4f'|format(r.score) }}">
+        <div class="opt-bar-label">{{ loop.index }}. {{ r.id }}{% if loop.first %} ★{% endif %}</div>
+        <div class="opt-bar-track">
+          {% for key in ['inference','memory','scalability','accuracy'] %}
+          <div class="opt-segment opt-{{ key }}" style="width:{{ '%.3f'|format(r.contributions[key]*100) }}%" title="{{ key }} contribution: {{ '%.4f'|format(r.contributions[key]) }}"></div>
+          {% endfor %}
+        </div>
+        <strong class="opt-bar-score">{{ '%.3f'|format(r.score) }}</strong>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Inference versus memory: measured trade-offs</div>
+    <div class="card-sub">Measured runtime and peak process memory of each eligible backend, both on logarithmic axes. ★ is the weighted recommendation; outlined points are Pareto-efficient on the active criteria. The plot shows two observed quantities only: the score uses memory <em>growth</em> rather than the absolute footprint, and also uses scaling and, if enabled, accuracy.</div>
+    <p class="rb-sowhat"><b>In plain words:</b> towards the lower left means faster and a smaller memory footprint in absolute terms. Outlined points are Pareto-efficient on the criteria in use, which include memory growth and scaling, not only these two axes.</p>
+    <svg class="opt-scatter" viewBox="0 0 650 300" role="img" aria-label="Scatterplot of measured inference runtime against peak process memory">
+      {% for t in opt.plot.yticks %}
+      <line x1="{{ opt.plot.x0 }}" x2="{{ opt.plot.x1 }}" y1="{{ t.pos }}" y2="{{ t.pos }}" stroke="#e2e9f3"/>
+      <text x="{{ opt.plot.x0 - 6 }}" y="{{ t.pos + 4 }}" font-size="11" fill="#53657c" text-anchor="end">{{ t.label }}</text>
+      {% endfor %}
+      {% for t in opt.plot.xticks %}
+      <line x1="{{ t.pos }}" x2="{{ t.pos }}" y1="{{ opt.plot.y1 }}" y2="{{ opt.plot.y0 }}" stroke="#eef2f8"/>
+      <text x="{{ t.pos }}" y="{{ opt.plot.y0 + 16 }}" font-size="11" fill="#53657c" text-anchor="middle">{{ t.label }}</text>
+      {% endfor %}
+      <line x1="{{ opt.plot.x0 }}" x2="{{ opt.plot.x1 }}" y1="{{ opt.plot.y0 }}" y2="{{ opt.plot.y0 }}" stroke="#65758c" stroke-width="1.2"/>
+      <line x1="{{ opt.plot.x0 }}" x2="{{ opt.plot.x0 }}" y1="{{ opt.plot.y1 }}" y2="{{ opt.plot.y0 }}" stroke="#65758c" stroke-width="1.2"/>
+      {% for r in opt.rows %}
+      <g>
+        <title>{{ r.id }}: {{ '%.5f'|format(r.runtime_s) }} s; {{ '%.1f'|format(r.memory_mb) }} MB peak RSS; growth {{ '%.1f'|format(r.memory_growth_mb) }} MB; weighted score {{ '%.3f'|format(r.score) }}</title>
+        {% if loop.first %}<circle cx="{{ r.plot_x }}" cy="{{ r.plot_y }}" r="11" fill="none" stroke="#d69c22" stroke-width="3"/>{% endif %}
+        <circle cx="{{ r.plot_x }}" cy="{{ r.plot_y }}" r="{{ 6 if r.pareto else 4.5 }}" fill="{{ theme.colors.get(r.framework,'#64748b') }}" stroke="{{ '#223147' if r.pareto else 'white' }}" stroke-width="1.3"/>
+        <text x="{{ r.label_x }}" y="{{ r.label_y }}" font-size="10.5" fill="#31435e" text-anchor="{{ r.label_anchor }}">{{ r.id }}{% if loop.first %} ★{% endif %}</text>
+      </g>
+      {% endfor %}
+      <text x="{{ (opt.plot.x0 + opt.plot.x1) / 2 }}" y="292" font-size="12" fill="#31435e" text-anchor="middle">Inference runtime at N={{ '{:,}'.format(opt.network_size) }} (logarithmic)</text>
+      <text transform="translate(16,145) rotate(-90)" font-size="12" fill="#31435e" text-anchor="middle">Peak process memory (MB, log)</text>
+    </svg>
+    <p class="opt-small">Highlighted circle: current preferred backend. Point colours follow the simulator legend used elsewhere in the dashboard. Hover for the exact figures.</p>
+  </div>
+</div>
+{% set P = opt.profiles %}
+{% if P %}
+<div class="card" id="selectionNetwork">
+  <div class="card-title">Selection network: backends → measured criteria → reader profiles</div>
+  <div class="card-sub">Each output node is one reader profile and computes a weighted sum of the normalised criteria, <i>y</i> = <i>W</i><i>x</i>. Lines from a backend are darker where it does better on that criterion; lines into a profile are thicker where that profile gives the criterion more weight. The arrow names the backend each profile would choose at N={{ '{:,}'.format(opt.network_size) }} ({{ 'share-of-total' if opt.normalisation == 'share' else 'min–max' }} normalisation). Profiles are illustrative readers, not elicited preferences; * marks profiles that use the exploratory accuracy criterion.</div>
+  <p class="rb-sowhat"><b>In plain words:</b> each profile is a different kind of reader. The table below lists every backend's score for every profile; the highlighted cell is that profile's choice.</p>
+  {% set nb = P.backends|length %}{% set npf = P.profiles|length %}
+  {% set H = 40 + 34 * ([nb, npf, 4]|max) %}
+  {% set yb = (H - 34 * (nb - 1)) / 2 %}{% set yp = (H - 34 * (npf - 1)) / 2 %}{% set yc = (H - 70 * 3) / 2 %}
+  {% set cy = {'inference': yc, 'memory': yc + 70, 'scalability': yc + 140, 'accuracy': yc + 210} %}
+  {% set clab = {'inference': 'Inference speed', 'memory': 'Memory growth', 'scalability': 'Scalability', 'accuracy': 'Accuracy*'} %}
+  <svg class="opt-network" viewBox="0 0 1180 {{ H }}" role="img" aria-label="Selection network diagram">
+    {% for b in P.backends %}{% set by = yb + 34 * loop.index0 %}{% set fw = b.split('/')[0] %}
+      {% for c in P.criteria %}{% set g = P.goodness.get(b, {}).get(c) %}{% if g is not none %}
+      <line x1="232" y1="{{ by }}" x2="488" y2="{{ cy[c] }}" stroke="{{ theme.colors.get(fw, '#64748b') }}" stroke-opacity="{{ '%.2f'|format(0.08 + 0.62 * g) }}" stroke-width="1.6"><title>{{ b }} on {{ clab[c] }}: relative performance {{ '%.2f'|format(g) }} (1 = best eligible)</title></line>
+      {% endif %}{% endfor %}
+    {% endfor %}
+    {% for pf in P.profiles %}{% set py = yp + 34 * loop.index0 %}
+      {% for c in P.criteria %}{% set w = pf.weights[c] %}{% if w > 0 %}
+      <line x1="512" y1="{{ cy[c] }}" x2="788" y2="{{ py }}" stroke="#2f5f86" stroke-opacity="0.55" stroke-width="{{ '%.1f'|format(1 + 7 * w) }}"><title>{{ pf.label }}: weight {{ '%.0f'|format(100 * w) }}% on {{ clab[c] }}</title></line>
+      {% endif %}{% endfor %}
+    {% endfor %}
+    {% for b in P.backends %}{% set by = yb + 34 * loop.index0 %}{% set fw = b.split('/')[0] %}
+      <circle cx="232" cy="{{ by }}" r="9" fill="{{ theme.colors.get(fw, '#64748b') }}"/>
+      <text x="216" y="{{ by + 4 }}" font-size="13" fill="#24364f" text-anchor="end">{{ b }}</text>
+    {% endfor %}
+    {% for c in P.criteria %}
+      <circle cx="500" cy="{{ cy[c] }}" r="13" fill="#eef4fa" stroke="#2f5f86" stroke-width="2"/>
+      <text x="500" y="{{ cy[c] - 20 }}" font-size="13" font-weight="700" fill="#24364f" text-anchor="middle">{{ clab[c] }}</text>
+    {% endfor %}
+    {% for pf in P.profiles %}{% set py = yp + 34 * loop.index0 %}{% set win = P.winners.get(pf.key) %}
+      <circle cx="800" cy="{{ py }}" r="10" fill="{{ '#fdf3e1' if pf.exploratory else '#e9f5ee' }}" stroke="{{ '#a86b12' if pf.exploratory else '#2e7d5b' }}" stroke-width="2"/>
+      <text x="818" y="{{ py + 4 }}" font-size="13" fill="#24364f"><tspan font-weight="700">{{ pf.label }}</tspan> → {{ P.labels[pf.key] if P.labels else (win if win else 'no difference (all tied)') }}</text>
+    {% endfor %}
+  </svg>
+  <div class="opt-scroll"><table class="opt-table opt-profile-table"><thead><tr><th>Simulator / backend</th>{% for pf in P.profiles %}<th>{{ pf.label }}</th>{% endfor %}</tr></thead>
+  <tbody>{% for b in P.backends %}<tr><td><b>{{ b }}</b></td>{% for pf in P.profiles %}{% set cell = P.scores.get(b, {}).get(pf.key) %}{% set tied_here = (P.ties[pf.key].ids if P.ties else []) %}<td class="{{ 'opt-row-winner' if P.winners.get(pf.key) == b else '' }}{{ ' rb-tied' if b in tied_here else '' }}">{% if cell %}{{ '%.3f'|format(cell.score) }} <span class="opt-small">(#{{ cell.rank }})</span>{% if b in tied_here %} <span class="rb-tag rb-tag-T" title="Exact tie: same score as {{ (tied_here|length - 1) }} other backend{{ '' if tied_here|length == 2 else 's' }}">tied</span>{% endif %}{% else %}—{% endif %}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+  <p class="opt-small">Cells give each backend’s weighted score for the profile (lower is better) and its rank; the highlighted cell is the profile’s choice. Cells marked <em>tied</em> have exactly the same score (to 12 decimals); the first of them is shown as the choice because of its shorter runtime (tie rule). A profile whose criteria do not separate the backends (for example memory growth at N=100, where it is zero for every backend) is shown as tied. Bias terms are zero: a constant added to every backend’s score cannot change a ranking. The softmax activation below turns these scores into priorities without changing any choice.</p>
+</div>
+{% set S = opt.softmax %}
+{% if S %}
+<div class="card" id="softmaxPriorities">
+  <div class="card-title">Activation function</div>
+  <div class="card-sub">The output layer above gives each backend a weighted score <i>y</i> (lower is better). A softmax activation turns the scores of one profile into priorities that are positive and add up to 100%: each simulator is represented by its best eligible backend for that profile, and its priority is exp(&minus;<i>y</i>/&tau;) divided by the sum of exp(&minus;<i>y</i>/&tau;) over the simulators, with temperature &tau; = {{ '%g'|format(S.tau) }} (N={{ '{:,}'.format(S.network_size) }}, {{ 'share-of-total' if S.normalisation == 'share' else 'min–max' }} normalisation).</div>
+  <p class="rb-sowhat"><b>In plain words:</b> a priority close to 100% means that the profile clearly prefers one simulator; similar priorities mean that two or three simulators are almost as good and the choice is close. The simulator with the highest priority is always the one whose backend is recommended above.</p>
+  <div class="opt-scroll"><table class="opt-table opt-softmax-table"><thead><tr><th>Reader profile</th>{% for s in S.simulators %}<th>{{ theme.labels.get(s, s) if theme.labels else s }}</th>{% endfor %}<th>Highest priority</th></tr></thead>
+  <tbody>{% for pf in S.profiles %}{% set top = pf.rows[0] %}<tr><td><b>{{ pf.label }}</b></td>{% for s in S.simulators %}{% set v = pf.priority.get(s) %}<td class="{{ 'opt-row-winner' if s == top.simulator and not pf.tied else '' }}">{% if v is not none %}{{ '%.1f'|format(100 * v) }}%{% else %}—{% endif %}</td>{% endfor %}<td>{% if pf.tied %}no difference (all tied){% else %}{{ theme.labels.get(top.simulator, top.simulator) if theme.labels else top.simulator }} via {{ top.backend }}{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+    {% if opt.softmax_charts %}
+  <div class="opt-softmax-chart" style="margin-top:14px">
+    <label for="softmaxProfile"><b>Activation curve for profile:</b></label>
+    <select id="softmaxProfile" onchange="document.querySelectorAll('.opt-softmax-svg').forEach(function(e){e.style.display = e.getAttribute('data-profile') === this.value ? 'block' : 'none';}, this)">
+      {% for pf in S.profiles %}<option value="{{ pf.key }}" {{ 'selected' if pf.key == 'balanced' else '' }}>{{ pf.label }}</option>{% endfor %}
+    </select>
+    {% for pf in S.profiles %}{% set C = opt.softmax_charts[pf.key] %}
+    <svg class="opt-softmax-svg" data-profile="{{ pf.key }}" viewBox="0 0 {{ C.width }} {{ C.height }}" style="display:{{ 'block' if pf.key == 'balanced' else 'none' }};width:100%;max-width:{{ C.width }}px;height:auto" role="img" aria-label="Activation curve for the {{ pf.label }} profile">
+      {% for t in C.yticks %}<line x1="{{ C.left }}" x2="{{ C.right }}" y1="{{ t.y }}" y2="{{ t.y }}" stroke="#e5e7eb"/><text x="{{ C.left - 8 }}" y="{{ t.y + 4 }}" text-anchor="end" font-size="11" fill="#475569">{{ '%.1f'|format(t.v) }}</text>{% endfor %}
+      {% for t in C.xticks %}<text x="{{ t.x }}" y="{{ C.bottom + 16 }}" text-anchor="middle" font-size="11" fill="#475569">{{ '%.1f'|format(t.v) }}</text>{% endfor %}
+      <line x1="{{ C.left }}" x2="{{ C.left }}" y1="{{ C.top }}" y2="{{ C.bottom }}" stroke="#334155"/>
+      <line x1="{{ C.left }}" x2="{{ C.right }}" y1="{{ C.bottom }}" y2="{{ C.bottom }}" stroke="#334155"/>
+      <text x="{{ (C.left + C.right) / 2 }}" y="{{ C.height - 6 }}" text-anchor="middle" font-size="12" fill="#1e293b">Simulator score y (best eligible backend; lower is better →)</text>
+      <text transform="translate(14 {{ (C.top + C.bottom) / 2 }}) rotate(-90)" text-anchor="middle" font-size="12" fill="#1e293b">Softmax priority π</text>
+      <path d="{{ C.path }}" fill="none" stroke="#334155" stroke-width="2"/>
+      {% for p in C.points %}
+      <line x1="{{ p.x }}" x2="{{ p.x }}" y1="{{ p.y }}" y2="{{ C.bottom }}" stroke="#2a6db0" stroke-dasharray="4 3"/>
+      <line x1="{{ C.left }}" x2="{{ p.x }}" y1="{{ p.y }}" y2="{{ p.y }}" stroke="#2a6db0" stroke-dasharray="1 3"/>
+      <circle cx="{{ p.x }}" cy="{{ p.y }}" r="4.5" fill="#2a6db0" stroke="#fff"/>
+      <text x="{{ p.lx }}" y="{{ p.ly }}" text-anchor="{{ p.anchor }}" font-size="11.5" fill="#0f172a" paint-order="stroke" stroke="#fff" stroke-width="3">{{ p.label }}: y = {{ '%.3f'|format(p.score) }}, π = {{ '%.1f'|format(100 * p.priority) }}%</text>
+      {% endfor %}
+    </svg>{% endfor %}
+    <p class="opt-small">Each point is one simulator, placed on the activation curve at its score; the dashed line reads its score and the dotted line reads its priority on the vertical axis.</p>
+  </div>
+  {% endif %}
+  <p class="opt-small">Softmax is monotone, so it never changes which simulator ranks first; it shows how far ahead that simulator is. Representing each simulator by its best backend means that a simulator is not favoured because it has more backends. A smaller &tau; sharpens the priorities and a larger &tau; flattens them; the value 0.1 is one tenth of the 0-to-1 range of the min–max scores, so a score gap of 0.1 divides the priority by e (about 2.7). Priorities are a presentation of the weighted scores, not probabilities that a simulator is truly best.</p>
+</div>
+{% endif %}
+{% endif %}
+<div class="card">
+  <div class="card-title">All eligible alternatives: underlying observations and derived scores</div>
+  <div class="card-sub">Network size N={{ '{:,}'.format(opt.network_size) }}; scaling exponent fitted across the five measured network sizes (not measured at just one size). Accuracy* is from a separate MNIST run at 60,000 training images, 10 epochs, and hidden width 256. Values below about 15% are approximately chance-level for this 10-class task; the native learning rules are not the same.</div>
+  <div class="opt-scroll"><table class="opt-table"><thead><tr><th>Rank</th><th>Simulator / backend</th><th>Inference (s) ↓</th><th>Peak RSS (MB)</th><th>Memory growth (MB) ↓</th><th>Scaling k ↓</th><th>Fit R²</th><th>MNIST accuracy* (%) ↑</th><th>Weighted score ↓</th><th>Rank sum ↓</th><th>Pareto (active criteria)</th><th>Wins in priority grid</th></tr></thead>
+  <tbody>
+  {% for r in opt.rows %}<tr class="{{ 'opt-row-winner' if loop.first else '' }}"><td>{{ loop.index }}</td><td><b>{{ r.id }}</b></td><td>{{ '%.5f'|format(r.runtime_s) }}</td><td>{{ '%.1f'|format(r.memory_mb) }}</td><td>{{ '%.1f'|format(r.memory_growth_mb) }}</td><td>{{ '%.3f'|format(r.scaling_k) }}</td><td>{{ '%.2f'|format(r.scaling_r2) if r.scaling_r2 is not none else '—' }}{{ ' ⚠' if r.fit_caution else '' }}</td><td>{{ '%.2f'|format(r.accuracy_pct) if r.accuracy_pct is not none else 'Not available' }}</td><td>{{ '%.3f'|format(r.score) }}</td><td>{{ '%g'|format(r.rank_sum) }}</td><td>{{ 'Yes' if r.pareto else 'No' }}</td><td>{{ r.scenario_wins }}/{{ opt.n_grid_points }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  <p class="opt-small"><b>Weight interpretation:</b> The initial equal-priority settings are a transparent demonstration, not weights inferred from an established SNN theory, participants or a survey. The recommendation belongs to the current user-chosen scenario. Vary individual priorities and inspect the scenario grid before interpreting it as a robust choice.</p>
+  <p class="opt-small"><b>Calculation:</b> {% if opt.normalisation == 'share' %}Share-of-total normalisation: each backend's runtime, memory growth and scaling exponent is divided by the sum over the eligible backends, and accuracy (if weighted) enters as its shortfall from 100% divided by the summed shortfalls, so that a smaller share is better on every criterion.{% else %}Min–max normalisation: inference runtime on a logarithmic scale; memory as the growth in peak process memory above the same backend's footprint at the smallest measured size; the scaling exponent linearly; and accuracy (if weighted) inversely.{% endif %} At N=100 memory growth is zero for every backend, so memory does not discriminate there. The rank sum adds each backend's rank (1 = best) on every active criterion without weights, as a weight-free cross-check. The weighted cost is the sum of four normalised criteria. An absent metric is never substituted with zero. <b>Grid sensitivity:</b> {{ opt.n_grid_points }} equally spaced priority combinations (0%, 25%, 50%, 75%, 100% that sum to 100%). Counts are deterministic sensitivity results, <em>not probabilities</em>. ⚠ marks a scaling fit with R² below 0.80. The Pareto flag compares only metrics carrying nonzero weights.</p>
+  <p class="opt-small"><b>Filtered out:</b> {{ opt.excluded.control }} NumPy validation control{{ '' if opt.excluded.control == 1 else 's' }}, {{ opt.excluded.compilation }} compilation-dominated backend{{ '' if opt.excluded.compilation == 1 else 's' }}, {{ opt.excluded.missing }} missing workload sizes, {{ opt.excluded.invalid }} invalid observations, {{ opt.excluded.memory_cap }} over the memory cap, {{ opt.excluded.missing_scaling }} missing scaling fits, {{ opt.excluded.missing_accuracy }} missing accuracy measurements. CV above 15% is flagged in benchmark pages and requires caution when interpreting any close rankings.</p>
+  <a class="action" id="multiOptCsvLink" href="/api/optimization.csv?n={{ opt.network_size }}&inference={{ opt.raw_weights.inference }}&memory={{ opt.raw_weights.memory }}&scalability={{ opt.raw_weights.scalability }}&accuracy={{ opt.raw_weights.accuracy }}&norm={{ opt.normalisation }}{{ '&cap=' ~ opt.memory_limit_mb if opt.memory_limit_mb is not none else '' }}">Export current recommendation and all four criteria (CSV)</a>
+</div>
+{% else %}
+<div class="card"><div class="card-title">No eligible recommendation</div><div class="card-sub">{{ opt.notice }}</div></div>
+{% endif %}

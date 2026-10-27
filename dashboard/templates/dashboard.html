@@ -1,0 +1,555 @@
+<!--
+  Building a Benchmarking Dashboard for SNN Methods — main page.
+
+  Seven views live in this one file as <section class="view" id="view-...">
+  blocks; static/js/dashboard.js shows and hides them and fills their charts
+  from the /api/* routes in app.py. Edit layout and copy here; edit behaviour
+  in dashboard.js.
+
+  The primary control is the SIMULATOR selector: a reader picks simulators,
+  not backends, because the simulator is the unit the research question is
+  asked about. Selecting one filters every chart, every table and every KPI
+  on every view. Backend detail is available behind a disclosure rather than
+  occupying the page by default.
+
+  Single hardware platform: the machine is held fixed so that a difference in
+  runtime is attributable to a difference in the simulator rather than to the
+  hardware. That is the controlled-experiment design, which is why there is no
+  hardware selector.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Auto-refresh used to be a bare <meta http-equiv="refresh"> here, reloading
+     the whole page every 20 seconds so newly-appended results would appear
+     without a manual reload. That reload repainted the entire page each time,
+     which read as the dashboard flickering or going blank to anyone actually
+     looking at it. The refresh itself now happens quietly in the background —
+     see the periodic re-fetch in dashboard.js — without navigating away from
+     the page, so nothing visibly flashes. -->
+<title>{{ title }}</title>
+<!-- The charting is local (static/js/minichart.js). Nothing on this page is
+     fetched from a third-party host, so it renders identically with or
+     without an internet connection — which is the same reproducibility
+     standard the thesis applies to the measurements themselves. -->
+<script src="{{ url_for('static', filename='js/minichart.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">&#9889;</div>
+    <div>
+      <h1 class="logo">{{ title }}</h1>
+      {% if author %}<div class="byline">{{ author }} &middot; {{ institution }}</div>{% endif %}
+      <div class="subtitle">{{ subtitle }}</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <span class="badge cpu">Single hardware platform</span>
+    {% if meta.ok %}<span class="badge">{{ meta.counts.runs }} measured runs</span>{% endif %}
+    <span class="badge muted" title="This page reloads itself every 20 seconds, so newly-appended results appear on their own.">loaded {{ loaded_at }}</span>
+    <a class="action" href="/" title="Reload now">
+      <span class="ico">&#8635;</span> Refresh
+    </a>
+    <a class="action" id="exportBtn" href="/api/export/all.csv" download>
+      <span class="ico">&#8615;</span> Export CSV
+    </a>
+  </div>
+</header>
+
+{% if not meta.ok %}
+<div class="main">
+  <div class="card">
+    <div class="card-title">No results to show</div>
+    <div class="card-sub">{{ meta.error }}</div>
+  </div>
+</div>
+{% else %}
+
+<!-- ══ HEADLINE FIGURES — placed above the selector so the answer
+     is read first and the control that changes it sits beneath. ══ -->
+<div class="kpi-band">
+  <!-- ══ KPIs ═════════════════════════════════════════════════════════ -->
+<div class="kpis" id="kpiGrid">
+  <div class="kpi" id="kpi1"><div class="kpi-label">Fastest inference</div>
+    <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+  <div class="kpi" id="kpi2"><div class="kpi-label">Lowest peak memory</div>
+    <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+  <div class="kpi" id="kpi3"><div class="kpi-label">Flattest scaling</div>
+    <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+  <div class="kpi" id="kpi4"><div class="kpi-label">Best MNIST accuracy</div>
+    <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+</div>
+<div class="scope-note" id="scopeNote"></div>
+</div>
+
+<!-- ══ SIMULATOR SELECTOR — the primary control ═══════════════════════ -->
+<div class="selector">
+  <div class="selector-head">
+    <span class="selector-title">Simulators</span>
+    <span class="selector-hint">
+      Click to <b>select</b> or <b>de-select</b>. Every chart, table and
+      headline figure below responds immediately.
+    </span>
+    <span class="fw-tools">
+      <button class="link-btn" id="allBtn">Select all</button>
+      <button class="link-btn" id="noneBtn">Clear</button>
+      <button class="link-btn" id="detailBtn" aria-expanded="false"
+              aria-controls="backendPanel">Show backend detail &#9662;</button>
+    </span>
+  </div>
+
+  <div class="fw-row" id="fwRow">
+    {% for f in frameworks %}
+    <button class="fw{{ ' control' if f.is_control }}" data-fw="{{ f.id }}"
+            style="--c: {{ f.color }}" aria-pressed="true"
+            title="{{ f.one_line }}">
+      <span class="fw-name"><span class="fw-dot"></span>{{ f.label }}</span>
+      <span class="fw-sub">{{ f.n_backends }} backend{{ '' if f.n_backends == 1 else 's' }}</span>
+    </button>
+    {% endfor %}
+  </div>
+
+  <!-- Backend detail: hidden by default, exactly as asked. -->
+  <div class="disclosure" id="backendPanel" hidden>
+    <div class="disclosure-inner">
+      <div class="note" style="max-width:none;margin-bottom:11px">
+        A <b>backend</b> is one execution path within a simulator — a
+        code-generation target, a thread count, or an implementation variant.
+        Backends are filtered by their simulator above; this panel explains
+        what each one is. Every backend listed here produced measured rows.
+      </div>
+      <div class="backend-grid">
+        {% for b in backends %}
+        <div class="backend-item" style="--c: {{ theme.colors.get(b.framework, '#7c879b') }}">
+          <div class="b-name">{{ theme.labels.get(b.framework, b.framework) }} / {{ b.backend }}</div>
+          <div class="b-note">{{ b.note }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VIEW TABS ══════════════════════════════════════════════════════ -->
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-view="inference">Inference</button>
+  <button class="tab" data-view="scalability">Scalability</button>
+  <button class="tab" data-view="memory">Memory</button>
+  <button class="tab" data-view="training">Training</button>
+  <button class="tab" data-view="sensitivity">Sensitivity</button>
+  <button class="tab" data-view="equivalence">Equivalence &amp; provenance</button>
+  <button class="tab" data-view="about">What the baselines are</button>
+</nav>
+
+<div class="main">
+
+  <!-- This page reads and never writes. Running the benchmark is the command
+       line's job (python run.py bench), so that a measurement campaign is
+       started deliberately, on a quiet machine, and never as a side effect of
+       clicking something while reading results. -->
+
+
+
+  <!-- ══ OVERVIEW — a line chart and a bar chart directly beneath the
+       headline figures, so the shape of the result is visible before the
+       reader chooses a tab. Both respond to the simulator selector. ══ -->
+  <div class="row-2-wide" id="overviewRow">
+    <div class="card">
+      <div class="card-title">How runtime grows with network size</div>
+      <div class="card-sub">Every simulator across the full sweep, both axes logarithmic. A straight line is power-law scaling; a flat line means a fixed cost is dominating rather than the network.</div>
+      <div class="chart-wrap"><canvas id="overviewLine" height="250"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Inference cost at the reference size</div>
+      <div class="card-sub">Median wall-clock time for one run, warmup excluded. Log scale — the spread across these backends is four orders of magnitude.</div>
+      <div class="chart-wrap"><canvas id="overviewBar" height="250"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══ VIEW: INFERENCE ══════════════════════════════════════════════ -->
+  <section class="view active" id="view-inference">
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Inference runtime</div>
+        <div class="card-sub">Median wall-clock seconds over the measured runs, warmup excluded. Log scale — the spread here is four orders of magnitude.</div>
+        <div class="chart-wrap"><canvas id="runtimeChart" height="235"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Peak memory</div>
+        <div class="card-sub">Peak resident set size of the whole Python process — interpreter and imports included, which at this network size is most of it.</div>
+        <div class="chart-wrap"><canvas id="memChart" height="235"></canvas></div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Energy proxy index</div>
+        <div class="card-sub">runtime &times; CPU utilisation &times; configured TDP, rescaled so the costliest simulating backend reads 100 (log scale). A compile-dominated backend reads above 100. The joule estimate is in the table and the CSV.</div>
+        <div class="chart-wrap"><canvas id="energyChart" height="215"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Processor utilisation</div>
+        <div class="card-sub">Mean process CPU% during the measured window. Above 100% means more than one core was busy — a real advantage, but one the single-threaded backends never took.</div>
+        <div class="chart-wrap"><canvas id="cpuChart" height="215"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Detailed results</div>
+      <div class="card-sub">One row per backend at the reference network size.</div>
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th class="num">Runtime (s)</th><th class="num">CV %</th>
+          <th class="num">Setup (s)</th><th class="num">Peak MB</th><th class="num">CPU %</th>
+          <th class="num">Spikes</th><th class="num">Energy (J)</th><th class="num">Runs</th><th>Note</th>
+        </tr></thead>
+        <tbody id="infTable"></tbody>
+      </table></div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/inference.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+      <div class="caveat">
+        <strong>Setup and simulation are timed separately</strong> so a backend
+        that is slow to build is distinguishable from one that is slow to run.
+        Brian2's <code>cpp_standalone</code> target reports a runtime dominated
+        by C++ compilation rather than by simulation; it is marked in the last
+        column and excluded from the headline figures, but it is not hidden,
+        because that behaviour is a finding a simulator chooser needs.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW: SCALABILITY ════════════════════════════════════════════ -->
+  <section class="view" id="view-scalability">
+    <div class="row-2-wide">
+      <div class="card">
+        <div class="card-title">Runtime against network size</div>
+        <div class="card-sub">Both axes logarithmic, so a straight line is power-law scaling and its slope is the exponent k. Hover any point for its coefficient of variation and spike count.</div>
+        <div class="chart-wrap"><canvas id="scaleChart" height="285"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Throughput at the largest size</div>
+        <div class="card-sub">Neurons simulated per second of wall clock at the top of the sweep. Higher is better.</div>
+        <div class="chart-wrap"><canvas id="throughputChart" height="285"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Fitted scaling exponent</div>
+      <div class="card-sub">
+        Least-squares fit of log(runtime) on log(N). k &asymp; 1 means cost grows
+        in step with the network; k below 1 means it grows more slowly. r&sup2;
+        says whether the straight line describes the data at all — where it is
+        low the exponent is not worth quoting, and the interpretation column
+        says so instead.
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th class="num">k</th><th>95% CI</th><th class="num">r&sup2;</th>
+          <th class="num">Sizes</th><th class="num">Runtime at largest N</th><th>Interpretation</th>
+        </tr></thead>
+        <tbody id="scaleTable"></tbody>
+      </table></div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/scalability.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+      <div class="caveat">
+        <strong>A near-zero exponent is not a fast simulator.</strong> Brian2's
+        backends post k close to zero because a fixed per-run cost — code
+        generation, kernel setup — dominates the actual integration at every
+        size measured here. Read k together with the absolute runtime column
+        beside it.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW: MEMORY ═════════════════════════════════════════════════ -->
+  <section class="view" id="view-memory">
+    <div class="row-2-wide">
+      <div class="card">
+        <div class="card-title">Peak memory against network size</div>
+        <div class="card-sub">Where a line is flat, the footprint is interpreter and imports rather than the network. Where it climbs, the simulator is genuinely allocating per neuron.</div>
+        <div class="chart-wrap"><canvas id="memScaleChart" height="275"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Memory attributable to the network</div>
+        <div class="card-sub">Growth from the smallest to the largest size, divided by neuron count — computed from the growth rather than the peak, because the fixed interpreter cost is not a per-neuron cost.</div>
+        <div class="chart-wrap"><canvas id="perNeuronChart" height="275"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Memory summary</div>
+      <div class="card-sub">&nbsp;</div>
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th class="num">Smallest N (MB)</th><th class="num">Largest N (MB)</th>
+          <th class="num">Growth (MB)</th><th class="num">KB / neuron</th>
+        </tr></thead>
+        <tbody id="memTable"></tbody>
+      </table></div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/memory.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Repeatability of the quoted medians</div>
+      <div class="card-sub">
+        Every individual measured run behind the inference figure. A median
+        with five tight runs behind it and a median with five scattered ones
+        are not the same claim, and the difference is invisible in a bar chart.
+      </div>
+      <div class="chart-wrap"><canvas id="spreadChart" height="230"></canvas></div>
+      <div class="table-scroll" style="margin-top:15px"><table>
+        <thead><tr>
+          <th>Backend</th><th class="num">Runs</th><th class="num">Median (s)</th>
+          <th class="num">Min (s)</th><th class="num">Max (s)</th><th class="num">CV %</th>
+        </tr></thead>
+        <tbody id="spreadTable"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW: TRAINING ═══════════════════════════════════════════════ -->
+  <section class="view" id="view-training">
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Test accuracy — MNIST classification</div>
+        <div class="card-sub">Held-out accuracy after training with each simulator's own native learning rule. Chance on ten classes is 10%.</div>
+        <div class="chart-wrap"><canvas id="accChart" height="245"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cost per epoch</div>
+        <div class="card-sub">Seconds per training epoch — or, for Nengo, the cost of the single closed-form decoder solve, which has no epoch to divide by.</div>
+        <div class="chart-wrap"><canvas id="epochChart" height="245"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">What each simulator actually did</div>
+      <div class="card-sub">
+        These rows are deliberately not running the same algorithm. Each uses
+        the learning mechanism it was built for, which is the fair comparison;
+        forcing one shared algorithm onto all of them would measure how well
+        each simulator imitates the others.
+        <br><br>
+        <b>Reading the &ldquo;Did it learn?&rdquo; column.</b> MNIST has ten
+        digit classes, so a model that has learned nothing and simply guesses
+        is right about <b>10%</b> of the time. A row marked
+        <span class="tag tag-bad">no — no better than guessing</span> scored at
+        or below that: it produced output, but the output carried no
+        information about which digit was shown. It is not a crash and not a
+        missing measurement — the run completed and this is what it produced.
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th class="num">Accuracy %</th><th>Did it learn?</th>
+          <th class="num">Hidden</th><th class="num">Train</th><th class="num">Test</th>
+          <th class="num">Epochs</th><th class="num">s / epoch</th><th>Mechanism</th>
+        </tr></thead>
+        <tbody id="trainTable"></tbody>
+      </table></div>
+      <div class="empty" id="trainEmpty" hidden>No training rows for the selected simulators.</div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/training.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+      <div class="caveat" id="chanceCaveat" hidden></div>
+      <div class="caveat">
+        <strong>Accuracy is not comparable across learning rules; cost per
+        epoch is.</strong> A surrogate-gradient result at three epochs and a
+        plasticity result at three epochs are snapshots of two different
+        convergence curves. The sample budget each row used is printed in the
+        table for exactly this reason.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW: SENSITIVITY (Experiment 4) ═════════════════════════════ -->
+  <section class="view" id="view-sensitivity">
+    <div class="card">
+      <div class="card-title">Experiment 4 — how much does the answer depend on how we asked?</div>
+      <div class="card-sub">
+        The other three experiments ask how fast, how large and how accurate
+        each simulator is. This one asks something different: whether those
+        answers survive a change in the question. A benchmark whose ranking
+        flips when the network size or the metric changes has not produced a
+        recommendation, it has produced an artefact of its own configuration —
+        and knowing which of the two you are holding is the point.
+      </div>
+      <div class="note" style="max-width:none">
+        The statistic is <b>Kendall's &tau;</b>, the rank correlation between
+        two orderings of the same backends. &tau;&nbsp;=&nbsp;1 means the two
+        orderings agree exactly, 0 means they are unrelated, and &minus;1 means
+        one is the reverse of the other. Rank correlation is used rather than
+        a comparison of the values themselves because the claim under test is
+        about the <em>order a reader would act on</em>, not the magnitudes.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Does the ordering depend on the network size measured?</div>
+      <div class="card-sub">
+        Each tile compares the runtime ordering at that network size against
+        the ordering at the largest size measured. If a benchmark reported
+        only one size, this is how much its recommendation would have differed.
+      </div>
+      <div class="tau-grid" id="tauSize"></div>
+      <div class="caveat" id="sizeReading"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Does the ordering depend on the metric chosen?</div>
+      <div class="card-sub">
+        Each tile compares the ordering under that metric against the ordering
+        by runtime, both at the largest network size.
+      </div>
+      <div class="tau-grid" id="tauMetric"></div>
+      <div class="caveat" id="metricReading"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Objective O2 — the energy proxy against the EFLOP metric</div>
+      <div class="card-sub">
+        The stated objective is to assess how far the utilisation-weighted
+        energy proxy agrees with an operation-count metric, by rank
+        correlation.
+      </div>
+      <div id="o2Body"></div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW: EQUIVALENCE & PROVENANCE ═══════════════════════════════ -->
+  <section class="view" id="view-equivalence">
+    <div class="card">
+      <div class="card-title">Do the simulators agree on the answer?</div>
+      <div class="card-sub">
+        Before any timing comparison means anything, the implementations have
+        to be simulating the same network. Each backend's output firing rate
+        is compared against the plain-NumPy validation control of the
+        identical model. A simulator that is fast because it is solving an
+        easier problem would show up here.
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th>Status</th><th class="num">Rate (Hz)</th>
+          <th class="num">Reference (Hz)</th><th class="num">Relative deviation</th><th>Note</th>
+        </tr></thead>
+        <tbody id="validTable"></tbody>
+      </table></div>
+      <div class="empty" id="validEmpty" hidden></div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/validation.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Provenance</div>
+      <div class="card-sub">Recorded programmatically at run time, not transcribed.</div>
+      <div class="row-3">
+        <div class="table-scroll"><table><thead><tr><th>Machine</th><th>Value</th></tr></thead>
+          <tbody>{% for k, v in meta.machine.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+        <div class="table-scroll"><table><thead><tr><th>Package</th><th>Version</th></tr></thead>
+          <tbody>{% for k, v in meta.packages.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+        <div class="table-scroll"><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+          <tbody>{% for k, v in meta.config.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+      </div>
+      <div class="note" style="margin-top:12px">Database: <code>{{ meta.db }}</code></div>
+      {% if meta.excluded %}
+      <div class="caveat" style="margin-top:12px">
+        <strong>{{ meta.excluded }} condition record{{ '' if meta.excluded == 1 else 's' }}
+        in this database are excluded from every figure on this page.</strong>
+        {% if meta.excluded_other_machine %}
+        {{ meta.excluded_other_machine }} were measured on a different machine
+        {% if meta.other_machines %}({% for m in meta.other_machines %}<code>{{ m }}</code>{% if not loop.last %}, {% endif %}{% endfor %}){% endif %}
+        — the whole comparison rests on the machine being held fixed, so a row
+        measured elsewhere cannot be pooled with the campaign even when it covers
+        the same condition.
+        {% endif %}
+        {% if meta.excluded_replication %}
+      {{ meta.excluded_replication }} are replications of Experiments 1 and 3
+      ({{ meta.replication_sessions | join("; ") }}). They repeat the same
+      protocol on this machine and are kept to show how far a result reproduces
+      between sessions, but a figure draws on one session only. The August
+      campaign's processor-utilisation readings were withdrawn: its sampler
+      thread was starved by native simulator code, so only its runtimes stand.
+      {% endif %}
+      {% if meta.excluded_same_machine %}
+        {{ meta.excluded_same_machine }} more were measured on this same machine but
+        during an earlier, superseded attempt at this campaign — left behind while a
+        bug was being fixed, and excluded on the same principle even though the
+        hardware matches, since they are not part of the single verified run this
+        page reports on.
+        {% endif %}
+        The rows are kept rather than deleted, so every exclusion above can be
+        checked against the database directly.
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ══ VIEW: WHAT THE BASELINES ARE ═════════════════════════════════ -->
+  <section class="view" id="view-about">
+    <div class="card">
+      <div class="card-title">What each entry in this study is, and why it is here</div>
+      <div class="card-sub">
+        Five simulators are under test. The sixth entry is not a simulator at
+        all but the experimental control, and reading it as a competitor would
+        misread the whole study — so it is described here in full.
+      </div>
+      <div class="explain-grid" id="explainGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Research gaps this benchmark addresses</div>
+      <div class="card-sub">Each gap maps to one research question and one objective.</div>
+      <div class="gap-grid">
+        {% for g in gaps %}
+        <div class="gap-item">
+          <span class="gap-num">{{ g.n }}</span>
+          <div class="gap-rq">{{ g.rq }}</div>
+          <div class="gap-title">{{ g.title }}</div>
+          <div class="gap-desc">{{ g.desc }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">What this dashboard does not claim</div>
+      <div class="card-sub">&nbsp;</div>
+      <div class="caveat" style="margin-top:0">
+        <strong>The energy figure is a proxy, not a measurement.</strong> It is
+        runtime &times; CPU utilisation &times; a configured TDP value, and is
+        comparable only within this machine and this session. It is not joules
+        at the wall socket.
+      </div>
+      <div class="caveat">
+        <strong>The simulators are not solving identical problems.</strong> The
+        tensor-based libraries run a discrete recurrence; the simulators
+        integrate an ODE. The equivalence view bounds how far apart that lets
+        the answers drift, but a runtime advantage is partly a cheaper problem,
+        not purely better engineering.
+      </div>
+      <div class="caveat">
+        <strong>One hardware platform, by design.</strong> Holding the machine
+        fixed is what allows a difference in runtime to be attributed to a
+        difference in the simulator rather than to the hardware it happened to
+        run on — that control is the basis of the comparison. The consequence
+        is that absolute timings are specific to this platform; what carries
+        across is the ordering, and the Sensitivity view reports how far even
+        that holds. Running the same harness on GPU hardware is identified in
+        the thesis as the next extension of this work.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  {{ title }}<br>
+  {{ author }} &middot; {{ institution }}<br>
+  {{ meta.counts.runs }} measured runs across {{ meta.counts.conditions }} conditions
+  on {{ meta.counts.snn_backends }} SNN simulator backends (plus {{ meta.counts.controls }} NumPy validation controls) &middot; single hardware platform
+</footer>
+
+<script>
+  window.SNN = {
+    theme: {{ theme | tojson }},
+    frameworks: {{ frameworks | tojson }},
+    backends: {{ backends | tojson }}
+  };
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endif %}
+</body>
+</html>

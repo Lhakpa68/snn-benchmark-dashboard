@@ -1,0 +1,12 @@
+backend                      s/epoch    CPU %   peak MB   energy J   acc %   cpu_s/wall_s
+brian2/cpp_standalone          59.54     99.9       647   3270.292   12.00   118.9/119.1
+brian2/cython                  52.87     99.8       644   2903.367   11.00   105.6/105.8
+brian2/numpy                   59.89     99.9       647   3288.832   11.00   119.6/119.8
+nengo/reference                 4.29   2945.0       718   6952.266   74.00   126.4/4.3
+nest/threads1                   7.92     99.7       473    434.419   10.00   15.8/15.8
+nest/threads2                   4.46    182.1       474    446.320   10.00   16.2/8.9
+nest/threads4                   2.70    316.3       478    469.660   10.00   17.1/5.4
+snntorch/cpu                    1.14     36.4       882     22.911   22.00   0.8/2.3
+spikingjelly/cpu                0.88     46.0       892     22.312   66.00   0.8/1.8
+
+SMOKE TEST PASS: every training row carries utilisation, peak memory and an energy proxy, and the figures are plausible.

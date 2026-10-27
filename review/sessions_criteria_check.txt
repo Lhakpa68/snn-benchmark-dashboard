@@ -1,0 +1,8 @@
+SESSION CRITERIA CHECK (scalability/simulate rows; run groups A=3dd09b61bd76-fb679a, B=3dd09b61bd76-0077ae)
+Loader check: independent session-A loader + own OLS fit == dashboard get_scalability_series() (medians, memory, k, R2): OK
+Session A: 11 series; runtime median + peak RSS present at all 5 sizes for: 11 ; k refittable (>=3 sizes) for: 11
+Session B: 11 series; runtime median + peak RSS present at all 5 sizes for: 11 ; k refittable (>=3 sizes) for: 11
+A vs B runtime median: max relative difference 41.7% at ('spikingjelly/cpu', 100) ; median 5.7%
+A vs B memory growth: max absolute difference 6.3 MB at ('nest/threads2', 10000)
+Accuracy: measured in the training groups only (one run per condition, shared by both sessions) -> HELD CONSTANT across sessions; accuracy-bearing profiles are re-scored per session only for runtime/memory/scalability.
+Not available per session: nothing else is held constant; runtime, peak RSS and k (refit from that session's five sizes) all exist in both.

@@ -1,0 +1,23 @@
+change,profile,N,backend,role,runtime_ms,memory_growth_mb,k,R2,accuracy_pct,score_minmax,score_share,score_minmax_without_scalability,score_share_without_scalability,tied_set_without_scalability
+normalisation,Accuracy + speed*,100,nengo/reference,min-max winner,4.456,0.0,1.5444,0.948,85.44,0.17075,0.02259,n/a,n/a,
+normalisation,Accuracy + speed*,100,spikingjelly/cpu,share winner,9.1499,0.0,0.9598,0.923,97.46,0.18658,0.01763,n/a,n/a,
+normalisation,Balanced,100,nest/threads4,min-max winner,1.8223,0.0,1.1335,0.984,not in profile,0.24382,0.05687,0.0,0.00298,
+normalisation,Balanced,100,spikingjelly/cpu,share winner,9.1499,0.0,0.9598,0.923,not in profile,0.33036,0.05645,0.18658,0.01496,
+normalisation,Balanced,5000,brian2/numpy,min-max winner,142.1147,6.473,0.0173,0.869,not in profile,0.04447,0.02273,0.0657,0.03284,
+normalisation,Balanced,5000,brian2/cython,share winner,147.3146,2.109,0.0142,0.454,not in profile,0.04528,0.02255,0.06792,0.03278,
+normalisation,Speed + memory,5000,brian2/numpy,min-max winner,142.1147,6.473,0.0173,0.869,not in profile,0.0657,0.03284,n/a,n/a,
+normalisation,Speed + memory,5000,brian2/cython,share winner,147.3146,2.109,0.0142,0.454,not in profile,0.06792,0.03278,n/a,n/a,
+scalability removal,Memory + scaling,100,brian2/cython,min-max winner,137.621,0.0,0.0142,0.454,not in profile,0.0,0.00103,0.0,0.0,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython
+scalability removal,Memory + scaling,100,nest/threads4,winner without scalability (tie-break pick),1.8223,0.0,1.1335,0.984,not in profile,0.36572,0.08232,0.0,0.0,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython
+scalability removal,Memory + scaling,500,brian2/cython,min-max winner,148.3041,0.0,0.0142,0.454,not in profile,0.0,0.00103,0.0,0.0,snntorch/cpu|brian2/cython
+scalability removal,Memory + scaling,500,snntorch/cpu,winner without scalability (tie-break pick),15.7015,0.0,0.9212,0.862,not in profile,0.29634,0.0669,0.0,0.0,snntorch/cpu|brian2/cython
+scalability removal,Scaling + accuracy*,100,snntorch/cpu,min-max winner,12.4261,0.0,0.9212,0.862,97.24,0.29758,0.0698,0.00247,0.0058,
+scalability removal,Scaling + accuracy*,100,spikingjelly/cpu,winner without scalability (tie-break pick),9.1499,0.0,0.9598,0.923,97.46,0.30897,0.07238,0.0,0.00534,
+scalability removal,Scaling + accuracy*,500,snntorch/cpu,min-max winner,15.7015,0.0,0.9212,0.862,97.24,0.29758,0.0698,0.00247,0.0058,
+scalability removal,Scaling + accuracy*,500,spikingjelly/cpu,winner without scalability (tie-break pick),20.4024,0.652,0.9598,0.923,97.46,0.30897,0.07238,0.0,0.00534,
+scalability removal,Scaling + accuracy*,1000,snntorch/cpu,min-max winner,22.4264,0.062,0.9212,0.862,97.24,0.29758,0.0698,0.00247,0.0058,
+scalability removal,Scaling + accuracy*,1000,spikingjelly/cpu,winner without scalability (tie-break pick),25.633,0.723,0.9598,0.923,97.46,0.30897,0.07238,0.0,0.00534,
+scalability removal,Scaling + accuracy*,5000,snntorch/cpu,min-max winner,205.856,95.434,0.9212,0.862,97.24,0.29758,0.0698,0.00247,0.0058,
+scalability removal,Scaling + accuracy*,5000,spikingjelly/cpu,winner without scalability (tie-break pick),211.1863,96.516,0.9598,0.923,97.46,0.30897,0.07238,0.0,0.00534,
+scalability removal,Scaling + accuracy*,10000,snntorch/cpu,min-max winner,772.0038,381.535,0.9212,0.862,97.24,0.29758,0.0698,0.00247,0.0058,
+scalability removal,Scaling + accuracy*,10000,spikingjelly/cpu,winner without scalability (tie-break pick),764.225,383.145,0.9598,0.923,97.46,0.30897,0.07238,0.0,0.00534,

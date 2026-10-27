@@ -1,0 +1,40 @@
+# NOT auto-installed by PyCharm, on purpose.
+#
+# PyCharm offers to install any file named exactly `requirements.txt` the moment
+# you open a project. On a Python 3.14 interpreter that offer is a trap: neither
+# nest-simulator nor norse publishes a cp314 wheel, so pip falls back to building
+# both from source. That needs CMake, GSL and a full C++ toolchain, takes a very
+# long time, and usually fails. This file is named differently so the offer never
+# appears and you install deliberately instead.
+#
+#     python -m pip install -r requirements-frameworks.txt
+#
+# USE PYTHON 3.11 OR 3.12. Every framework below ships prebuilt wheels for those
+# versions. On 3.13 and newer several do not, and pip will try to compile them.
+#
+# Better still: you already have a working environment. See PYCHARM.md.
+
+# Required. Nothing is measured without these two.
+numpy<2.0
+psutil
+
+# Used by the analysis for exact permutation tests and the regression fits.
+# The suite falls back to a slower NumPy path if it is absent.
+scipy
+
+# Frameworks under test. Any that will not install is recorded as a skip with a
+# stated reason, so a partial install still produces a valid, smaller experiment.
+brian2
+nengo
+snntorch
+torch
+spikingjelly
+
+# These two build from source on any interpreter without a matching wheel.
+# Install them last, and expect them to be slow.
+nest-simulator
+norse
+
+# Only needed if results/mnist_784.npz is missing. It is not: a copy is already
+# there, so the training experiment needs no network access.
+# scikit-learn

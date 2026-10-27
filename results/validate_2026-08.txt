@@ -1,0 +1,12 @@
+  framework/backend            status             rate Hz    ref Hz
+  brian2/numpy                 pass                 109.6     107.0
+  brian2/cython                pass                 109.6     107.0
+  brian2/cpp_standalone        pass                  99.4     107.0
+  nest/threads1                pass                 104.6     107.0
+  nest/threads2                pass                 101.8     107.0
+  nest/threads4                pass                  90.0     107.0
+  nengo/reference              pass                 107.4     107.0
+  snntorch/cpu                 pass                 107.4     107.0
+  spikingjelly/cpu             pass                 107.4     107.0
+  reference/vectorised         pass                 107.0     107.0
+  reference/scalar             pass                 107.0     107.0

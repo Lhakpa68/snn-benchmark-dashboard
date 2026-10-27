@@ -1,0 +1,29 @@
+=== python environment inventory ===
+when : 2026-09-10T19:50:06+10:00
+host : lt_68@LT68
+
+stopping the campaign that is currently running:
+   2286 bash -c    cd '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison'   echo '=== environment check ==='   '/home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11' run.py check   echo   echo '=== full benchmark: inference + scalability + training ==='   echo 'training preset: full  (60,000 train / 10,000 test / 10 epochs / hidden 500)'   echo "started $(date -Is)"   echo   '/home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11' run.py bench   echo   echo '=== equivalence validation ==='   '/home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11' run.py validate > '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/validate.txt' 2>&1   cat '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/validate.txt'   echo   echo '=== CAMPAIGN COMPLETE ==='   echo "finished $(date -Is)"   cp -f '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/benchmarks.db'   '/mnt/d/MIT College/Last Edition/full_run_output/benchmarks.db'   2>/dev/null   cp -f '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/validate.txt'    '/mnt/d/MIT College/Last Edition/full_run_output/validate.txt'    2>/dev/null   cp -f '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/conditions.csv'  '/mnt/d/MIT College/Last Edition/full_run_output/conditions.csv'  2>/dev/null   cp -f '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/results/runs.csv'        '/mnt/d/MIT College/Last Edition/full_run_output/runs.csv'        2>/dev/null   cp -f '/home/lt_68/snn_full_run/Full-Scale Simulator Comparison/full_run.log' '/mnt/d/MIT College/Last Edition/full_run_output/full_run.log' 2>/dev/null   echo done > '/mnt/d/MIT College/Last Edition/full_run_output/FINISHED.txt'   kill 2285 2>/dev/null 
+   2326 /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11 run.py bench
+stopped.
+
+moved the partial database aside: benchmarks_aborted_20260910_195009.db
+(so the real campaign starts from an empty database, with no rows
+ measured under a different set of package versions)
+
+searching for python interpreters ...
+3 distinct interpreters found.
+
+TARGET (what the existing results were measured with):
+  numpy 2.4.6 | scipy 1.17.1 | brian2 2.9.0 | nest 3.10.0 | nengo 4.1.0 | snntorch 1.0.0 | spikingjelly present
+
+interpreter                                                              python    numpy    scipy    brian2   nest     nengo    snntorch spikingjelly psutil  
+------------------------------------------------------------------------------------------------------------------------------------------------------
+/opt/az/bin/python3.14                                                   3.14.5    -        -        -        -        -        -        -        6.1.0      [0/5 sims]
+/usr/bin/python3.11                                                      3.11.15   -        -        -        -        -        -        -        7.2.2      [0/5 sims]
+/usr/bin/python3                                                         3.14.4    -        -        -        -        -        -        -        -          [0/5 sims]
+
+=== end of inventory - nothing was launched ===
+
+Report written to:
+  /mnt/d/MIT College/Last Edition/full_run_output/environment_report.txt

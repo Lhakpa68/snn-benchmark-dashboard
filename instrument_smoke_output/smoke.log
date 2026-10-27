@@ -1,0 +1,1340 @@
+=== training-instrument smoke test ===
+started 2026-09-21T10:52:10+10:00
+
+--- 1. processor-clock self-test ---
+python 3.11.15 | process_time clock: clock_gettime(CLOCK_PROCESS_CPUTIME_ID) | cores: 32
+{"load": "spin 1 ms (true 100 %)", "true_pct": 100, "wall_ms": 1.0, "A_aug_sampler": {"median": 0.0, "min": 0.0, "max": 100.0}, "B_sep_cpu_times": {"median": 0.0, "min": 0.0, "max": 999.5}, "C_current": {"median": 100.3, "min": 100.2, "max": 101.5}, "A_runs_with_no_sample_(stored_as_100)": 2}
+{"load": "spin 10 ms (true 100 %)", "true_pct": 100, "wall_ms": 10.0, "A_aug_sampler": {"median": 49.0, "min": 0.0, "max": 372.8}, "B_sep_cpu_times": {"median": 100.0, "min": 99.4, "max": 100.0}, "C_current": {"median": 100.3, "min": 100.1, "max": 100.6}, "A_runs_with_no_sample_(stored_as_100)": 2}
+{"load": "spin 100 ms (true 100 %)", "true_pct": 100, "wall_ms": 100.0, "A_aug_sampler": {"median": 92.2, "min": 83.0, "max": 114.2}, "B_sep_cpu_times": {"median": 100.0, "min": 100.0, "max": 100.0}, "C_current": {"median": 100.4, "min": 100.3, "max": 100.6}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "sleep 10 ms (true ~0 %)", "true_pct": 0, "wall_ms": 10.18, "A_aug_sampler": {"median": 0.0, "min": 0.0, "max": 0.0}, "B_sep_cpu_times": {"median": 0.0, "min": 0.0, "max": 97.7}, "C_current": {"median": 1.6, "min": 1.0, "max": 5.1}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "native code holding the GIL (true 100 %)", "true_pct": 100, "wall_ms": 93.92, "A_aug_sampler": {"median": 55.4, "min": 9.4, "max": 139454.5}, "B_sep_cpu_times": {"median": 102.6, "min": 88.1, "max": 107.0}, "C_current": {"median": 100.5, "min": 100.4, "max": 100.9}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "sleep", "region_ms": 1.0, "median_pct": 1.7821407397205578, "min_pct": 0.6810733236477358, "max_pct": 3.6609046252134347, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 1.0, "median_pct": 100.1686619990491, "min_pct": 100.11654545099799, "max_pct": 100.53032801013475, "expected": "90-110", "passed": true}
+{"load": "sleep", "region_ms": 10.0, "median_pct": 0.6466932068293194, "min_pct": 0.41695966404145973, "max_pct": 1.4797098956395764, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 10.0, "median_pct": 100.05198959890404, "min_pct": 100.0148687830579, "max_pct": 100.18795893228487, "expected": "90-110", "passed": true}
+{"load": "sleep", "region_ms": 100.0, "median_pct": 0.08143551523254705, "min_pct": 0.05012941407108642, "max_pct": 0.3209107111465182, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 100.0, "median_pct": 100.00805565885051, "min_pct": 99.97116878309009, "max_pct": 100.02576092566854, "expected": "90-110", "passed": true}
+{"load": "2 threads, GIL released", "region_ms": 100.0, "median_pct": 195.83676287480986, "min_pct": 184.38856342709354, "max_pct": 199.18736089661698, "expected": "150-210", "passed": true}
+{"load": "measure(): spin 5 ms", "region_ms": 5.0, "median_pct": 100.17403535775175, "min_pct": 100.14177673028652, "max_pct": 100.55005138626504, "expected": "90-110", "passed": true}
+{"load": "transient 200 MB allocation", "region_ms": 201.66843896731734, "peak_above_start_mb": 199.65625, "expected": ">=180 MB", "passed": true}
+{"load": "child process spin 0.3 s", "region_ms": 300.0, "median_pct": 100.01563185000165, "min_pct": 98.96492551593303, "max_pct": 100.03344361206824, "expected": "80-130", "passed": true}
+SELFTEST PASS
+
+--- 2. the three fast simulators ---
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-13a103
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Nengo (4.1.0) ===
+  Nengo / reference simulator: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 4.29 s/epoch, 74.00% accuracy, 2945.0% CPU, 718 MB peak (5s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+1 individual runs, 1 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-3f143c
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== snnTorch (1.0.0 (torch 2.13.0+cu130)) ===
+  snnTorch / CPU tensors: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 1.14 s/epoch, 22.00% accuracy, 36.4% CPU, 882 MB peak (4s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+2 individual runs, 2 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c5f208
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== SpikingJelly (present (torch 2.13.0+cu130)) ===
+  SpikingJelly / CPU tensors: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 0.88 s/epoch, 66.00% accuracy, 46.0% CPU, 892 MB peak (4s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+3 individual runs, 3 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+--- 3. NEST, across the subprocess boundary, all thread counts ---
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-f5f11a
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== NEST (3.10.0) ===
+  NEST / 1 thread: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 7.92 s/epoch, 10.00% accuracy, 99.7% CPU, 473 MB peak (22s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+4 individual runs, 4 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-b8bd76
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== NEST (3.10.0) ===
+  NEST / 2 threads: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 4.46 s/epoch, 10.00% accuracy, 182.1% CPU, 474 MB peak (14s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+5 individual runs, 5 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-639f58
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== NEST (3.10.0) ===
+  NEST / 4 threads: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 2.70 s/epoch, 10.00% accuracy, 316.3% CPU, 478 MB peak (10s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+--- 4. Brian2, deliberately chopped into 20 s chunks ---
+  == brian2/cython
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-f1831e
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 87/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-ec5364
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 175/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-1b8e5e
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 269/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-0f0152
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 62/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-4d04e1
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 151/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-3e6ea2
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 244/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c8338d
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 33/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-44da2d
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 121/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-648786
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 208/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-d125a3
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 297/300; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-a91323
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] test readout, sample 90/100; checkpoint saved to ckpt_brian2_cython.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+6 individual runs, 6 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-dd2b9a
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / Cython: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 52.87 s/epoch, 11.00% accuracy, 99.8% CPU, 644 MB peak (3s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+     finished after 12 chunk(s)
+  == brian2/numpy
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-fc622f
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 79/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-4c31c6
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 157/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c2ec92
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 236/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-9e5ebd
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 13/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-5c92db
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 92/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-7a0df7
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 176/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-6b5000
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 254/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-3d124a
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 34/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-756903
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 114/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c870b8
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 192/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-d70486
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 271/300; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-445686
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] test readout, sample 54/100; checkpoint saved to ckpt_brian2_numpy.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+7 individual runs, 7 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-665583
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 59.89 s/epoch, 11.00% accuracy, 99.9% CPU, 647 MB peak (10s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+     finished after 13 chunk(s)
+  == brian2/cpp_standalone
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-f6cc62
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 80/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c6c8e6
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 159/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-288650
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 1/2, sample 239/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-b1df5a
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 23/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-da15eb
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 102/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-2317ac
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 178/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-d25bc3
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] epoch 2/2, sample 257/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-0483be
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 55/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-c15c44
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 167/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-55063f
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] train readout, sample 277/300; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-4f7efa
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    [in progress] test readout, sample 87/100; checkpoint saved to ckpt_brian2_cpp_standalone.pkl, rerun to continue
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+8 individual runs, 8 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-bca9d5
+protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / C++ standalone: training [smoke] hidden=100 train=300 epochs=2 ...
+    -> 59.54 s/epoch, 12.00% accuracy, 99.9% CPU, 647 MB peak (3s total)
+
+--- export ---
+  wrote /home/lt_68/snn_smoke_instruments/results/runs.csv
+  wrote /home/lt_68/snn_smoke_instruments/results/conditions.csv
+
+9 individual runs, 9 conditions stored in /home/lt_68/snn_smoke_instruments/results/benchmarks.db
+     finished after 12 chunk(s)
+
+--- 5. what was recorded ---
+backend                      s/epoch    CPU %   peak MB   energy J   acc %   cpu_s/wall_s
+brian2/cpp_standalone          59.54     99.9       647   3270.292   12.00   118.9/119.1
+brian2/cython                  52.87     99.8       644   2903.367   11.00   105.6/105.8
+brian2/numpy                   59.89     99.9       647   3288.832   11.00   119.6/119.8
+nengo/reference                 4.29   2945.0       718   6952.266   74.00   126.4/4.3
+nest/threads1                   7.92     99.7       473    434.419   10.00   15.8/15.8
+nest/threads2                   4.46    182.1       474    446.320   10.00   16.2/8.9
+nest/threads4                   2.70    316.3       478    469.660   10.00   17.1/5.4
+snntorch/cpu                    1.14     36.4       882     22.911   22.00   0.8/2.3
+spikingjelly/cpu                0.88     46.0       892     22.312   66.00   0.8/1.8
+
+SMOKE TEST PASS: every training row carries utilisation, peak memory and an energy proxy, and the figures are plausible.
+
+finished 2026-09-21T11:05:49+10:00
+DONE - you can close this window.

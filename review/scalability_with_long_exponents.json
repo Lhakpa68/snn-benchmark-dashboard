@@ -1,0 +1,786 @@
+{
+ "10ms": {
+  "100": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": null,
+    "scalable": "brian2/cython",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "nest/threads4",
+    "speed_mem": "nest/threads4",
+    "mem_scal": "brian2/cython",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "nengo/reference"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.8603753037627163,
+     "nengo": 0.10881618089417475,
+     "spikingjelly": 0.020611721191269042,
+     "snntorch": 0.010156524366273097,
+     "brian2": 4.0269785566838186e-05
+    },
+    "lowmem": {
+     "nest": 0.2,
+     "nengo": 0.2,
+     "spikingjelly": 0.2,
+     "snntorch": 0.2,
+     "brian2": 0.2
+    },
+    "scalable": {
+     "brian2": 0.994579697001641,
+     "snntorch": 0.0026523696536443512,
+     "spikingjelly": 0.0020605675399468187,
+     "nest": 0.0006622119563808417,
+     "nengo": 4.515384838706797e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "nest": 0.417103171745239,
+     "spikingjelly": 0.17554247297328288,
+     "brian2": 0.1709936687143766,
+     "snntorch": 0.150825542525431,
+     "nengo": 0.08553514404167072
+    },
+    "speed_mem": {
+     "nest": 0.615042419038011,
+     "nengo": 0.2187297424471919,
+     "spikingjelly": 0.09519589722663602,
+     "snntorch": 0.0668241832300961,
+     "brian2": 0.004207758058064947
+    },
+    "mem_scal": {
+     "brian2": 0.8851909462354124,
+     "snntorch": 0.04571241794493509,
+     "spikingjelly": 0.04029123649537472,
+     "nest": 0.022841029644473317,
+     "nengo": 0.0059643696798045214
+    },
+    "scal_acc": {
+     "snntorch": 0.4748900641750341,
+     "spikingjelly": 0.42376387764782186,
+     "brian2": 0.0677363055251226,
+     "nengo": 0.03198381578469184,
+     "nest": 0.00162593686732965
+    },
+    "acc_speed": {
+     "nengo": 0.40272754886397233,
+     "spikingjelly": 0.3437710854664129,
+     "snntorch": 0.23835832468816787,
+     "nest": 0.015032487333304092,
+     "brian2": 0.00011055364814299412
+    }
+   }
+  },
+  "500": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "snntorch/cpu",
+    "scalable": "brian2/cython",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "snntorch/cpu",
+    "speed_mem": "snntorch/cpu",
+    "mem_scal": "brian2/cython",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7478940377125517,
+     "nengo": 0.15474102041513768,
+     "snntorch": 0.06895611828065355,
+     "spikingjelly": 0.02836598448415236,
+     "brian2": 4.283910750471242e-05
+    },
+    "lowmem": {
+     "snntorch": 0.34760381466987744,
+     "brian2": 0.34760381466987744,
+     "spikingjelly": 0.28612382538168696,
+     "nengo": 0.018646443712166727,
+     "nest": 2.2101566391427812e-05
+    },
+    "scalable": {
+     "brian2": 0.994579697001641,
+     "snntorch": 0.0026523696536443512,
+     "spikingjelly": 0.0020605675399468187,
+     "nest": 0.0006622119563808417,
+     "nengo": 4.515384838706797e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "snntorch": 0.41726395556769474,
+     "spikingjelly": 0.2673580838608125,
+     "brian2": 0.24124945211478824,
+     "nengo": 0.05300040087816779,
+     "nest": 0.021128107578536722
+    },
+    "speed_mem": {
+     "snntorch": 0.5064007373290205,
+     "spikingjelly": 0.29467385274156666,
+     "nengo": 0.17569782889315821,
+     "nest": 0.011614781565917514,
+     "brian2": 0.011612799470337155
+    },
+    "mem_scal": {
+     "brian2": 0.9134965593142017,
+     "snntorch": 0.047174156816924336,
+     "spikingjelly": 0.03772378775573842,
+     "nengo": 0.0014255755780926156,
+     "nest": 0.00017992053504297482
+    },
+    "scal_acc": {
+     "snntorch": 0.4748900641750341,
+     "spikingjelly": 0.42376387764782186,
+     "brian2": 0.0677363055251226,
+     "nengo": 0.03198381578469184,
+     "nest": 0.00162593686732965
+    },
+    "acc_speed": {
+     "snntorch": 0.4089414187503353,
+     "nengo": 0.31621630294189146,
+     "spikingjelly": 0.2655388534935808,
+     "nest": 0.009228345455130745,
+     "brian2": 7.507935906180677e-05
+    }
+   }
+  },
+  "1000": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/cython",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "snntorch/cpu",
+    "speed_mem": "snntorch/cpu",
+    "mem_scal": "brian2/cython",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7735409330877235,
+     "snntorch": 0.14080942036752644,
+     "spikingjelly": 0.08545731884149724,
+     "brian2": 0.00015720899922216607,
+     "nengo": 3.5118704030589643e-05
+    },
+    "lowmem": {
+     "brian2": 0.34420510566560536,
+     "snntorch": 0.34138290073046956,
+     "spikingjelly": 0.31295009194761036,
+     "nengo": 0.0014386772013000187,
+     "nest": 2.3224455014686706e-05
+    },
+    "scalable": {
+     "brian2": 0.994579697001641,
+     "snntorch": 0.0026523696536443512,
+     "spikingjelly": 0.0020605675399468187,
+     "nest": 0.0006622119563808417,
+     "nengo": 4.515384838706797e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "snntorch": 0.3923752672688976,
+     "spikingjelly": 0.2966671887889119,
+     "brian2": 0.2943363384124372,
+     "nest": 0.015594928393518824,
+     "nengo": 0.0010262771362345346
+    },
+    "speed_mem": {
+     "snntorch": 0.5566919914786641,
+     "spikingjelly": 0.4152316120050046,
+     "brian2": 0.018677794449191206,
+     "nest": 0.008827874096479277,
+     "nengo": 0.0005707279706608287
+    },
+    "mem_scal": {
+     "brian2": 0.9128544608075008,
+     "snntorch": 0.046947341107568596,
+     "spikingjelly": 0.03961905041598845,
+     "nengo": 0.00039765107360096403,
+     "nest": 0.00018149659534120966
+    },
+    "scal_acc": {
+     "snntorch": 0.4748900641750341,
+     "spikingjelly": 0.42376387764782186,
+     "brian2": 0.0677363055251226,
+     "nengo": 0.03198381578469184,
+     "nest": 0.00162593686732965
+    },
+    "acc_speed": {
+     "snntorch": 0.5515230315421791,
+     "spikingjelly": 0.43498760139273424,
+     "nest": 0.008857650896033844,
+     "nengo": 0.004495974822737911,
+     "brian2": 0.00013574134631493716
+    }
+   }
+  },
+  "5000": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/cython",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "brian2/numpy",
+    "speed_mem": "brian2/numpy",
+    "mem_scal": "brian2/cython",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7038840692196358,
+     "brian2": 0.2099732740605308,
+     "snntorch": 0.045330077674147054,
+     "spikingjelly": 0.04078062275838285,
+     "nengo": 3.195628730350349e-05
+    },
+    "lowmem": {
+     "brian2": 0.825179876213103,
+     "snntorch": 0.08848925411421261,
+     "spikingjelly": 0.08622793865386696,
+     "nest": 6.546791039588089e-05,
+     "nengo": 3.7463108421490824e-05
+    },
+    "scalable": {
+     "brian2": 0.994579697001641,
+     "snntorch": 0.0026523696536443512,
+     "spikingjelly": 0.0020605675399468187,
+     "nest": 0.0006622119563808417,
+     "nengo": 4.515384838706797e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "brian2": 0.9236571648686798,
+     "snntorch": 0.03805254023435166,
+     "spikingjelly": 0.033479287619977025,
+     "nest": 0.004745589125222612,
+     "nengo": 6.54181517690819e-05
+    },
+    "speed_mem": {
+     "brian2": 0.7549353131057068,
+     "snntorch": 0.12102068762800591,
+     "spikingjelly": 0.11331099319117262,
+     "nest": 0.010666890895743407,
+     "nengo": 6.611517937130202e-05
+    },
+    "mem_scal": {
+     "brian2": 0.9691003881350485,
+     "snntorch": 0.01638841492897139,
+     "spikingjelly": 0.014259099113747354,
+     "nest": 0.0002081007326785983,
+     "nengo": 4.3997089554128015e-05
+    },
+    "scal_acc": {
+     "snntorch": 0.4748900641750341,
+     "spikingjelly": 0.42376387764782186,
+     "brian2": 0.0677363055251226,
+     "nengo": 0.03198381578469184,
+     "nest": 0.00162593686732965
+    },
+    "acc_speed": {
+     "snntorch": 0.4958304662556255,
+     "spikingjelly": 0.47612540216159105,
+     "nest": 0.013388121855581256,
+     "brian2": 0.007860454168177787,
+     "nengo": 0.00679555555902443
+    }
+   }
+  },
+  "10000": {
+   "winners": {
+    "fast": "brian2/cython",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/cython",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "brian2/cython",
+    "speed_mem": "brian2/cython",
+    "mem_scal": "brian2/cython",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "spikingjelly/cpu"
+   },
+   "prio": {
+    "fast": {
+     "brian2": 0.9184767061003333,
+     "nest": 0.06825594461162732,
+     "spikingjelly": 0.006713364011290062,
+     "snntorch": 0.006512286498803726,
+     "nengo": 4.1698777945433576e-05
+    },
+    "lowmem": {
+     "brian2": 0.8426156365651136,
+     "snntorch": 0.0764715277468592,
+     "spikingjelly": 0.07568488293143791,
+     "nest": 0.005189698065872409,
+     "nengo": 3.825469071682762e-05
+    },
+    "scalable": {
+     "brian2": 0.994579697001641,
+     "snntorch": 0.0026523696536443512,
+     "spikingjelly": 0.0020605675399468187,
+     "nest": 0.0006622119563808417,
+     "nengo": 4.515384838706797e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "brian2": 0.9714470550209708,
+     "snntorch": 0.011630431412979805,
+     "spikingjelly": 0.010763465354775976,
+     "nest": 0.006114944583207367,
+     "nengo": 4.410362806592484e-05
+    },
+    "speed_mem": {
+     "brian2": 0.9342393120532639,
+     "spikingjelly": 0.02393778586059873,
+     "snntorch": 0.023698777326198826,
+     "nest": 0.018081710360790103,
+     "nengo": 4.2414399148570354e-05
+    },
+    "mem_scal": {
+     "brian2": 0.9697234579986698,
+     "snntorch": 0.015086213800326325,
+     "spikingjelly": 0.013228522748784995,
+     "nest": 0.0019177800753366573,
+     "nengo": 4.402537688217354e-05
+    },
+    "scal_acc": {
+     "snntorch": 0.4748900641750341,
+     "spikingjelly": 0.42376387764782186,
+     "brian2": 0.0677363055251226,
+     "nengo": 0.03198381578469184,
+     "nest": 0.00162593686732965
+    },
+    "acc_speed": {
+     "spikingjelly": 0.47176327799038464,
+     "snntorch": 0.45895101505999575,
+     "brian2": 0.040147574403725884,
+     "nengo": 0.018956933271991497,
+     "nest": 0.010181199273902162
+    }
+   }
+  }
+ },
+ "1s": {
+  "100": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": null,
+    "scalable": "brian2/numpy",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "nest/threads2",
+    "speed_mem": "nest/threads4",
+    "mem_scal": "brian2/numpy",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "nengo/reference"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.8603753037627163,
+     "nengo": 0.10881618089417475,
+     "spikingjelly": 0.020611721191269042,
+     "snntorch": 0.010156524366273097,
+     "brian2": 4.0269785566838186e-05
+    },
+    "lowmem": {
+     "nest": 0.2,
+     "nengo": 0.2,
+     "spikingjelly": 0.2,
+     "snntorch": 0.2,
+     "brian2": 0.2
+    },
+    "scalable": {
+     "brian2": 0.9914715299890425,
+     "snntorch": 0.0060190773053728636,
+     "spikingjelly": 0.0014637276054398486,
+     "nest": 0.001000652362321844,
+     "nengo": 4.501273782300593e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "nest": 0.41438130324103517,
+     "snntorch": 0.18958335289357237,
+     "brian2": 0.1644857866305699,
+     "spikingjelly": 0.14981893149977826,
+     "nengo": 0.08173062573504437
+    },
+    "speed_mem": {
+     "nest": 0.615042419038011,
+     "nengo": 0.2187297424471919,
+     "spikingjelly": 0.09519589722663602,
+     "snntorch": 0.0668241832300961,
+     "brian2": 0.004207758058064947
+    },
+    "mem_scal": {
+     "brian2": 0.8659168014132235,
+     "snntorch": 0.06746849194924949,
+     "spikingjelly": 0.03327102450210933,
+     "nest": 0.02750918062187774,
+     "nengo": 0.005834501513539915
+    },
+    "scal_acc": {
+     "snntorch": 0.6093071314521206,
+     "spikingjelly": 0.3041976686384041,
+     "brian2": 0.057601935636844036,
+     "nengo": 0.027198555988076394,
+     "nest": 0.0016947082845550428
+    },
+    "acc_speed": {
+     "nengo": 0.40272754886397233,
+     "spikingjelly": 0.3437710854664129,
+     "snntorch": 0.23835832468816787,
+     "nest": 0.015032487333304092,
+     "brian2": 0.00011055364814299412
+    }
+   }
+  },
+  "500": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "snntorch/cpu",
+    "scalable": "brian2/numpy",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "snntorch/cpu",
+    "speed_mem": "snntorch/cpu",
+    "mem_scal": "brian2/numpy",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7478940377125517,
+     "nengo": 0.15474102041513768,
+     "snntorch": 0.06895611828065355,
+     "spikingjelly": 0.02836598448415236,
+     "brian2": 4.283910750471242e-05
+    },
+    "lowmem": {
+     "snntorch": 0.34760381466987744,
+     "brian2": 0.34760381466987744,
+     "spikingjelly": 0.28612382538168696,
+     "nengo": 0.018646443712166727,
+     "nest": 2.2101566391427812e-05
+    },
+    "scalable": {
+     "brian2": 0.9914715299890425,
+     "snntorch": 0.0060190773053728636,
+     "spikingjelly": 0.0014637276054398486,
+     "nest": 0.001000652362321844,
+     "nengo": 4.501273782300593e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "snntorch": 0.4954268205951438,
+     "brian2": 0.21920881844298698,
+     "spikingjelly": 0.21553665709503045,
+     "nengo": 0.047836866834919084,
+     "nest": 0.02199083703191963
+    },
+    "speed_mem": {
+     "snntorch": 0.5064007373290205,
+     "spikingjelly": 0.29467385274156666,
+     "nengo": 0.17569782889315821,
+     "nest": 0.011614781565917514,
+     "brian2": 0.011612799470337155
+    },
+    "mem_scal": {
+     "brian2": 0.8892545508589758,
+     "snntorch": 0.07530817789356,
+     "spikingjelly": 0.03369318414181156,
+     "nengo": 0.001508344812696221,
+     "nest": 0.00023574229295641742
+    },
+    "scal_acc": {
+     "snntorch": 0.6093071314521206,
+     "spikingjelly": 0.3041976686384041,
+     "brian2": 0.057601935636844036,
+     "nengo": 0.027198555988076394,
+     "nest": 0.0016947082845550428
+    },
+    "acc_speed": {
+     "snntorch": 0.4089414187503353,
+     "nengo": 0.31621630294189146,
+     "spikingjelly": 0.2655388534935808,
+     "nest": 0.009228345455130745,
+     "brian2": 7.507935906180677e-05
+    }
+   }
+  },
+  "1000": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/numpy",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "snntorch/cpu",
+    "speed_mem": "snntorch/cpu",
+    "mem_scal": "brian2/numpy",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7735409330877235,
+     "snntorch": 0.14080942036752644,
+     "spikingjelly": 0.08545731884149724,
+     "brian2": 0.00015720899922216607,
+     "nengo": 3.5118704030589643e-05
+    },
+    "lowmem": {
+     "brian2": 0.34420510566560536,
+     "snntorch": 0.34138290073046956,
+     "spikingjelly": 0.31295009194761036,
+     "nengo": 0.0014386772013000187,
+     "nest": 2.3224455014686706e-05
+    },
+    "scalable": {
+     "brian2": 0.9914715299890425,
+     "snntorch": 0.0060190773053728636,
+     "spikingjelly": 0.0014637276054398486,
+     "nest": 0.001000652362321844,
+     "nengo": 4.501273782300593e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "snntorch": 0.4813983666108604,
+     "brian2": 0.25555773977286744,
+     "spikingjelly": 0.24713353631137044,
+     "nest": 0.014953201647264618,
+     "nengo": 0.0009571556576370844
+    },
+    "speed_mem": {
+     "snntorch": 0.5566919914786641,
+     "spikingjelly": 0.4152316120050046,
+     "brian2": 0.018677794449191206,
+     "nest": 0.008827874096479277,
+     "nengo": 0.0005707279706608287
+    },
+    "mem_scal": {
+     "brian2": 0.888710483676175,
+     "snntorch": 0.07514794448931503,
+     "spikingjelly": 0.035481252052637684,
+     "nengo": 0.0004218719577444974,
+     "nest": 0.00023844782412781745
+    },
+    "scal_acc": {
+     "snntorch": 0.6093071314521206,
+     "spikingjelly": 0.3041976686384041,
+     "brian2": 0.057601935636844036,
+     "nengo": 0.027198555988076394,
+     "nest": 0.0016947082845550428
+    },
+    "acc_speed": {
+     "snntorch": 0.5515230315421791,
+     "spikingjelly": 0.43498760139273424,
+     "nest": 0.008857650896033844,
+     "nengo": 0.004495974822737911,
+     "brian2": 0.00013574134631493716
+    }
+   }
+  },
+  "5000": {
+   "winners": {
+    "fast": "nest/threads4",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/numpy",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "brian2/numpy",
+    "speed_mem": "brian2/numpy",
+    "mem_scal": "brian2/numpy",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "snntorch/cpu"
+   },
+   "prio": {
+    "fast": {
+     "nest": 0.7038840692196358,
+     "brian2": 0.2099732740605308,
+     "snntorch": 0.045330077674147054,
+     "spikingjelly": 0.04078062275838285,
+     "nengo": 3.195628730350349e-05
+    },
+    "lowmem": {
+     "brian2": 0.825179876213103,
+     "snntorch": 0.08848925411421261,
+     "spikingjelly": 0.08622793865386696,
+     "nest": 6.546791039588089e-05,
+     "nengo": 3.7463108421490824e-05
+    },
+    "scalable": {
+     "brian2": 0.9914715299890423,
+     "snntorch": 0.006019077305372863,
+     "spikingjelly": 0.0014637276054398484,
+     "nest": 0.0010006523623218438,
+     "nengo": 4.5012737823005914e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "brian2": 0.9161277506806437,
+     "snntorch": 0.04931804435354401,
+     "spikingjelly": 0.029461684945602248,
+     "nest": 0.0050280681695230615,
+     "nengo": 6.445185068695531e-05
+    },
+    "speed_mem": {
+     "brian2": 0.7549353131057068,
+     "snntorch": 0.12102068762800591,
+     "spikingjelly": 0.11331099319117262,
+     "nest": 0.010666890895743407,
+     "nengo": 6.611517937130202e-05
+    },
+    "mem_scal": {
+     "brian2": 0.9612647472337879,
+     "snntorch": 0.025840832816560542,
+     "spikingjelly": 0.012579124407919503,
+     "nest": 0.0002693158666912502,
+     "nengo": 4.597967504062474e-05
+    },
+    "scal_acc": {
+     "snntorch": 0.6093071314521205,
+     "spikingjelly": 0.30419766863840403,
+     "brian2": 0.05760193563684403,
+     "nengo": 0.02719855598807639,
+     "nest": 0.0016947082845550426
+    },
+    "acc_speed": {
+     "snntorch": 0.4958304662556255,
+     "spikingjelly": 0.47612540216159105,
+     "nest": 0.013388121855581256,
+     "brian2": 0.007860454168177787,
+     "nengo": 0.00679555555902443
+    }
+   }
+  },
+  "10000": {
+   "winners": {
+    "fast": "brian2/cython",
+    "lowmem": "brian2/cython",
+    "scalable": "brian2/numpy",
+    "accurate": "spikingjelly/cpu",
+    "balanced": "brian2/numpy",
+    "speed_mem": "brian2/cython",
+    "mem_scal": "brian2/numpy",
+    "scal_acc": "snntorch/cpu",
+    "acc_speed": "spikingjelly/cpu"
+   },
+   "prio": {
+    "fast": {
+     "brian2": 0.9184767061003333,
+     "nest": 0.06825594461162732,
+     "spikingjelly": 0.006713364011290062,
+     "snntorch": 0.006512286498803726,
+     "nengo": 4.1698777945433576e-05
+    },
+    "lowmem": {
+     "brian2": 0.8426156365651136,
+     "snntorch": 0.0764715277468592,
+     "spikingjelly": 0.07568488293143791,
+     "nest": 0.005189698065872409,
+     "nengo": 3.825469071682762e-05
+    },
+    "scalable": {
+     "brian2": 0.9914715299890423,
+     "snntorch": 0.006019077305372863,
+     "spikingjelly": 0.0014637276054398484,
+     "nest": 0.0010006523623218438,
+     "nengo": 4.5012737823005914e-05
+    },
+    "accurate": {
+     "spikingjelly": 0.4472868023586735,
+     "snntorch": 0.43639240780786964,
+     "nengo": 0.11627620546880456,
+     "brian2": 2.36770991140538e-05,
+     "nest": 2.0907265538240086e-05
+    },
+    "balanced": {
+     "brian2": 0.9682439792882627,
+     "snntorch": 0.015437789686950197,
+     "spikingjelly": 0.009700644570679592,
+     "nest": 0.006573084555298394,
+     "nengo": 4.450189880899726e-05
+    },
+    "speed_mem": {
+     "brian2": 0.9342393120532639,
+     "spikingjelly": 0.02393778586059873,
+     "snntorch": 0.023698777326198826,
+     "nest": 0.018081710360790103,
+     "nengo": 4.2414399148570354e-05
+    },
+    "mem_scal": {
+     "brian2": 0.9632754146191609,
+     "snntorch": 0.022997967092024573,
+     "spikingjelly": 0.011282603023898606,
+     "nest": 0.0023995332279834955,
+     "nengo": 4.448203693257111e-05
+    },
+    "scal_acc": {
+     "snntorch": 0.6093071314521205,
+     "spikingjelly": 0.30419766863840403,
+     "brian2": 0.05760193563684403,
+     "nengo": 0.02719855598807639,
+     "nest": 0.0016947082845550426
+    },
+    "acc_speed": {
+     "spikingjelly": 0.47176327799038464,
+     "snntorch": 0.45895101505999575,
+     "brian2": 0.040147574403725884,
+     "nengo": 0.018956933271991497,
+     "nest": 0.010181199273902162
+    }
+   }
+  }
+ }
+}

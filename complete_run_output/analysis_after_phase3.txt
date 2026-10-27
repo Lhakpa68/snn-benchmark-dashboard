@@ -1,0 +1,16 @@
+# Analysis: every number Chapter 4 is written from
+
+Generated from `benchmarks.db`. Single machine, CPU only.
+
+## Measurement machine
+
+| Property | Value |
+|---|---|
+
+## Package versions, captured at run time
+
+| Package | Version |
+|---|---|
+
+
+wrote /home/lt_68/snn_complete_run/Complete Simulator Campaign/results/ANALYSIS.md and analysis.json

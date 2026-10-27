@@ -1,0 +1,28 @@
+=== complete campaign, instrumented training ===
+started : 2026-09-21T11:07:07+10:00
+spec    : 60,000 train / 10,000 test / 10 epochs / hidden 256
+new     : training now measures utilisation, energy proxy and peak memory
+scope   : every experiment, every backend, nothing skipped
+
+nothing was running.
+
+installing the current code into: /home/lt_68/snn_complete_run/Complete Simulator Campaign
+database: will be created fresh (the thesis database is not touched)
+
+LAUNCHED: pid 2893
+
+   0  processor-clock self-test                        < 1 min
+   1  inference + scalability, 11 backends (A)           0.1 h
+   2  inference + scalability, 11 backends (B, repeat)   0.1 h
+   3  training 6,000/3ep, all 9 backends                 4.5 h   <- repeat budget
+   4  training 60,000/10ep, all 9 backends             134   h   <- the thesis budget
+        4a-4f Nengo, SpikingJelly, snnTorch, NEST x3    23   h
+        4g-4i Brian2 Cython, NumPy, C++ standalone     111   h
+      -> everything the thesis reports is measured here: about 5.8 days
+   5  OPTIONAL hidden 500, the CCR-proposed width      ~260   h
+      stop it by creating: /mnt/d/MIT College/Last Edition/SNN Simulator Benchmark - Final/complete_run_output/SKIP_WIDTH_500.txt
+
+Resumable: re-running this launcher skips phases already recorded.
+log     : /home/lt_68/snn_complete_run/Complete Simulator Campaign/complete_run.log
+mirrored: /mnt/d/MIT College/Last Edition/SNN Simulator Benchmark - Final/complete_run_output/complete_run.log  (every 30 s)
+database: /mnt/d/MIT College/Last Edition/SNN Simulator Benchmark - Final/complete_run_output/benchmarks.db  (every 30 s)

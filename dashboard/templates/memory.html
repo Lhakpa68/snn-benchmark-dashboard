@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Peak memory against network size</div>
+    <div class="card-sub">Where a line is flat, the footprint is interpreter and imports rather than the network. Where it climbs, the simulator is genuinely allocating per neuron.</div>
+    <div class="chart-wrap"><canvas id="memScaleChart" height="230"></canvas></div>
+    <div class="fig-table" id="memScaleChartTable"></div>
+    <div class="chart-result" id="memScaleResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Memory attributable to the network</div>
+    <div class="card-sub">Growth from the smallest to the largest size, divided by neuron count.</div>
+    <div class="chart-wrap"><canvas id="perNeuronChart" height="230"></canvas></div>
+    <div class="fig-table" id="perNeuronChartTable"></div>
+    <div class="chart-result" id="perNeuronResult"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Repeatability of the quoted medians</div>
+  <div class="card-sub">
+    Every individual measured run behind the inference figure. A median
+    with five tight runs behind it and a median with five scattered ones
+    are not the same claim, and the difference is invisible in a bar chart.
+  </div>
+  <div class="chart-wrap"><canvas id="spreadChart" height="220"></canvas></div>
+    <div class="fig-table" id="spreadChartTable"></div>
+  <div class="chart-result" id="spreadResult"></div>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Full memory and repeatability tables</summary>
+  <div class="disclosure-card-body">
+    <div class="card-title" style="font-size:13.5px">Memory summary</div>
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>Backend</th><th class="num">Smallest N (MB)</th><th class="num">Largest N (MB)</th>
+        <th class="num">Growth (MB)</th><th class="num">KB / neuron</th>
+      </tr></thead>
+      <tbody id="memTable"></tbody>
+    </table></div>
+    <div style="margin:13px 0 22px"><a class="action" href="/api/export/memory.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+
+    <div class="card-title" style="font-size:13.5px">Run-by-run spread</div>
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>Backend</th><th class="num">Runs</th><th class="num">Median (s)</th>
+        <th class="num">Min (s)</th><th class="num">Max (s)</th><th class="num">CV %</th>
+      </tr></thead>
+      <tbody id="spreadTable"></tbody>
+    </table></div>
+  </div>
+</details>
+{% endblock %}

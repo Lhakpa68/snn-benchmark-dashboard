@@ -1,0 +1,41 @@
+WARNING    /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/lib/python3.11/site-packages/nest/lib/hl_api_helper.py:111: UserWarning:
+Provided for backward compatibility only. Set `nest.verbosity = nest.VerbosityLevel.XYZ` instead.
+ [py.warnings]
+WARNING    /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/lib/python3.11/site-packages/nest/lib/hl_api_helper.py:111: UserWarning:
+GetStatus() is deprecated and will be removed in a future version of NEST. Instead of GetStatus(nrns|conns, args), use nrns|conns.get(args).
+ [py.warnings]
+WARNING    /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/lib/python3.11/site-packages/nengo/neurons.py:597: RuntimeWarning:divide by zero encountered in log1p
+ [py.warnings]
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+Equivalence validation at N=500, tolerance 35% of the reference firing rate
+
+  simulator/backend              status             rate Hz    ref Hz     rel
+  brian2/numpy                   pass                 109.6     107.0   0.024
+  brian2/cython                  pass                 109.6     107.0   0.024
+  brian2/cpp_standalone          pass                 106.0     107.0   0.009
+  nest/threads1                  pass                 104.6     107.0   0.022
+  nest/threads2                  pass                 101.8     107.0   0.049
+  nest/threads4                  pass                  90.0     107.0   0.159
+  nengo/reference                pass                 107.4     107.0   0.004
+  snntorch/cpu                   pass                 107.4     107.0   0.004
+  spikingjelly/cpu               pass                 107.4     107.0   0.004
+  reference/vectorised           pass                 107.0     107.0     0.0
+  reference/scalar               pass                 107.0     107.0     0.0
+
+11 of 11 entries passed or were skipped cleanly.

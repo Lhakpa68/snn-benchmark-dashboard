@@ -1,0 +1,11 @@
+# The pure-Python dashboard (streamlit_app.py) needs these in addition to
+# ../requirements-frameworks.txt. None of the six benchmark frameworks need
+# them, so they are kept in a separate file from dashboard/requirements.txt
+# (which is just Flask, for app.py).
+#
+#     python -m pip install -r requirements-streamlit.txt
+#     streamlit run streamlit_app.py
+
+streamlit
+plotly
+pandas

@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite the thesis below and, once published, the journal articles listed under references."
+title: "Building a Benchmarking Dashboard for SNN Methods: code and data"
+version: "1.0.0"
+date-released: "2026-10-23"
+license: MIT
+repository-code: "https://github.com/Lhakpa68/snn-benchmark-dashboard"
+authors:
+  - family-names: "Tshering"
+    given-names: "Lhakpa"
+    affiliation: "Melbourne Institute of Technology"
+preferred-citation:
+  type: thesis
+  title: "Building a Benchmarking Dashboard for SNN Methods"
+  authors:
+    - family-names: "Tshering"
+      given-names: "Lhakpa"
+  thesis-type: "Master of ICT Research"
+  institution:
+    name: "Melbourne Institute of Technology"
+    city: "Melbourne"
+    country: "AU"
+  year: 2026
+  month: 10
+references:
+  - type: unpublished
+    title: "How Stable Are Spiking Neural Network Simulator Rankings? A Backend-Level Benchmark across Network Size, Metric and Measurement Session"
+    authors:
+      - family-names: "Tshering"
+        given-names: "Lhakpa"
+    year: 2026
+    notes: "Manuscript under review"
+  - type: unpublished
+    title: "An Interactive Benchmarking Dashboard for Preference-Aware Selection of Spiking Neural Network Simulators"
+    authors:
+      - family-names: "Tshering"
+        given-names: "Lhakpa"
+    year: 2026
+    notes: "Manuscript under review"

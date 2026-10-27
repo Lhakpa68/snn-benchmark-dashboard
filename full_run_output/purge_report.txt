@@ -1,0 +1,22 @@
+=== discard hidden=500 training rows ===
+when : 2026-09-12T06:57:19+10:00
+
+backup taken: benchmarks_before_500_purge_20260912_065719.db
+
+before training rows:
+   nengo/reference      hidden=256   x1
+   nengo/reference      hidden=500   x1
+   snntorch/cpu            hidden=500   x1
+   spikingjelly/cpu            hidden=500   x1
+
+to delete : 3 condition rows, 3 run rows (training @ hidden 500)
+to preserve: 22 non-training rows at N=500 (the scalability sweep)
+
+after training rows:
+   nengo/reference      hidden=256   x1
+
+scalability rows at N=500 still present: 22
+OK
+
+mirrored the cleaned database to /mnt/d/MIT College/Last Edition/full_run_output/benchmarks.db
+=== done ===

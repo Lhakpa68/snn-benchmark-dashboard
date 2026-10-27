@@ -1,0 +1,28 @@
+=== clean restart ===
+when : 2026-09-12T11:04:29+10:00
+
+--- stopping everything, parent first ---
+before:
+   35261 bash /home/lt_68/snn_full_run/Full-Scale Simulator Comparison/phases.sh
+   36729 /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11 run.p
+stopped cleanly on attempt 1
+
+--- clearing NEST checkpoints ---
+   removed ckpt_nest_threads1.pkl
+   removed ckpt_nest_threads2.pkl
+   removed ckpt_nest_threads4.pkl
+   (the 500- and 256-width runs shared these filenames, so a resumed run
+    could otherwise load state from the wrong network width)
+
+--- discarding contaminated 256-width training rows ---
+   backup: benchmarks_before_contamination_purge_20260912_110433.db
+   training rows before: nengo/reference@256, snntorch/cpu@256, spikingjelly/cpu@256
+   deleted 3 condition rows and 3 run rows (all training)
+   inference/scalability rows preserved: 132 of 132
+   OK
+
+Inference and scalability were measured before the orphan existed and are kept.
+
+--- restarting the campaign ---
+It will re-measure Nengo, snnTorch, SpikingJelly and NEST/4 on an idle machine.
+

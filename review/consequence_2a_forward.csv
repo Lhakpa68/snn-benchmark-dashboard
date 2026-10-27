@@ -1,0 +1,6 @@
+reused_from_N,N,reused_backend,reused_median_ms,reused_run_range_ms,best_backend,best_median_ms,best_run_range_ms,ratio_reused_over_best,abs_difference_ms,same_backend,run_ranges_overlap
+100,100,nest/threads4,1.8223,1.727 to 2.268,nest/threads4,1.8223,1.727 to 2.268,1.0,0.0,yes,yes
+100,500,nest/threads4,7.7752,7.262 to 8.522,nest/threads4,7.7752,7.262 to 8.522,1.0,0.0,yes,yes
+100,1000,nest/threads4,14.2158,14.08 to 14.93,nest/threads4,14.2158,14.08 to 14.93,1.0,0.0,yes,yes
+100,5000,nest/threads4,106.0866,93.67 to 114,nest/threads4,106.0866,93.67 to 114,1.0,0.0,yes,yes
+100,10000,nest/threads4,353.0154,336 to 366.7,brian2/cython,148.5345,146.1 to 152.7,2.3767,204.4809,no,no

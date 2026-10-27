@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-title">Do the simulators agree on the answer?</div>
+  <div class="card-sub">
+    Before any timing comparison means anything, the implementations have
+    to be simulating the same network. Each backend's output firing rate
+    is compared against the plain-NumPy validation control of the
+    identical model. A simulator that is fast because it is solving an
+    easier problem would show up here.
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Measured rate against the reference rate</div>
+    <div class="card-sub">
+      One point per backend: its measured firing rate (y) against the
+      plain-NumPy reference rate for the identical network (x). A point on
+      the dashed line is exact agreement.
+    </div>
+    <div class="chart-wrap"><canvas id="equivScatterChart" height="240"></canvas></div>
+    <div class="fig-table" id="equivScatterChartTable"></div>
+    <div class="chart-result" id="equivScatterResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Pass / fail composition</div>
+    <div class="card-sub">
+      What fraction of the current selection agrees with the reference
+      implementation within tolerance.
+    </div>
+    <div class="chart-wrap"><canvas id="statusDonut" height="240"></canvas></div>
+    <div class="fig-table" id="statusDonutTable"></div>
+    <div class="chart-result" id="statusDonutResult"></div>
+  </div>
+</div>
+
+<div class="card">
+  <!-- ══ STATUS GRID — pass/fail/not-installed is categorical data, so a
+       colour-coded grid reads it at a glance; the table beneath still
+       carries the numbers behind each verdict. ══ -->
+  <div class="card-title">Pass / fail by backend</div>
+  <div class="status-grid" id="statusGrid"></div>
+
+  <details class="disclosure-card" style="margin-top:16px">
+    <summary>Full equivalence table, with measured rates</summary>
+    <div class="disclosure-card-body">
+      <div class="table-scroll"><table>
+        <thead><tr>
+          <th>Backend</th><th>Status</th><th class="num">Rate (Hz)</th>
+          <th class="num">Reference (Hz)</th><th class="num">Relative deviation</th><th>Note</th>
+        </tr></thead>
+        <tbody id="validTable"></tbody>
+      </table></div>
+      <div class="empty" id="validEmpty" hidden></div>
+      <div style="margin-top:13px"><a class="action" href="/api/export/validation.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    </div>
+  </details>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Provenance — machine, packages and configuration, recorded at run time</summary>
+  <div class="disclosure-card-body">
+    <div class="row-3">
+      <div class="table-scroll"><table><thead><tr><th>Machine</th><th>Value</th></tr></thead>
+        <tbody>{% for k, v in meta.machine.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+      <div class="table-scroll"><table><thead><tr><th>Package</th><th>Version</th></tr></thead>
+        <tbody>{% for k, v in meta.packages.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+      <div class="table-scroll"><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>{% for k, v in meta.config.items() %}<tr><td class="name">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table></div>
+    </div>
+    <div class="note" style="margin-top:12px">Database: <code>{{ meta.db }}</code></div>
+    {% if meta.excluded %}
+    <div class="caveat" style="margin-top:12px">
+      <strong>{{ meta.excluded }} condition record{{ '' if meta.excluded == 1 else 's' }}
+      in this database are excluded from every figure on this page.</strong>
+      {% if meta.excluded_other_machine %}
+      {{ meta.excluded_other_machine }} were measured on a different machine
+      {% if meta.other_machines %}({% for m in meta.other_machines %}<code>{{ m }}</code>{% if not loop.last %}, {% endif %}{% endfor %}){% endif %}
+      — the whole comparison rests on the machine being held fixed, so a row
+      measured elsewhere cannot be pooled with the campaign even when it covers
+      the same condition.
+      {% endif %}
+      {% if meta.excluded_replication %}
+      {{ meta.excluded_replication }} are replications of Experiments 1 and 3
+      ({{ meta.replication_sessions | join("; ") }}). They repeat the same
+      protocol on this machine and are kept to show how far a result reproduces
+      between sessions, but a figure draws on one session only. The August
+      campaign's processor-utilisation readings were withdrawn: its sampler
+      thread was starved by native simulator code, so only its runtimes stand.
+      {% endif %}
+      {% if meta.excluded_same_machine %}
+      {{ meta.excluded_same_machine }} more were measured on this same machine but
+      during an earlier, superseded attempt at this campaign — left behind while a
+      bug was being fixed, and excluded on the same principle even though the
+      hardware matches, since they are not part of the single verified run this
+      page reports on.
+      {% endif %}
+      The rows are kept rather than deleted, so every exclusion above can be
+      checked against the database directly.
+    </div>
+    {% endif %}
+  </div>
+</details>
+{% endblock %}

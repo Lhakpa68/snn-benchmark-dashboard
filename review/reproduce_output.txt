@@ -1,0 +1,65 @@
+TABLE 19 (equal priorities 50/50/50/0, min-max)
+N=  100 winner=nest/threads4 0.2438 runner-up=nest/threads2 0.2542 wins=9/15 pareto=['nest/threads4', 'spikingjelly/cpu', 'brian2/numpy', 'brian2/cython', 'snntorch/cpu']  published=nest/threads4 0.244 / nest/threads2 0.254  -> MATCH
+N=  500 winner=snntorch/cpu 0.2770 runner-up=spikingjelly/cpu 0.3215 wins=6/15 pareto=['snntorch/cpu', 'brian2/numpy', 'brian2/cython', 'nengo/reference', 'nest/threads2', 'nest/threads4', 'nest/threads1']  published=snntorch/cpu 0.277  -> MATCH
+N= 1000 winner=snntorch/cpu 0.2546 runner-up=spikingjelly/cpu 0.2826 wins=5/15 pareto=['snntorch/cpu', 'brian2/cython', 'nest/threads4', 'nest/threads2']  published=snntorch/cpu 0.255  -> MATCH
+N= 5000 winner=brian2/numpy 0.0445 runner-up=brian2/cython 0.0453 wins=7/15 pareto=['brian2/numpy', 'brian2/cython', 'nest/threads4', 'nest/threads2']  published=brian2/numpy 0.044 / brian2/cython 0.045  -> MATCH
+N=10000 winner=brian2/cython 0.0000 runner-up=brian2/numpy 0.0019 wins=15/15 pareto=['brian2/cython']  published=brian2/cython 0.0  -> MATCH
+
+TABLE 20 (profile x size; * = exploratory; MM=min-max, SH=share)
+N=  100 Fast SNN               MM=nest/threads4      SH=nest/threads4     
+N=  100 Low-memory SNN         MM=None               SH=None              
+N=  100 Scalable SNN           MM=brian2/cython      SH=brian2/cython     
+N=  100 Accurate SNN*          MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+N=  100 Balanced               MM=nest/threads4      SH=spikingjelly/cpu    DIFF
+N=  100 Speed + memory         MM=nest/threads4      SH=nest/threads4     
+N=  100 Memory + scaling       MM=brian2/cython      SH=brian2/cython     
+N=  100 Scaling + accuracy*    MM=snntorch/cpu       SH=snntorch/cpu      
+N=  100 Accuracy + speed*      MM=nengo/reference    SH=spikingjelly/cpu    DIFF
+N=  500 Fast SNN               MM=nest/threads4      SH=nest/threads4     
+N=  500 Low-memory SNN         MM=snntorch/cpu       SH=snntorch/cpu      
+N=  500 Scalable SNN           MM=brian2/cython      SH=brian2/cython     
+N=  500 Accurate SNN*          MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+N=  500 Balanced               MM=snntorch/cpu       SH=snntorch/cpu      
+N=  500 Speed + memory         MM=snntorch/cpu       SH=snntorch/cpu      
+N=  500 Memory + scaling       MM=brian2/cython      SH=brian2/cython     
+N=  500 Scaling + accuracy*    MM=snntorch/cpu       SH=snntorch/cpu      
+N=  500 Accuracy + speed*      MM=snntorch/cpu       SH=snntorch/cpu      
+N= 1000 Fast SNN               MM=nest/threads4      SH=nest/threads4     
+N= 1000 Low-memory SNN         MM=brian2/cython      SH=brian2/cython     
+N= 1000 Scalable SNN           MM=brian2/cython      SH=brian2/cython     
+N= 1000 Accurate SNN*          MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+N= 1000 Balanced               MM=snntorch/cpu       SH=snntorch/cpu      
+N= 1000 Speed + memory         MM=snntorch/cpu       SH=snntorch/cpu      
+N= 1000 Memory + scaling       MM=brian2/cython      SH=brian2/cython     
+N= 1000 Scaling + accuracy*    MM=snntorch/cpu       SH=snntorch/cpu      
+N= 1000 Accuracy + speed*      MM=snntorch/cpu       SH=snntorch/cpu      
+N= 5000 Fast SNN               MM=nest/threads4      SH=nest/threads4     
+N= 5000 Low-memory SNN         MM=brian2/cython      SH=brian2/cython     
+N= 5000 Scalable SNN           MM=brian2/cython      SH=brian2/cython     
+N= 5000 Accurate SNN*          MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+N= 5000 Balanced               MM=brian2/numpy       SH=brian2/cython       DIFF
+N= 5000 Speed + memory         MM=brian2/numpy       SH=brian2/cython       DIFF
+N= 5000 Memory + scaling       MM=brian2/cython      SH=brian2/cython     
+N= 5000 Scaling + accuracy*    MM=snntorch/cpu       SH=snntorch/cpu      
+N= 5000 Accuracy + speed*      MM=snntorch/cpu       SH=snntorch/cpu      
+N=10000 Fast SNN               MM=brian2/cython      SH=brian2/cython     
+N=10000 Low-memory SNN         MM=brian2/cython      SH=brian2/cython     
+N=10000 Scalable SNN           MM=brian2/cython      SH=brian2/cython     
+N=10000 Accurate SNN*          MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+N=10000 Balanced               MM=brian2/cython      SH=brian2/cython     
+N=10000 Speed + memory         MM=brian2/cython      SH=brian2/cython     
+N=10000 Memory + scaling       MM=brian2/cython      SH=brian2/cython     
+N=10000 Scaling + accuracy*    MM=snntorch/cpu       SH=snntorch/cpu      
+N=10000 Accuracy + speed*      MM=spikingjelly/cpu   SH=spikingjelly/cpu  
+
+Agreement: 41 of 45 (published: 41 of 45)
+  differs: ('Balanced', 100, 'nest/threads4', 'spikingjelly/cpu')
+  differs: ('Accuracy + speed*', 100, 'nengo/reference', 'spikingjelly/cpu')
+  differs: ('Balanced', 5000, 'brian2/numpy', 'brian2/cython')
+  differs: ('Speed + memory', 5000, 'brian2/numpy', 'brian2/cython')
+Published differing set : [('Accuracy + speed*', 100), ('Balanced', 100), ('Balanced', 5000), ('Speed + memory', 5000)]
+Reproduced differing set: [('Accuracy + speed*', 100), ('Balanced', 100), ('Balanced', 5000), ('Speed + memory', 5000)]
+Same set: True
+
+Brian2/Cython fit R2 = 0.4539 (published 0.45), k = 0.0142
+Table 19 mismatches: none

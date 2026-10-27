@@ -1,0 +1,115 @@
+=== Long-duration scalability check (SIM_MS = 1000) ===
+started 2026-10-23T15:03:01+11:00
+spikingjelly 0.0.0.0.14
+snntorch 1.0.0
+torch 2.13.0
+brian2 2.9.0
+nengo 4.1.0
+numpy 2.4.6
+scipy 1.17.1
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+nest 3.10.0
+ 15:03:02 up 0 min,  1 user,  load average: 0.56, 0.12, 0.04
+32
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+group   : 3dd09b61bd76-1dbca8
+protocol: warmup 2, measured 3, sizes [100, 500, 1000, 5000, 10000]
+
+=== Brian2 (2.9.0) ===
+  Brian2 / NumPy               scalability  N=100    sim   481.29 ms   spikes 14090   (3.3s)
+  Brian2 / NumPy               scalability  N=500    sim   558.15 ms   spikes 69398   (3.5s)
+  Brian2 / NumPy               scalability  N=1000   sim   625.83 ms   spikes 138261  (4.0s)
+  Brian2 / NumPy               scalability  N=5000   sim  1017.64 ms   spikes 692017  (6.0s)
+  Brian2 / NumPy               scalability  N=10000  sim  1474.82 ms   spikes 1386186 (8.5s)
+  Brian2 / Cython              scalability  N=100    sim   300.31 ms   spikes 14090   (12.1s)
+  Brian2 / Cython              scalability  N=500    sim   346.92 ms   spikes 69398   (3.0s)
+  Brian2 / Cython              scalability  N=1000   sim   418.44 ms   spikes 138261  (3.2s)
+  Brian2 / Cython              scalability  N=5000   sim   766.92 ms   spikes 692017  (5.1s)
+  Brian2 / Cython              scalability  N=10000  sim  1208.15 ms   spikes 1386186 (7.5s)
+  Brian2 / C++ standalone      scalability  N=100    sim  1730.71 ms   spikes 14126   (10.2s)
+  Brian2 / C++ standalone      scalability  N=500    sim  1689.88 ms   spikes 68624   (10.0s)
+  Brian2 / C++ standalone      scalability  N=1000   sim  1752.80 ms   spikes 138175  (9.7s)
+  Brian2 / C++ standalone      scalability  N=5000   sim  1956.08 ms   spikes 690865  (11.0s)
+  Brian2 / C++ standalone      scalability  N=10000  sim  2330.86 ms   spikes 1382286 (13.1s)
+=== NEST (3.10.0) ===
+  NEST / 1 thread              scalability  N=100    sim   150.40 ms   spikes 13992   (1.4s)
+  NEST / 1 thread              scalability  N=500    sim   813.33 ms   spikes 70558   (4.8s)
+  NEST / 1 thread              scalability  N=1000   sim  1975.84 ms   spikes 141998  (10.9s)
+  NEST / 1 thread              scalability  N=5000   sim 17426.50 ms   spikes 710122  (87.0s)
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+    [nest worker timed out after 180s on n=10000 threads1; retrying]
+  NEST / 1 thread              scalability  N=10000  sim 32042.55 ms   spikes 1415503 (1423.7s)
+  NEST / 2 threads             scalability  N=100    sim   113.50 ms   spikes 13994   (1.1s)
+  NEST / 2 threads             scalability  N=500    sim   514.86 ms   spikes 70289   (3.2s)
+  NEST / 2 threads             scalability  N=1000   sim  1071.74 ms   spikes 139895  (6.1s)
+  NEST / 2 threads             scalability  N=5000   sim  7098.64 ms   spikes 708615  (37.2s)
+  NEST / 2 threads             scalability  N=10000  sim 20605.58 ms   spikes 1417610 (107.3s)
+  NEST / 4 threads             scalability  N=100    sim   107.15 ms   spikes 14549   (1.1s)
+  NEST / 4 threads             scalability  N=500    sim   445.32 ms   spikes 70585   (2.8s)
+  NEST / 4 threads             scalability  N=1000   sim   892.29 ms   spikes 141089  (5.2s)
+  NEST / 4 threads             scalability  N=5000   sim  6458.74 ms   spikes 708285  (33.6s)
+  NEST / 4 threads             scalability  N=10000  sim 24955.93 ms   spikes 1417282 (125.6s)
+=== Nengo (4.1.0) ===
+WARNING    /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/lib/python3.11/site-packages/nengo/neurons.py:597: RuntimeWarning:divide by zero encountered in log1p
+ [py.warnings]
+  Nengo / reference simulator  scalability  N=100    sim   362.23 ms   spikes 14225   (2.9s)
+  Nengo / reference simulator  scalability  N=500    sim   933.48 ms   spikes 71157   (5.9s)
+  Nengo / reference simulator  scalability  N=1000   sim 24149.10 ms   spikes 142514  (144.6s)
+  Nengo / reference simulator  scalability  N=5000   sim 86556.93 ms   spikes 709454  (480.3s)
+  Nengo / reference simulator  scalability  N=10000  sim 313642.57 ms   spikes 1420325 (1698.0s)
+=== snnTorch (1.0.0 (torch 2.13.0+cu130)) ===
+  snnTorch / CPU tensors       scalability  N=100    sim  1154.83 ms   spikes 14225   (6.8s)
+  snnTorch / CPU tensors       scalability  N=500    sim  1386.71 ms   spikes 71157   (8.1s)
+  snnTorch / CPU tensors       scalability  N=1000   sim  1938.08 ms   spikes 142514  (11.1s)
+  snnTorch / CPU tensors       scalability  N=5000   sim 17222.18 ms   spikes 709454  (89.9s)
+  snnTorch / CPU tensors       scalability  N=10000  sim 63306.40 ms   spikes 1420325 (324.4s)
+=== SpikingJelly (present (torch 2.13.0+cu130)) ===
+  SpikingJelly / CPU tensors   scalability  N=100    sim   511.57 ms   spikes 14225   (3.8s)
+  SpikingJelly / CPU tensors   scalability  N=500    sim   768.76 ms   spikes 71157   (5.0s)
+  SpikingJelly / CPU tensors   scalability  N=1000   sim  1272.99 ms   spikes 142514  (7.8s)
+  SpikingJelly / CPU tensors   scalability  N=5000   sim 15888.31 ms   spikes 709454  (84.0s)
+  SpikingJelly / CPU tensors   scalability  N=10000  sim 61555.13 ms   spikes 1420325 (312.2s)
+
+--- export ---
+  wrote /home/lt_68/snn_long_duration/results/runs.csv
+  wrote /home/lt_68/snn_long_duration/results/conditions.csv
+
+270 individual runs, 90 conditions stored in /home/lt_68/snn_long_duration/results/benchmarks.db
+finished 2026-10-23T16:28:54+11:00

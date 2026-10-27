@@ -1,0 +1,20 @@
+{
+  "title": "snn-benchmark-dashboard: benchmark harness, results database and dashboard for five SNN simulators",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Benchmark harness, complete results database (every measured run with provenance), analysis and reproduction scripts, interactive dashboard with a preference-aware selection method. Brian2, NEST, Nengo, snnTorch and SpikingJelly across nine execution backends. Code under MIT; data under CC BY 4.0 (see DATA_LICENSE.md).",
+  "creators": [
+    {
+      "name": "Tshering, Lhakpa",
+      "affiliation": "Melbourne Institute of Technology"
+    }
+  ],
+  "keywords": [
+    "spiking neural networks",
+    "simulator benchmarking",
+    "rank stability",
+    "dashboard",
+    "multi-criteria decision analysis"
+  ]
+}

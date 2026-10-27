@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-title">SNN simulators and the methods considered</div>
+  <div class="card-sub">The dashboard compares five actual spiking neural network simulators. The measured backends, workload, and native learning objectives are stated so that the comparison is not detached from its experimental context.</div>
+  <div class="explain-grid">
+    <div class="gap-item"><strong>Brian2</strong><p>Equation-based simulation, including NumPy, Cython and compiled C++ modes; these are real Brian2 backends and differ in setup costs.</p></div>
+    <div class="gap-item"><strong>NEST</strong><p>Point-neuron simulation using the measured one-, two- and four-thread execution configurations.</p></div>
+    <div class="gap-item"><strong>Nengo</strong><p>Neural Engineering Framework reference backend, with a distinct native learning mechanism.</p></div>
+    <div class="gap-item"><strong>snnTorch</strong><p>PyTorch-based spiking neural network training with surrogate gradients.</p></div>
+    <div class="gap-item"><strong>SpikingJelly</strong><p>PyTorch-based spiking neural network library with alternative sequence and execution modes.</p></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Research gaps this benchmark addresses</div>
+  <div class="card-sub">Each gap maps to one research question and one objective.</div>
+  <div class="gap-grid">
+    {% for g in gaps %}
+    <div class="gap-item">
+      <span class="gap-num">{{ g.n }}</span>
+      <div class="gap-rq">{{ g.rq }}</div>
+      <div class="gap-title">{{ g.title }}</div>
+      <div class="gap-desc">{{ g.desc }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<details class="card disclosure-card">
+  <summary>What this dashboard does not claim</summary>
+  <div class="disclosure-card-body">
+    <div class="caveat" style="margin-top:0">
+      <strong>The energy figure is a proxy, not a measurement.</strong> It is
+      runtime &times; CPU utilisation &times; a configured TDP value, and is
+      comparable only within this machine and this session. It is not joules
+      at the wall socket.
+    </div>
+    <div class="caveat">
+      <strong>The simulators are not solving identical problems.</strong> The
+      tensor-based libraries run a discrete recurrence; the simulators
+      integrate an ODE. The equivalence view bounds how far apart that lets
+      the answers drift, but a runtime advantage is partly a cheaper problem,
+      not purely better engineering.
+    </div>
+    <div class="caveat">
+      <strong>One hardware platform, by design.</strong> Holding the machine
+      fixed is what allows a difference in runtime to be attributed to a
+      difference in the simulator rather than to the hardware it happened to
+      run on — that control is the basis of the comparison. Running the same
+      harness on GPU hardware is identified in the thesis as the next
+      extension of this work.
+    </div>
+  </div>
+</details>
+{% endblock %}

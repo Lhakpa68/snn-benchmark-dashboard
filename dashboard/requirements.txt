@@ -1,0 +1,9 @@
+# Flask is not a benchmark framework, so it is not in
+# ../requirements-frameworks.txt and a benchmark-only environment usually
+# does not have it. Install it once, in whichever interpreter runs app.py:
+#
+#     python -m pip install -r requirements.txt
+#
+# START_DASHBOARD.sh / START_DASHBOARD.bat do this automatically.
+
+flask

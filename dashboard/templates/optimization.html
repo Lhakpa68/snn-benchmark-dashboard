@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="scope-note">
+  <strong>Four-criterion method selection, not simulator acceleration.</strong>
+  Network size selects a measured inference workload; it is <em>not a weight</em>.
+  Weights express the importance of <b>inference runtime, memory growth, scalability and MNIST accuracy</b>.
+  Accuracy comes from a separate native-learning task with different learning rules; positive accuracy weight therefore creates an <strong>exploratory cross-paradigm scenario</strong>, not a controlled claim that one simulator learns better.
+  Recommendations are limited to five genuine SNN simulators and their measured backends. All performance estimates depend on the selected benchmark conditions.
+</div>
+<div id="multiOptAnswer">{% include "optimization_answer.html" %}</div>
+<section class="card opt-controls" aria-label="Optimisation preferences">
+  <div class="card-title">Specify the workload and relative priorities</div>
+  <div class="card-sub">Adjust a weight and the recommendation, charts and table update automatically. Raw weights are normalised to a total of 100%; setting a weight to 0 removes that criterion from the score.</div>
+  <div class="rb-presets" role="group" aria-label="Quick choices">
+    <span class="rb-presets-label">Quick choices</span>
+    {% for p in presets %}<button type="button" class="rb-preset" data-preset='{{ p.weights|tojson }}' title="Reader profile “{{ p.profile }}”: inference {{ p.weights.inference }}, memory {{ p.weights.memory }}, scalability {{ p.weights.scalability }}, accuracy {{ p.weights.accuracy }}">{{ p.label }}</button>{% endfor %}
+    <span class="opt-small">or set the sliders yourself</span>
+  </div>
+  <form id="multiOptForm" method="get" action="/optimization">
+    <div class="opt-context">
+      <label>Inference network size (measured neurons)
+        <select name="n" id="optNetworkSize">
+          {% for n in sizes %}<option value="{{ n }}"{{ ' selected' if n == opt.network_size }}>{{ '{:,}'.format(n) }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Normalisation of the measured criteria
+        <select name="norm" id="optNorm">
+          <option value="minmax"{{ ' selected' if opt.normalisation == 'minmax' }}>Min–max (0 = best, 1 = worst eligible backend)</option>
+          <option value="share"{{ ' selected' if opt.normalisation == 'share' }}>Share of total (value ÷ sum over backends)</option>
+        </select>
+      </label>
+      <label>Maximum peak process memory (MB; optional)
+        <input name="cap" id="optCap" type="number" min="1" step="1" value="{{ opt.memory_limit_mb if opt.memory_limit_mb is not none else '' }}" placeholder="No limit">
+      </label>
+    </div>
+    <div class="opt-four">
+      {% for key,label,detail in [('inference','Inference speed','Runs faster at the chosen network size'),('memory','Memory','Uses less extra memory as the network grows (growth above its 100-neuron size)'),('scalability','Scalability','Runtime grows more slowly as the network gets bigger (fitted exponent k)'),('accuracy','Accuracy — exploratory','Higher native MNIST accuracy, separate learning task')] %}
+      <label class="opt-weight-card{{ ' opt-accuracy' if key=='accuracy' else '' }}">
+        <span class="opt-weight-title">{{ label }} <b id="optRaw-{{ key }}">{{ opt.raw_weights[key]|round|int }}</b> / 100</span>
+        <span class="opt-weight-detail">{{ detail }}</span>
+        <input type="range" name="{{ key }}" min="0" max="100" step="5" value="{{ opt.raw_weights[key]|round|int }}" data-opt-weight="{{ key }}" aria-label="{{ label }} weight">
+        <span class="opt-weight-normal">Effective priority: <strong id="optNormalized-{{ key }}">{{ '%.0f'|format(opt.weights[key]*100) }}%</strong></span>
+      </label>
+      {% endfor %}
+    </div>
+  </form>
+  <p class="opt-small" id="optLiveStatus" role="status" aria-live="polite">Changing a weight automatically recalculates. Initial sliders give equal relative priority to inference, memory and scalability, with exploratory accuracy excluded. These are illustrative starting values—not established or elicited research preferences.</p>
+</section>
+<div id="multiOptResults">
+  {% with suppress_answer=true %}{% include "optimization_results.html" %}{% endwith %}
+</div>
+<details class="card disclosure-card rb-glossary" id="optGlossary">
+  <summary>Terms used on this page</summary>
+  <div class="disclosure-card-body">
+    <dl class="rb-terms">{% for term, text in glossary %}<dt>{{ term }}</dt><dd>{{ text }}</dd>{% endfor %}</dl>
+    <p class="opt-small"><b>Backend names.</b> {% for id, name in backend_names %}<code>{{ id }}</code> = {{ name }}{{ '; ' if not loop.last }}{% endfor %}.</p>
+  </div>
+</details>
+<script src="{{ url_for('static', filename='js/optimization_live.js') }}" defer></script>
+{% endblock %}

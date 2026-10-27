@@ -1,0 +1,46 @@
+profile,size,weighted_pick,runtime_only_pick,rank_sum_pick,changes_under_share_normalisation,share_pick,changes_without_scalability,without_scalability_pick,without_scalability_share_pick,changes_by_session,session_B_pick,weighted_vs_runtime_only,weighted_vs_rank_sum,margin_to_runner_up,margin_rel_pct,runtime_ranges_overlap_winner_vs_runner_up,memory_degenerate_flag,tied_set_size
+Fast SNN,100,nest/threads4,nest/threads4,nest/threads4,no,nest/threads4,not assessable,,,no,nest/threads4,same,same,0.02991,,yes,,1
+Fast SNN,500,nest/threads4,nest/threads4,nest/threads4,no,nest/threads4,not assessable,,,no,nest/threads4,same,same,0.019496,,yes,,1
+Fast SNN,1000,nest/threads4,nest/threads4,nest/threads4,no,nest/threads4,not assessable,,,no,nest/threads4,same,same,0.081824,,no,,1
+Fast SNN,5000,nest/threads4,nest/threads4,nest/threads4,no,nest/threads4,not assessable,,,no,nest/threads4,same,same,0.046475,,yes,,1
+Fast SNN,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,not assessable,,,yes,brian2/numpy,same,same,0.00029,,yes,,1
+Low-memory SNN,100,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython,nest/threads4,brian2/cython|brian2/numpy|nengo/reference|nest/threads1|nest/threads2|nest/threads4|snntorch/cpu|spikingjelly/cpu,no,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython,not assessable,,,no,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython,differ,same,,,,YES: memory-weighted profile at N=100,8
+Low-memory SNN,500,snntorch/cpu|brian2/cython,nest/threads4,brian2/cython|snntorch/cpu,no,snntorch/cpu|brian2/cython,not assessable,,,no,snntorch/cpu|brian2/cython,differ,same,0.016667,,,,2
+Low-memory SNN,1000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.000823,,no,,1
+Low-memory SNN,5000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.010439,,yes,,1
+Low-memory SNN,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,same,same,0.003398,,yes,,1
+Scalable SNN,100,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.002009,,yes,,1
+Scalable SNN,500,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.002009,,yes,,1
+Scalable SNN,1000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.002009,,yes,,1
+Scalable SNN,5000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,differ,same,0.002009,,yes,,1
+Scalable SNN,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,same,same,0.002009,,yes,,1
+Accurate SNN*,100,spikingjelly/cpu,nest/threads4,spikingjelly/cpu,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,same,0.002466,,no,,1
+Accurate SNN*,500,spikingjelly/cpu,nest/threads4,spikingjelly/cpu,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,same,0.002466,,yes,,1
+Accurate SNN*,1000,spikingjelly/cpu,nest/threads4,spikingjelly/cpu,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,same,0.002466,,no,,1
+Accurate SNN*,5000,spikingjelly/cpu,nest/threads4,spikingjelly/cpu,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,same,0.002466,,yes,,1
+Accurate SNN*,10000,spikingjelly/cpu,brian2/cython,spikingjelly/cpu,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,same,0.002466,,yes,,1
+Balanced,100,nest/threads4,nest/threads4,nest/threads4,yes,spikingjelly/cpu,no,nest/threads4,nest/threads4,no,nest/threads4,same,same,0.010357,4.25,yes,YES: memory-weighted profile at N=100,1
+Balanced,500,snntorch/cpu,nest/threads4,snntorch/cpu,no,snntorch/cpu,no,snntorch/cpu,snntorch/cpu,no,snntorch/cpu,differ,same,0.044513,16.07,yes,,1
+Balanced,1000,snntorch/cpu,nest/threads4,brian2/cython|snntorch/cpu,no,snntorch/cpu,no,snntorch/cpu,snntorch/cpu,no,snntorch/cpu,differ,differ,0.027961,10.98,no,,1
+Balanced,5000,brian2/numpy,nest/threads4,brian2/cython,yes,brian2/cython,no,brian2/numpy,brian2/cython,no,brian2/numpy,differ,differ,0.000807,1.81,yes,,1
+Balanced,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,no,brian2/cython,brian2/cython,no,brian2/cython,same,same,0.001899,,yes,,1
+Speed + memory,100,nest/threads4,nest/threads4,nest/threads4,no,nest/threads4,not assessable,,,no,nest/threads4,same,same,0.014955,,yes,YES: memory-weighted profile at N=100,1
+Speed + memory,500,snntorch/cpu,nest/threads4,snntorch/cpu,no,snntorch/cpu,not assessable,,,yes,spikingjelly/cpu,differ,same,0.054146,45.43,yes,,1
+Speed + memory,1000,snntorch/cpu,nest/threads4,snntorch/cpu,no,snntorch/cpu,not assessable,,,yes,spikingjelly/cpu,differ,same,0.029318,34.25,no,,1
+Speed + memory,5000,brian2/numpy,nest/threads4,brian2/cython|brian2/numpy,yes,brian2/cython,not assessable,,,no,brian2/numpy,differ,differ,0.002214,3.37,yes,,1
+Speed + memory,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,not assessable,,,no,brian2/cython,same,same,0.001844,,yes,,1
+Memory + scaling,100,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,yes,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython,nest/threads4|nest/threads2|nest/threads1|nengo/reference|spikingjelly/cpu|snntorch/cpu|brian2/numpy|brian2/cython,no,brian2/cython,differ,same,0.001004,,yes,YES: memory-weighted profile at N=100,1
+Memory + scaling,500,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,yes,snntorch/cpu|brian2/cython,snntorch/cpu|brian2/cython,no,brian2/cython,differ,same,0.009338,,yes,,1
+Memory + scaling,1000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,no,brian2/cython,brian2/cython,no,brian2/cython,differ,same,0.009598,,yes,,1
+Memory + scaling,5000,brian2/cython,nest/threads4,brian2/cython,no,brian2/cython,no,brian2/cython,brian2/cython,no,brian2/cython,differ,same,0.006224,,yes,,1
+Memory + scaling,10000,brian2/cython,brian2/cython,brian2/cython,no,brian2/cython,no,brian2/cython,brian2/cython,no,brian2/cython,same,same,0.002704,,yes,,1
+Scaling + accuracy*,100,snntorch/cpu,nest/threads4,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,yes,spikingjelly/cpu,spikingjelly/cpu,no,snntorch/cpu,differ,differ,0.011391,3.83,no,,1
+Scaling + accuracy*,500,snntorch/cpu,nest/threads4,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,yes,spikingjelly/cpu,spikingjelly/cpu,no,snntorch/cpu,differ,differ,0.011391,3.83,yes,,1
+Scaling + accuracy*,1000,snntorch/cpu,nest/threads4,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,yes,spikingjelly/cpu,spikingjelly/cpu,no,snntorch/cpu,differ,differ,0.011391,3.83,no,,1
+Scaling + accuracy*,5000,snntorch/cpu,nest/threads4,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,yes,spikingjelly/cpu,spikingjelly/cpu,no,snntorch/cpu,differ,differ,0.011391,3.83,yes,,1
+Scaling + accuracy*,10000,snntorch/cpu,brian2/cython,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,yes,spikingjelly/cpu,spikingjelly/cpu,no,snntorch/cpu,differ,differ,0.011391,3.83,yes,,1
+Accuracy + speed*,100,nengo/reference,nest/threads4,spikingjelly/cpu,yes,spikingjelly/cpu,not assessable,,,yes,spikingjelly/cpu,differ,differ,0.015828,9.27,no,,1
+Accuracy + speed*,500,snntorch/cpu,nest/threads4,nengo/reference,no,snntorch/cpu,not assessable,,,yes,spikingjelly/cpu,differ,differ,0.025715,21.35,no,,1
+Accuracy + speed*,1000,snntorch/cpu,nest/threads4,snntorch/cpu|spikingjelly/cpu,no,snntorch/cpu,not assessable,,,yes,spikingjelly/cpu,differ,differ,0.023737,27.47,no,,1
+Accuracy + speed*,5000,snntorch/cpu,nest/threads4,brian2/numpy,no,snntorch/cpu,not assessable,,,yes,spikingjelly/cpu,differ,differ,0.004055,2.93,yes,,1
+Accuracy + speed*,10000,spikingjelly/cpu,brian2/cython,brian2/cython,no,spikingjelly/cpu,not assessable,,,no,spikingjelly/cpu,differ,differ,0.002753,1.12,yes,,1

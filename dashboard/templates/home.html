@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="kpi-band">
+  <div class="kpis" id="kpiGrid">
+    <div class="kpi" id="kpi1"><div class="kpi-label">Fastest inference</div>
+      <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+    <div class="kpi" id="kpi2"><div class="kpi-label">Lowest peak memory</div>
+      <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+    <div class="kpi" id="kpi3"><div class="kpi-label">Flattest scaling</div>
+      <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+    <div class="kpi" id="kpi4"><div class="kpi-label">Best MNIST accuracy</div>
+      <div class="kpi-val">&mdash;</div><div class="kpi-who"></div><div class="kpi-note"></div></div>
+  </div>
+  <div class="scope-note" id="scopeNote"></div>
+</div>
+
+<div class="card home-intro">
+  <div class="card-title">A controlled comparison of five spiking neural network simulators</div>
+  <div class="card-sub">
+    Five SNN simulators across nine simulator backends, on a single hardware
+    platform. Two plain-NumPy validation controls are shown for reference
+    only; they are not simulators and are never ranked or recommended. Every number on this dashboard
+    is read live from the results database — nothing here is baked in. Pick
+    an experiment below for the full charts, tables and reading.
+  </div>
+</div>
+
+<!-- ══ TEASER GRID — one compact card per experiment page: a thumbnail of
+     its primary chart plus a one-line summary, not the full detail. The
+     full charts, tables and captions live on that page, one click away. ══ -->
+<div class="teaser-grid">
+
+  <a class="teaser" href="/inference">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#4f93ea">&#9889;</span>
+      <div><div class="teaser-title">Inference</div>
+        <div class="teaser-sub">Wall-clock cost of one run, across backends</div></div>
+    </div>
+    <div class="chart-wrap teaser-chart"><canvas id="teaserInference" height="110"></canvas></div>
+    <div class="fig-table" id="teaserInferenceTable"></div>
+    <div class="teaser-link">View inference results &rarr;</div>
+  </a>
+
+  <a class="teaser" href="/scalability">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#3ec98a">&#8599;</span>
+      <div><div class="teaser-title">Scalability</div>
+        <div class="teaser-sub">How runtime grows with network size</div></div>
+    </div>
+    <div class="chart-wrap teaser-chart"><canvas id="teaserScalability" height="110"></canvas></div>
+    <div class="fig-table" id="teaserScalabilityTable"></div>
+    <div class="teaser-link">View scalability results &rarr;</div>
+  </a>
+
+  <a class="teaser" href="/memory">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#e2a63e">&#9707;</span>
+      <div><div class="teaser-title">Memory</div>
+        <div class="teaser-sub">Peak footprint at the largest network (N = 10,000)</div></div>
+    </div>
+    <div class="chart-wrap teaser-chart"><canvas id="teaserMemory" height="110"></canvas></div>
+    <div class="fig-table" id="teaserMemoryTable"></div>
+    <div class="teaser-link">View memory results &rarr;</div>
+  </a>
+
+  <a class="teaser" href="/training">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#b073e8">&#9673;</span>
+      <div><div class="teaser-title">Training</div>
+        <div class="teaser-sub">MNIST test accuracy by learning rule</div></div>
+    </div>
+    <div class="chart-wrap teaser-chart"><canvas id="teaserTraining" height="110"></canvas></div>
+    <div class="fig-table" id="teaserTrainingTable"></div>
+    <div class="teaser-link">View training results &rarr;</div>
+  </a>
+
+  <a class="teaser" href="/sensitivity">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#ef6f5e">&#8776;</span>
+      <div><div class="teaser-title">Sensitivity</div>
+        <div class="teaser-sub">Does the ranking survive a change in size or metric?</div></div>
+    </div>
+    <div class="teaser-strip" id="teaserSensitivity"></div>
+    <div class="teaser-link">View sensitivity analysis &rarr;</div>
+  </a>
+
+  <a class="teaser" href="/provenance">
+    <div class="teaser-head">
+      <span class="teaser-ico" style="--c:#8a98af">&#10003;</span>
+      <div><div class="teaser-title">Equivalence &amp; provenance</div>
+        <div class="teaser-sub">Do the simulators agree on the answer?</div></div>
+    </div>
+    <div class="teaser-dots" id="teaserProvenance"></div>
+    <div class="teaser-count" id="teaserProvenanceCount"></div>
+    <div class="teaser-link">View equivalence checks &rarr;</div>
+  </a>
+
+</div>
+{% endblock %}

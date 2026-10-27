@@ -1,0 +1,9 @@
+[project]
+name = "snn-benchmark-dashboard"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.2",
+    "streamlit>=1.62.0",
+    "flask>=3.1.0",
+]

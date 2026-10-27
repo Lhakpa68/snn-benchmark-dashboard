@@ -1,0 +1,15 @@
+profile,N,role,backend,B_median_runtime_ms,B_peak_rss_mb,B_memory_growth_mb,B_k,B_R2,B_cost_inference,B_cost_memory,B_cost_scalability,B_cost_accuracy,accuracy_pct,B_score,A_score,B_run_range_ms
+Accuracy + speed*,100,session-A choice,nengo/reference,5.0396,641.2,0.0,1.5188,0.952,0.222,0.0,1.0,0.1347,85.44,0.17838,0.17075,4.412 to 5.576
+Accuracy + speed*,100,session-B choice,spikingjelly/cpu,5.3367,693.71,0.0,1.0529,0.953,0.2354,0.0,0.6891,0.0,97.46,0.11768,0.18658,5.065 to 6.47
+Accuracy + speed*,500,session-A choice,snntorch/cpu,20.4021,689.97,0.0,0.8604,0.88,0.3296,0.0,0.5605,0.0025,97.24,0.16601,0.12042,18.18 to 26.41
+Accuracy + speed*,500,session-B choice,spikingjelly/cpu,16.4513,694.36,0.652,1.0529,0.953,0.2566,0.0194,0.6891,0.0,97.46,0.12831,0.1636,15.93 to 18.27
+Accuracy + speed*,1000,session-A choice,snntorch/cpu,29.4871,690.04,0.062,0.8604,0.88,0.2754,0.0008,0.5605,0.0025,97.24,0.13894,0.08641,28.01 to 49.31
+Accuracy + speed*,1000,session-B choice,spikingjelly/cpu,22.9455,694.43,0.723,1.0529,0.953,0.1764,0.0095,0.6891,0.0,97.46,0.08821,0.11015,21.49 to 26.68
+Accuracy + speed*,5000,session-A choice,snntorch/cpu,196.7989,785.41,95.434,0.8604,0.88,0.2662,0.2235,0.5605,0.0025,97.24,0.13436,0.13837,192.6 to 223.7
+Accuracy + speed*,5000,session-B choice,spikingjelly/cpu,189.0815,790.22,96.516,1.0529,0.953,0.25,0.2261,0.6891,0.0,97.46,0.12498,0.14242,185.4 to 193
+Fast SNN,10000,session-A choice,brian2/cython,158.2078,646.71,8.129,0.0206,0.97,0.0019,0.0,0.0,not in profile,not in profile,0.00193,0.0,153.2 to 161.8
+Fast SNN,10000,session-B choice,brian2/numpy,157.2097,644.14,13.008,0.0215,0.832,0.0,0.0031,0.0006,not in profile,not in profile,0.0,0.00029,155.9 to 169.2
+Speed + memory,500,session-A choice,snntorch/cpu,20.4021,689.97,0.0,0.8604,0.88,0.3296,0.0,0.5605,not in profile,not in profile,0.16478,0.11919,18.18 to 26.41
+Speed + memory,500,session-B choice,spikingjelly/cpu,16.4513,694.36,0.652,1.0529,0.953,0.2566,0.0194,0.6891,not in profile,not in profile,0.138,0.17334,15.93 to 18.27
+Speed + memory,1000,session-A choice,snntorch/cpu,29.4871,690.04,0.062,0.8604,0.88,0.2754,0.0008,0.5605,not in profile,not in profile,0.13812,0.08559,28.01 to 49.31
+Speed + memory,1000,session-B choice,spikingjelly/cpu,22.9455,694.43,0.723,1.0529,0.953,0.1764,0.0095,0.6891,not in profile,not in profile,0.09298,0.11491,21.49 to 26.68

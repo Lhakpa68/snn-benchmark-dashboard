@@ -1,0 +1,11 @@
+{% set A = opt.answer %}
+<div id="optAnswerCard" class="card rb-answer rb-level-{{ A.level if A else 'none' }}" role="region" aria-label="Answer for the selected priorities">
+{% if A %}
+  <div class="rb-answer-head"><span class="rb-badge rb-badge-{{ A.level }}">{{ A.badge }}</span></div>
+  <p class="rb-answer-lead">{{ A.lead }}</p>
+  {% if A.notes %}<ul class="rb-answer-notes">{% for n in A.notes %}<li>{{ n }}</li>{% endfor %}</ul>{% endif %}
+  <p class="opt-small rb-howto"><b>How to read this page:</b> {{ how_to_read }}</p>
+{% else %}
+  <p class="rb-answer-lead">{{ opt.notice or 'No eligible measured backend for this scenario.' }}</p>
+{% endif %}
+</div>

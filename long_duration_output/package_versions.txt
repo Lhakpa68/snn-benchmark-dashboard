@@ -1,0 +1,24 @@
+spikingjelly 0.0.0.0.14
+snntorch 1.0.0
+torch 2.13.0
+brian2 2.9.0
+nengo 4.1.0
+numpy 2.4.6
+scipy 1.17.1
+
+             -- N E S T --
+
+ Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.10.0
+ Built  : Jun 10 2026 06:47:23
+
+ This program is provided AS IS and comes with NO WARRANTY.
+ See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+nest 3.10.0

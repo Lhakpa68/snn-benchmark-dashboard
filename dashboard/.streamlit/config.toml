@@ -1,0 +1,11 @@
+# Streamlit's own server settings (host/port/headless). Data settings —
+# database path, validation log path, page title — stay in
+# dashboard_config.py one level up; this file only controls how the
+# Streamlit server itself binds.
+[server]
+address = "127.0.0.1"
+port = 8501
+headless = false
+
+[browser]
+gatherUsageStats = false

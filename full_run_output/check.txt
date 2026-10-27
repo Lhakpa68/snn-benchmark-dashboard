@@ -1,0 +1,76 @@
+=== campaign liveness check ===
+when : 2026-09-12T11:05:30+10:00
+
+RUNNING. pid(s): 52255 
+
+sample 1:
+     52255       00:47 00:00:47  100 11.0 1339996 Rl
+   (columns: pid  elapsed  cpu-time  %cpu  %mem  rss-kb  state)
+
+sample 2, 15 s later:
+     52255       01:02 00:01:03  100 11.0 1340000 Rl
+
+If cpu-time advanced between the two samples, it is genuinely computing.
+
+--- child / worker processes ---
+   160 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   260 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+   52255 /home/lt_68/projects/snn_benchmark_dashboard.backup_20260805_224202/.venv/bin/python3.11 run.py bench --tasks training --hidden 256 --only snntorch
+
+--- results database ---
+   311296 bytes   modified Sep 12 11:04
+   runs: 661 rows
+   conditions: 133 rows
+   recorded so far:
+      brian2/numpy            inference    2
+      brian2/numpy            scalability  10
+      brian2/cython           inference    2
+      brian2/cython           scalability  10
+      brian2/cpp_standalone   inference    2
+      brian2/cpp_standalone   scalability  10
+      nest/threads1         inference    2
+      nest/threads1         scalability  10
+      nest/threads2         inference    2
+      nest/threads2         scalability  10
+      nest/threads4         inference    2
+      nest/threads4         scalability  10
+      nengo/reference        inference    2
+      nengo/reference        scalability  10
+      snntorch/cpu              inference    2
+      snntorch/cpu              scalability  10
+      spikingjelly/cpu              inference    2
+      spikingjelly/cpu              scalability  10
+      reference/vectorised       inference    2
+      reference/vectorised       scalability  10
+      reference/scalar           inference    2
+      reference/scalar           scalability  10
+      nengo/reference        training     1
+
+--- last 25 lines of the run log ---
+   ################ PHASE 2/8  training: snnTorch
+   started 2026-09-12T11:04:43+10:00
+   
+                -- N E S T --
+   
+    Copyright (C) 2004 The NEST Initiative
+   
+    Version: 3.10.0
+    Built  : Jun 10 2026 06:47:23
+   
+    This program is provided AS IS and comes with NO WARRANTY.
+    See the file LICENSE for details.
+   
+    Problems or suggestions?
+      Visit https://www.nest-simulator.org
+   
+    Type 'nest.help()' to find out more about NEST.
+   
+   
+   machine : LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores
+   group   : 3dd09b61bd76-4923eb
+   protocol: warmup 5, measured 5, sizes [100, 500, 1000, 5000, 10000]
+   
+   === snnTorch (1.0.0 (torch 2.13.0+cu130)) ===
+     snnTorch / CPU tensors: training [full] hidden=256 train=60000 epochs=10 ...
+
+=== end of check ===

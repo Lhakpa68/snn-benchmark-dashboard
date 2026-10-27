@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page_title }} — {{ title }}</title>
+<script src="{{ url_for('static', filename='js/minichart.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ══ SIDEBAR — persistent app navigation. Each entry is a real page: a
+       distinct URL Flask renders server-side, not a JS-toggled section, so
+       following a link, bookmarking a view or sharing a URL all work the
+       ordinary way a website's reader expects an application to work. ══ -->
+  <nav class="sidenav" id="sidenav">
+    <a class="brand" href="/">
+      <div class="brand-mark">&#9889;</div>
+      <div class="brand-text">
+        <div class="brand-title">SNN Benchmark</div>
+        <div class="brand-sub">Methods &amp; Selection</div>
+      </div>
+    </a>
+
+    <div class="nav-group-label">Overview</div>
+    <a class="navlink{{ ' active' if page=='home' }}" href="/">
+      <span class="navico">&#9635;</span> Dashboard
+    </a>
+
+    <a class="navlink{{ ' active' if page=='optimization' }}" href="/optimization">
+      <span class="navico">&#9733;</span> Optimisation
+    </a>
+
+    <div class="nav-group-label">Experiments</div>
+    <a class="navlink{{ ' active' if page=='inference' }}" href="/inference">
+      <span class="navico">&#9889;</span> Inference
+    </a>
+    <a class="navlink{{ ' active' if page=='scalability' }}" href="/scalability">
+      <span class="navico">&#8599;</span> Scalability
+    </a>
+    <a class="navlink{{ ' active' if page=='memory' }}" href="/memory">
+      <span class="navico">&#9707;</span> Memory
+    </a>
+    <a class="navlink{{ ' active' if page=='training' }}" href="/training">
+      <span class="navico">&#9673;</span> Training
+    </a>
+    <a class="navlink{{ ' active' if page=='sensitivity' }}" href="/sensitivity">
+      <span class="navico">&#8776;</span> Sensitivity
+    </a>
+    <a class="navlink{{ ' active' if page=='robustness' }}" href="/robustness">
+      <span class="navico">&#9638;</span> Robustness
+    </a>
+
+    <div class="nav-group-label">Reference</div>
+    <a class="navlink{{ ' active' if page=='provenance' }}" href="/provenance">
+      <span class="navico">&#10003;</span> Equivalence &amp; provenance
+    </a>
+    <a class="navlink{{ ' active' if page=='about' }}" href="/about">
+      <span class="navico">&#63;</span> Methods &amp; limitations
+    </a>
+
+    <div class="sidenav-foot">
+      <a class="action block" id="exportBtn" href="/api/export/all.csv" download>
+        <span class="ico">&#8615;</span> Export all data
+      </a>
+      <div class="sidenav-meta">
+        {% if meta.ok %}{{ meta.counts.runs }} measured runs{% endif %}<br>
+        single hardware platform
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-col">
+
+    <!-- ══ TOP BAR — page title + the one control that is global across
+         every page: which simulators are included. Persisted in
+         localStorage so it survives a real page navigation. ══ -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1>{{ page_title }}</h1>
+        <div class="topbar-sub">{{ page_sub }}</div>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge muted" title="This page re-fetches its data every 20 seconds in the background.">loaded {{ loaded_at }}</span>
+        <a class="action" href="{{ request.path }}" title="Reload now">
+          <span class="ico">&#8635;</span> Refresh
+        </a>
+      </div>
+    </header>
+
+    {% if not meta.ok %}
+    <div class="page-content">
+      <div class="card">
+        <div class="card-title">No results to show</div>
+        <div class="card-sub">{{ meta.error }}</div>
+      </div>
+    </div>
+    {% else %}
+
+    <!-- ══ SIMULATOR SELECTOR — global filter, present on every page ══ -->
+    <div class="selector selector-compact">
+      <div class="selector-head">
+        <span class="selector-title">Simulators</span>
+        <span class="selector-hint">
+          {% if page == 'optimization' %}The Optimisation ranking considers every eligible measured simulator. Selection buttons here apply to other benchmark views.{% else %}Click to <b>select</b> or <b>de-select</b>. Charts, tables and headline figures on benchmark views respond to this filter.{% endif %}
+        </span>
+        <span class="fw-tools">
+          <button class="link-btn" id="allBtn">Select all</button>
+          <button class="link-btn" id="noneBtn">Clear</button>
+          <button class="link-btn link-btn-guide" id="guideBtn" aria-expanded="false"
+                  aria-controls="guidePanel">Guide Open &#9662;</button>
+          <button class="link-btn" id="detailBtn" aria-expanded="false"
+                  aria-controls="backendPanel">Show backend detail &#9662;</button>
+        </span>
+      </div>
+
+      <div class="fw-row" id="fwRow">
+        <a class="fw fw-navigation{{ ' on' if page=='all_simulators' }}" href="/all-simulators" title="Side-by-side rankings of all measured SNN simulators"><span class="fw-name">All Simulators</span><span class="fw-sub">Compare five methods</span></a>
+        {% for f in frameworks %}
+        <button class="fw{{ ' control' if f.is_control }}" data-fw="{{ f.id }}"
+                style="--c: {{ f.color }}" aria-pressed="true"
+                title="{{ f.one_line }}">
+          <span class="fw-name"><span class="fw-dot"></span>{{ f.label }}</span>
+          <span class="fw-sub">{{ f.n_backends }} backend{{ '' if f.n_backends == 1 else 's' }}</span>
+        </button>
+        {% endfor %}
+        <a class="fw fw-navigation{{ ' on' if page=='optimization' }}" href="/optimization" title="Weight-aware recommendations for measured network sizes"><span class="fw-name">Optimisation</span><span class="fw-sub">Recommend by priorities</span></a>
+      </div>
+
+      <div class="disclosure" id="backendPanel" hidden>
+        <div class="disclosure-inner">
+          <div class="note" style="max-width:none;margin-bottom:11px">
+            A <b>backend</b> is one execution path within a simulator — a
+            code-generation target, a thread count, or an implementation
+            variant. Backends are filtered by their simulator above; this
+            panel explains what each one is.
+          </div>
+          <div class="backend-grid">
+            {% for b in backends %}
+            <div class="backend-item" style="--c: {{ theme.colors.get(b.framework, '#7c879b') }}">
+              <div class="b-name">{{ theme.labels.get(b.framework, b.framework) }} / {{ b.backend }}</div>
+              <div class="b-note">{{ b.note }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="disclosure" id="guidePanel" hidden>
+        <div class="disclosure-inner">
+          {% set _guide = guide_items() %}
+          <div class="rb-guide-title">Start here: a four-step reading path</div>
+          <div class="note" style="max-width:none;margin-bottom:11px">
+            The pages answer one question each. Following them in order takes a few minutes and gives the argument of the thesis in miniature. This guide is optional; the dashboard works without it.
+          </div>
+          <ol class="rb-path">
+            {% for num, verb, question, href, label, text in _guide.reading_path %}
+            <li><a href="{{ href }}"><span class="rb-step">{{ num }}</span><span class="rb-step-body"><b>{{ verb }}: {{ question }}</b><span class="rb-step-text">{{ text }}</span><span class="rb-step-link">{{ label }} &rarr;</span></span></a></li>
+            {% endfor %}
+          </ol>
+          {% if _guide.takeaways %}
+          <div class="rb-guide-title">Three things to take away</div>
+          <ul class="rb-takeaways">
+            {% for t in _guide.takeaways %}<li><b>{{ t.title }}.</b> {{ t.text }}</li>{% endfor %}
+          </ul>
+          <p class="opt-small">These lines are recomputed from the stored measurements each time a page loads (runtimes are from the scalability experiment, first measurement run). They describe one machine and one workload, not simulators in general.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% endif %}
+
+    <footer>
+      {{ title }}<br>
+      {{ author }} &middot; {{ institution }}<br>
+      {% if meta.ok %}{{ meta.counts.runs }} measured runs across {{ meta.counts.conditions }} conditions
+      on {{ meta.counts.snn_backends }} SNN simulator backends (plus {{ meta.counts.controls }} NumPy validation controls) &middot; single hardware platform{% endif %}
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  window.SNN = {
+    theme: {{ theme | tojson }},
+    frameworks: {{ frameworks | tojson }},
+    backends: {{ backends | tojson }},
+    page: {{ page | tojson }}
+  };
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

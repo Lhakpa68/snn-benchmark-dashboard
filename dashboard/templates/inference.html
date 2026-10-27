@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Inference runtime</div>
+    <div class="card-sub">Median wall-clock seconds over the measured runs, warmup excluded. Log scale — the spread here is four orders of magnitude.</div>
+    <div class="chart-wrap"><canvas id="runtimeChart" height="230"></canvas></div>
+    <div class="fig-table" id="runtimeChartTable"></div>
+    <div class="chart-result" id="runtimeResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Peak memory</div>
+    <div class="card-sub">Peak resident set size of the whole Python process — interpreter and imports included, which at this network size is most of it.</div>
+    <div class="chart-wrap"><canvas id="memChart" height="230"></canvas></div>
+    <div class="fig-table" id="memChartTable"></div>
+    <div class="chart-result" id="memResult"></div>
+  </div>
+</div>
+
+<div class="row-2">
+  <div class="card">
+    <div class="card-title">Energy proxy index</div>
+    <div class="card-sub">runtime &times; CPU utilisation &times; configured TDP, rescaled so the costliest simulating backend reads 100 (log scale); a compile-dominated backend reads above 100.</div>
+    <div class="chart-wrap"><canvas id="energyChart" height="210"></canvas></div>
+    <div class="fig-table" id="energyChartTable"></div>
+    <div class="chart-result" id="energyResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Processor utilisation against runtime</div>
+    <div class="card-sub">One point per backend: how much of the machine it used (y) against how long it took (x, log).</div>
+    <div class="chart-wrap"><canvas id="cpuScatterChart" height="210"></canvas></div>
+    <div class="fig-table" id="cpuScatterChartTable"></div>
+    <div class="chart-result" id="cpuResult"></div>
+  </div>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Full detailed results table — one row per backend at the reference network size</summary>
+  <div class="disclosure-card-body">
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>Backend</th><th class="num">Runtime (s)</th><th class="num">CV %</th>
+        <th class="num">Setup (s)</th><th class="num">Peak MB</th><th class="num">CPU %</th>
+        <th class="num">Spikes</th><th class="num">Energy (J)</th><th class="num">Runs</th><th>Note</th>
+      </tr></thead>
+      <tbody id="infTable"></tbody>
+    </table></div>
+    <div style="margin-top:13px"><a class="action" href="/api/export/inference.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    <div class="caveat">
+      <strong>Setup and simulation are timed separately</strong> so a backend
+      that is slow to build is distinguishable from one that is slow to run.
+      Brian2's <code>cpp_standalone</code> target reports a runtime dominated
+      by C++ compilation rather than by simulation; it is marked in the last
+      column and excluded from the headline figures, but it is not hidden,
+      because that behaviour is a finding a simulator chooser needs.
+    </div>
+  </div>
+</details>
+
+<div class="card note-card" id="spreadPointer">
+  <div class="card-title">How repeatable are these medians?</div>
+  <div class="card-sub">
+    Each figure above is a median over five measured runs. The run-by-run spread
+    behind every one of them — minimum, maximum and coefficient of variation —
+    is on the <a href="/memory">Memory</a> page, under
+    <em>Repeatability of the quoted medians</em>, because it is drawn from the
+    same set of runs as the memory figures.
+  </div>
+</div>
+
+{% endblock %}

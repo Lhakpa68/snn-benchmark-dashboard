@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row-2-wide">
+  <div class="card">
+    <div class="card-title">Runtime against network size</div>
+    <div class="card-sub">Both axes logarithmic, so a straight line is power-law scaling and its slope is the exponent k. Hover any point for its coefficient of variation and spike count.</div>
+    <div class="chart-wrap"><canvas id="scaleChart" height="270"></canvas></div>
+    <div class="fig-table" id="scaleChartTable"></div>
+    <div class="chart-result" id="scaleResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Throughput at the largest size</div>
+    <div class="card-sub">Neurons simulated per second of wall clock at the top of the sweep. Higher is better.</div>
+    <div class="chart-wrap"><canvas id="throughputChart" height="270"></canvas></div>
+    <div class="fig-table" id="throughputChartTable"></div>
+    <div class="chart-result" id="throughputResult"></div>
+  </div>
+</div>
+
+<details class="card disclosure-card" open>
+  <summary>Fitted scaling exponent</summary>
+  <div class="disclosure-card-body">
+    <div class="card-sub" style="margin-bottom:12px">
+      Least-squares fit of log(runtime) on log(N). k &asymp; 1 means cost grows
+      in step with the network; k below 1 means it grows more slowly. r&sup2;
+      says whether the straight line describes the data at all — where it is
+      low the exponent is not worth quoting, and the interpretation column
+      says so instead.
+    </div>
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>Backend</th><th class="num">k</th><th>95% CI</th><th class="num">r&sup2;</th>
+        <th class="num">Sizes</th><th class="num">Runtime at largest N</th><th>Interpretation</th>
+      </tr></thead>
+      <tbody id="scaleTable"></tbody>
+    </table></div>
+    <div style="margin-top:13px"><a class="action" href="/api/export/scalability.csv" download><span class="ico">&#8615;</span> Export this table</a></div>
+    <div class="caveat">
+      <strong>A near-zero exponent is not a fast simulator.</strong> Brian2's
+      backends post k close to zero because a fixed per-run cost — code
+      generation, kernel setup — dominates the actual integration at every
+      size measured here. Read k together with the absolute runtime column
+      beside it.
+    </div>
+  </div>
+</details>
+{% endblock %}

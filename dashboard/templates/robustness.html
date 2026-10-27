@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="scope-note">
+  <strong>How far can a recommendation be trusted?</strong>
+  Each cell below is one of the nine reader profiles at one measured network size. It is re-checked under the other normalisation, on the repeat measurement run (session B), and with scalability removed. This is evidence about the stability of the <em>ranking method</em>, not a significance test, and it does not change any recommendation shown on the Optimisation page.
+  <br><em>{{ rb.caption }}</em>
+</div>
+
+<p class="rb-lead">{{ rb_lead }}</p>
+
+<div class="card" id="robustnessGrid">
+  <div class="card-title">{{ rb.headline.stable }} of {{ rb.headline.total }} recommendations unchanged under all checks</div>
+  <div class="card-sub">Nine profiles × five measured sizes (session A, min–max, as in Table 20). A cell is <b>stable</b> when it has one winner and that winner survives every check that applies to it.</div>
+  <div class="rb-legend" aria-label="Legend">
+    <span class="rb-key rb-stable">stable</span>
+    <span class="rb-key rb-changes">changes under at least one check</span>
+    <span class="rb-key rb-tie">exact tie</span>
+    <span class="rb-sep"></span>
+    <span><span class="rb-tag rb-tag-N">N</span> normalisation</span>
+    <span><span class="rb-tag rb-tag-S">S</span> session B</span>
+    <span><span class="rb-tag rb-tag-R">R</span> scalability removed</span>
+    <span><span class="rb-tag rb-tag-T">T</span> exact tie</span>
+  </div>
+  <div class="opt-scroll">
+  <table class="opt-table rb-grid">
+    <thead><tr><th>Profile</th>{% for n in rb.sizes %}<th>N = {{ '{:,}'.format(n) }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for p in rb.profiles %}
+      <tr><th scope="row">{{ p }}{% if p.endswith('*') %} <span class="opt-small">exploratory</span>{% endif %}</th>
+      {% for n in rb.sizes %}{% set c = rb.grid[p][n] %}
+        <td class="rb-cell rb-{{ c.status }}" title="Weighted pick: {{ c.pick }}. Share-of-total: {{ c.share_pick }}. Session B: {{ c.session_b_pick }}.{% if c.without_scalability_pick %} Without scalability: {{ c.without_scalability_pick }}.{% endif %}{% if c.margin is not none %} Margin to runner-up {{ '%.4f'|format(c.margin) }} (score difference, not a significance test).{% endif %}">
+          <span class="rb-pick">{{ c.pick_label }}</span>
+          <span class="rb-tags">{% if c.tags %}{% for t in c.tags %}<span class="rb-tag rb-tag-{{ t }}">{{ t }}</span>{% endfor %}{% else %}<span class="rb-ok" aria-label="stable">✓</span>{% endif %}</span>
+        </td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="opt-small">Hover a cell for the pick under each check. Accuracy-weighted profiles (*) use native MNIST accuracy from a different task and are exploratory; accuracy is measured once and is shared by both sessions.</p>
+</div>
+
+<div class="card" id="robustnessCauses">
+  <div class="card-title">What changes a recommendation</div>
+  <div class="card-sub">A cell can carry more than one tag, so the counts need not add up to the number of unstable cells.</div>
+  <div class="rb-causes">
+    {% for c in rb.causes %}
+    <div class="rb-cause">
+      <div class="rb-cause-head"><span class="rb-tag rb-tag-{{ c.tag }}">{{ c.tag }}</span> {{ c.name }} <b class="rb-count">{{ c.count }}</b></div>
+      <p>{{ c.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% set W = rb.wrong_size %}{% set CH = W.chart %}
+<div class="card" id="robustnessWrongSize">
+  <div class="card-title">What a wrong-size choice costs (Fast SNN, runtime only)</div>
+  <div class="card-sub">Median inference runtime of a backend chosen at one size and reused at another, divided by the runtime of the best backend at that size (logarithmic axis; 1× = the best). Fast SNN weights inference speed only, so memory and scalability are not part of this comparison.</div>
+  <div class="opt-legend">
+    <span><i class="rb-dot rb-fwd"></i>{{ W.forward_backend }} (best at N = 100) reused at larger sizes</span>
+    <span><i class="rb-dot rb-rev"></i>{{ W.reverse_backend }} (best at N = 10,000) reused at smaller sizes</span>
+  </div>
+  <svg class="rb-chart" viewBox="0 0 680 310" role="img" aria-label="Runtime ratio of a reused backend to the best backend at each network size, logarithmic axis">
+    {% for t in CH.ticks %}
+    <line x1="{{ CH.x0 }}" x2="{{ CH.x1 }}" y1="{{ t.y }}" y2="{{ t.y }}" stroke="#e2e9f3"/>
+    <text x="{{ CH.x0 - 6 }}" y="{{ t.y + 4 }}" font-size="11" fill="#53657c" text-anchor="end">{{ t.label }}</text>
+    {% endfor %}
+    <line x1="{{ CH.x0 }}" x2="{{ CH.x1 }}" y1="{{ CH.y0 }}" y2="{{ CH.y0 }}" stroke="#65758c" stroke-width="1.2"/>
+    {% for b in CH.bars %}
+    <g>
+      <title>{{ b.series_name if b.series_name else (W.forward_backend if b.series == 'fwd' else W.reverse_backend) }} at N = {{ '{:,}'.format(b.size) }}: {{ b.label }} the best ({{ '%.1f'|format(b.diff_ms) }} ms slower){{ ' — it is the best choice at this size' if b.same else '' }}</title>
+      <rect class="rb-bar rb-{{ b.series }}" x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h if b.h > 0.5 else 0.5 }}"/>
+      <text x="{{ b.x + b.w / 2 }}" y="{{ b.y - 4 }}" font-size="11" fill="#24364f" text-anchor="middle">{{ b.label }}</text>
+    </g>
+    {% endfor %}
+    {% for l in CH.labels %}<text x="{{ l.x }}" y="{{ CH.y0 + 18 }}" font-size="12" fill="#31435e" text-anchor="middle">N = {{ l.text }}</text>{% endfor %}
+    <text x="{{ (CH.x0 + CH.x1) / 2 }}" y="304" font-size="12" fill="#31435e" text-anchor="middle">Network size at which the reused backend is run</text>
+    <text transform="translate(16,140) rotate(-90)" font-size="12" fill="#31435e" text-anchor="middle">Runtime ÷ best runtime (log)</text>
+  </svg>
+  <table class="opt-table rb-wrong-table">
+    <thead><tr><th>Reused from</th>{% for n in rb.sizes %}<th>N = {{ '{:,}'.format(n) }}</th>{% endfor %}</tr></thead>
+    <tbody>
+      <tr><th scope="row">N = 100 ({{ W.forward_backend }})</th>{% for r in W.forward %}<td>{{ '%.3g'|format(r.ratio_reused_over_best|float) }}×<span class="opt-small"> ({{ '%.1f'|format(r.abs_difference_ms|float) }} ms)</span></td>{% endfor %}</tr>
+      <tr><th scope="row">N = 10,000 ({{ W.reverse_backend }})</th>{% for r in W.reverse %}<td>{{ '%.3g'|format(r.ratio_reused_over_best|float) }}×<span class="opt-small"> ({{ '%.1f'|format(r.abs_difference_ms|float) }} ms)</span></td>{% endfor %}</tr>
+    </tbody>
+  </table>
+  <p class="opt-small">Session A medians. Run ranges of the five runs are in the exported data; overlap of ranges is descriptive only.</p>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Session transfer: the {{ rb.session|length // 2 }} cells whose choice differs between sessions</summary>
+  <div class="disclosure-card-body">
+    <div class="card-sub">Both backends on session-B measurements. Score is a weighted normalised cost (lower is better); a score difference is not a significance test. Accuracy is shared by both sessions.</div>
+    <div class="opt-scroll"><table class="opt-table">
+      <thead><tr><th>Profile</th><th>N</th><th>Backend</th><th>Role</th><th>B runtime (ms)</th><th>B growth (MB)</th><th>k (R²)</th><th>B score</th><th>A score</th></tr></thead>
+      <tbody>{% for r in rb.session %}<tr><td>{{ r.profile }}</td><td>{{ '{:,}'.format(r.N|int) }}</td><td>{{ r.backend }}</td><td>{{ r.role }}</td><td>{{ r.B_median_runtime_ms }}</td><td>{{ r.B_memory_growth_mb }}</td><td>{{ r.B_k }} ({{ r.B_R2 }})</td><td>{{ r.B_score }}</td><td>{{ r.A_score }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </div>
+</details>
+
+<p class="opt-small"><a class="action" href="/api/robustness.csv">Export robustness data (CSV)</a> <a class="action" href="/api/robustness.json">Export robustness data (JSON)</a> Also included in the all-results CSV in the sidebar.</p>
+{% endblock %}

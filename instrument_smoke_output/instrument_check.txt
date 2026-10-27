@@ -1,0 +1,17 @@
+python 3.11.15 | process_time clock: clock_gettime(CLOCK_PROCESS_CPUTIME_ID) | cores: 32
+{"load": "spin 1 ms (true 100 %)", "true_pct": 100, "wall_ms": 1.0, "A_aug_sampler": {"median": 0.0, "min": 0.0, "max": 100.0}, "B_sep_cpu_times": {"median": 0.0, "min": 0.0, "max": 999.5}, "C_current": {"median": 100.3, "min": 100.2, "max": 101.5}, "A_runs_with_no_sample_(stored_as_100)": 2}
+{"load": "spin 10 ms (true 100 %)", "true_pct": 100, "wall_ms": 10.0, "A_aug_sampler": {"median": 49.0, "min": 0.0, "max": 372.8}, "B_sep_cpu_times": {"median": 100.0, "min": 99.4, "max": 100.0}, "C_current": {"median": 100.3, "min": 100.1, "max": 100.6}, "A_runs_with_no_sample_(stored_as_100)": 2}
+{"load": "spin 100 ms (true 100 %)", "true_pct": 100, "wall_ms": 100.0, "A_aug_sampler": {"median": 92.2, "min": 83.0, "max": 114.2}, "B_sep_cpu_times": {"median": 100.0, "min": 100.0, "max": 100.0}, "C_current": {"median": 100.4, "min": 100.3, "max": 100.6}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "sleep 10 ms (true ~0 %)", "true_pct": 0, "wall_ms": 10.18, "A_aug_sampler": {"median": 0.0, "min": 0.0, "max": 0.0}, "B_sep_cpu_times": {"median": 0.0, "min": 0.0, "max": 97.7}, "C_current": {"median": 1.6, "min": 1.0, "max": 5.1}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "native code holding the GIL (true 100 %)", "true_pct": 100, "wall_ms": 93.92, "A_aug_sampler": {"median": 55.4, "min": 9.4, "max": 139454.5}, "B_sep_cpu_times": {"median": 102.6, "min": 88.1, "max": 107.0}, "C_current": {"median": 100.5, "min": 100.4, "max": 100.9}, "A_runs_with_no_sample_(stored_as_100)": 0}
+{"load": "sleep", "region_ms": 1.0, "median_pct": 1.7821407397205578, "min_pct": 0.6810733236477358, "max_pct": 3.6609046252134347, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 1.0, "median_pct": 100.1686619990491, "min_pct": 100.11654545099799, "max_pct": 100.53032801013475, "expected": "90-110", "passed": true}
+{"load": "sleep", "region_ms": 10.0, "median_pct": 0.6466932068293194, "min_pct": 0.41695966404145973, "max_pct": 1.4797098956395764, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 10.0, "median_pct": 100.05198959890404, "min_pct": 100.0148687830579, "max_pct": 100.18795893228487, "expected": "90-110", "passed": true}
+{"load": "sleep", "region_ms": 100.0, "median_pct": 0.08143551523254705, "min_pct": 0.05012941407108642, "max_pct": 0.3209107111465182, "expected": "0-10", "passed": true}
+{"load": "spin 1 thread", "region_ms": 100.0, "median_pct": 100.00805565885051, "min_pct": 99.97116878309009, "max_pct": 100.02576092566854, "expected": "90-110", "passed": true}
+{"load": "2 threads, GIL released", "region_ms": 100.0, "median_pct": 195.83676287480986, "min_pct": 184.38856342709354, "max_pct": 199.18736089661698, "expected": "150-210", "passed": true}
+{"load": "measure(): spin 5 ms", "region_ms": 5.0, "median_pct": 100.17403535775175, "min_pct": 100.14177673028652, "max_pct": 100.55005138626504, "expected": "90-110", "passed": true}
+{"load": "transient 200 MB allocation", "region_ms": 201.66843896731734, "peak_above_start_mb": 199.65625, "expected": ">=180 MB", "passed": true}
+{"load": "child process spin 0.3 s", "region_ms": 300.0, "median_pct": 100.01563185000165, "min_pct": 98.96492551593303, "max_pct": 100.03344361206824, "expected": "80-130", "passed": true}
+SELFTEST PASS

@@ -1,0 +1,25 @@
+=== complete CCR-specification campaign ===
+started : 2026-09-16T12:03:09+10:00
+spec    : 60,000 train / 10,000 test / 10 epochs / hidden 256
+source  : CCR Section 4.1 proposed 500 hidden; 256 used - see header, declare in Section 3.7
+scope   : every training-capable backend, nothing skipped
+
+nothing was running.
+
+database: reusing benchmarks.db - completed phases will be skipped
+
+LAUNCHED: pid 736
+
+  1/8  inference + scalability, all 11 backends      0.3 h
+  2/8  training: Nengo, snnTorch, SpikingJelly       0.2 h
+  3/8  training: NEST / 4 threads                    3.6 h
+  4/8  training: NEST / 2 threads                    6.3 h
+  5/8  training: NEST / 1 thread                    11.3 h
+  6/8  training: Brian2 / Cython                    29.5 h
+  7/8  training: Brian2 / NumPy                     44.2 h
+  8/8  training: Brian2 / C++ standalone            44.6 h
+       total ~140 h = 5.8 days
+
+Resumable: re-running this launcher skips phases already recorded.
+log     : /home/lt_68/snn_full_run/Full-Scale Simulator Comparison/full_run.log
+mirrored: /mnt/d/MIT College/Last Edition/full_run_output/full_run.log  (every 30 s)

@@ -1,0 +1,338 @@
+{
+ "stable": [
+  [
+   "Accuracy + speed*",
+   10000
+  ],
+  [
+   "Accurate SNN*",
+   100
+  ],
+  [
+   "Accurate SNN*",
+   500
+  ],
+  [
+   "Accurate SNN*",
+   1000
+  ],
+  [
+   "Accurate SNN*",
+   5000
+  ],
+  [
+   "Accurate SNN*",
+   10000
+  ],
+  [
+   "Balanced",
+   500
+  ],
+  [
+   "Balanced",
+   1000
+  ],
+  [
+   "Balanced",
+   10000
+  ],
+  [
+   "Fast SNN",
+   100
+  ],
+  [
+   "Fast SNN",
+   500
+  ],
+  [
+   "Fast SNN",
+   1000
+  ],
+  [
+   "Fast SNN",
+   5000
+  ],
+  [
+   "Low-memory SNN",
+   1000
+  ],
+  [
+   "Low-memory SNN",
+   5000
+  ],
+  [
+   "Low-memory SNN",
+   10000
+  ],
+  [
+   "Memory + scaling",
+   1000
+  ],
+  [
+   "Memory + scaling",
+   5000
+  ],
+  [
+   "Memory + scaling",
+   10000
+  ],
+  [
+   "Scalable SNN",
+   100
+  ],
+  [
+   "Scalable SNN",
+   500
+  ],
+  [
+   "Scalable SNN",
+   1000
+  ],
+  [
+   "Scalable SNN",
+   5000
+  ],
+  [
+   "Scalable SNN",
+   10000
+  ],
+  [
+   "Speed + memory",
+   100
+  ],
+  [
+   "Speed + memory",
+   10000
+  ]
+ ],
+ "chg_norm": [
+  [
+   "Accuracy + speed*",
+   100
+  ],
+  [
+   "Balanced",
+   100
+  ],
+  [
+   "Balanced",
+   5000
+  ],
+  [
+   "Speed + memory",
+   5000
+  ]
+ ],
+ "chg_ses": [
+  [
+   "Accuracy + speed*",
+   100
+  ],
+  [
+   "Accuracy + speed*",
+   500
+  ],
+  [
+   "Accuracy + speed*",
+   1000
+  ],
+  [
+   "Accuracy + speed*",
+   5000
+  ],
+  [
+   "Fast SNN",
+   10000
+  ],
+  [
+   "Speed + memory",
+   500
+  ],
+  [
+   "Speed + memory",
+   1000
+  ]
+ ],
+ "chg_ns": [
+  [
+   "Memory + scaling",
+   100
+  ],
+  [
+   "Memory + scaling",
+   500
+  ],
+  [
+   "Scaling + accuracy*",
+   100
+  ],
+  [
+   "Scaling + accuracy*",
+   500
+  ],
+  [
+   "Scaling + accuracy*",
+   1000
+  ],
+  [
+   "Scaling + accuracy*",
+   5000
+  ],
+  [
+   "Scaling + accuracy*",
+   10000
+  ]
+ ],
+ "ns_applicable": [
+  [
+   "Balanced",
+   100
+  ],
+  [
+   "Balanced",
+   500
+  ],
+  [
+   "Balanced",
+   1000
+  ],
+  [
+   "Balanced",
+   5000
+  ],
+  [
+   "Balanced",
+   10000
+  ],
+  [
+   "Memory + scaling",
+   100
+  ],
+  [
+   "Memory + scaling",
+   500
+  ],
+  [
+   "Memory + scaling",
+   1000
+  ],
+  [
+   "Memory + scaling",
+   5000
+  ],
+  [
+   "Memory + scaling",
+   10000
+  ],
+  [
+   "Scaling + accuracy*",
+   100
+  ],
+  [
+   "Scaling + accuracy*",
+   500
+  ],
+  [
+   "Scaling + accuracy*",
+   1000
+  ],
+  [
+   "Scaling + accuracy*",
+   5000
+  ],
+  [
+   "Scaling + accuracy*",
+   10000
+  ]
+ ],
+ "ties": [
+  [
+   "Low-memory SNN",
+   100
+  ],
+  [
+   "Low-memory SNN",
+   500
+  ]
+ ],
+ "d_rt": 33,
+ "d_rs": 13,
+ "t19": {
+  "100": {
+   "winner": "nest/threads4",
+   "score": 0.24381632771103573,
+   "runner_up": "nest/threads2",
+   "runner_up_score": 0.2541736228672053,
+   "grid_wins": 9,
+   "cython_wins": 6,
+   "pareto": 5,
+   "pareto_ids": [
+    "nest/threads4",
+    "spikingjelly/cpu",
+    "brian2/numpy",
+    "brian2/cython",
+    "snntorch/cpu"
+   ]
+  },
+  "500": {
+   "winner": "snntorch/cpu",
+   "score": 0.27702192517595553,
+   "runner_up": "spikingjelly/cpu",
+   "runner_up_score": 0.3215349362346135,
+   "grid_wins": 6,
+   "cython_wins": 4,
+   "pareto": 7,
+   "pareto_ids": [
+    "snntorch/cpu",
+    "brian2/numpy",
+    "brian2/cython",
+    "nengo/reference",
+    "nest/threads2",
+    "nest/threads4",
+    "nest/threads1"
+   ]
+  },
+  "1000": {
+   "winner": "snntorch/cpu",
+   "score": 0.2546223672543508,
+   "runner_up": "spikingjelly/cpu",
+   "runner_up_score": 0.28258314348430374,
+   "grid_wins": 5,
+   "cython_wins": 7,
+   "pareto": 4,
+   "pareto_ids": [
+    "snntorch/cpu",
+    "brian2/cython",
+    "nest/threads4",
+    "nest/threads2"
+   ]
+  },
+  "5000": {
+   "winner": "brian2/numpy",
+   "score": 0.0444703521857358,
+   "runner_up": "brian2/cython",
+   "runner_up_score": 0.04527687137472933,
+   "grid_wins": 7,
+   "cython_wins": 7,
+   "pareto": 4,
+   "pareto_ids": [
+    "brian2/numpy",
+    "brian2/cython",
+    "nest/threads4",
+    "nest/threads2"
+   ]
+  },
+  "10000": {
+   "winner": "brian2/cython",
+   "score": 0.0,
+   "runner_up": "brian2/numpy",
+   "runner_up_score": 0.001898865645095427,
+   "grid_wins": 15,
+   "cython_wins": 15,
+   "pareto": 1,
+   "pareto_ids": [
+    "brian2/cython"
+   ]
+  }
+ }
+}

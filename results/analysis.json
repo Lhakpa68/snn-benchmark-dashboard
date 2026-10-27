@@ -1,0 +1,1591 @@
+{
+ "machine": {
+  "hostname": "LT68",
+  "os": "Linux 6.18.33.2-microsoft-standard-WSL2",
+  "arch": "x86_64",
+  "cpu": "Intel(R) Core(TM) i9-14900HX",
+  "logical_cores": 32,
+  "ram_gb": 11.5,
+  "python": "3.11.15",
+  "wsl": true,
+  "accelerator": "CPU only",
+  "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+  "fingerprint": "3dd09b61bd76"
+ },
+ "packages": {
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "brian2": "2.9.0",
+  "nest": "3.10.0",
+  "nengo": "4.1.0",
+  "snntorch": "1.0.0",
+  "torch": "2.13.0+cu130",
+  "spikingjelly": "present",
+  "cython": "3.2.9",
+  "psutil": "7.2.2"
+ },
+ "inference": [
+  {
+   "backend": "reference/vectorised",
+   "median": 0.0013755089603364468,
+   "sd": 0.0001489608522800501,
+   "cv": 10.829507954903802,
+   "setup": 0.001216166012454778,
+   "rss": 693.43359375,
+   "cpu": 104.16522904776961,
+   "spikes": 136,
+   "energy": 0.07776279499239536
+  },
+  {
+   "backend": "nest/threads4",
+   "median": 0.0021201459458097816,
+   "sd": 0.00017116427838518328,
+   "cv": 8.07323093598671,
+   "setup": 0.01141618296969682,
+   "rss": 93.55078125,
+   "cpu": 376.4234077958021,
+   "spikes": 72,
+   "energy": 0.33581558999997707
+  },
+  {
+   "backend": "nest/threads2",
+   "median": 0.002157974988222122,
+   "sd": 0.00010923887255763944,
+   "cv": 5.062100958252413,
+   "setup": 0.012752261012792587,
+   "rss": 91.80078125,
+   "cpu": 239.46029878558028,
+   "spikes": 96,
+   "energy": 0.3397374200000103
+  },
+  {
+   "backend": "nest/threads1",
+   "median": 0.0023667030036449432,
+   "sd": 0.0002772735426607565,
+   "cv": 11.715603615397853,
+   "setup": 0.010063693043775856,
+   "rss": 90.87890625,
+   "cpu": 100.97630826658443,
+   "spikes": 91,
+   "energy": 0.131534810000038
+  },
+  {
+   "backend": "nengo/reference",
+   "median": 0.00500945100793615,
+   "sd": 0.0005620650641610982,
+   "cv": 11.22009304553842,
+   "setup": 0.011742281960323453,
+   "rss": 640.72265625,
+   "cpu": 100.60083784545081,
+   "spikes": 134,
+   "energy": 0.2766402099928201
+  },
+  {
+   "backend": "spikingjelly/cpu",
+   "median": 0.006755936017725617,
+   "sd": 0.0004285627211504582,
+   "cv": 6.343498813873221,
+   "setup": 0.002393847971688956,
+   "rss": 691.75390625,
+   "cpu": 100.60941101550928,
+   "spikes": 134,
+   "energy": 0.37476702999811096
+  },
+  {
+   "backend": "snntorch/cpu",
+   "median": 0.0144155080197379,
+   "sd": 0.0016341013694407896,
+   "cv": 11.335718222371053,
+   "setup": 0.0019763350137509406,
+   "rss": 687.9375,
+   "cpu": 100.28613594256332,
+   "spikes": 134,
+   "energy": 0.7944563000114613
+  },
+  {
+   "backend": "reference/scalar",
+   "median": 0.014687862014397979,
+   "sd": 0.0005045026546346799,
+   "cv": 3.434827030238534,
+   "setup": 0.0012261740048415959,
+   "rss": 694.125,
+   "cpu": 100.30564759231716,
+   "spikes": 136,
+   "energy": 0.8097459699888533
+  },
+  {
+   "backend": "brian2/cython",
+   "median": 0.13358265603892505,
+   "sd": 0.002203651073213266,
+   "cv": 1.6496535841981892,
+   "setup": 0.012201620964333415,
+   "rss": 639.78515625,
+   "cpu": 100.022281489904,
+   "spikes": 108,
+   "energy": 7.34846590499993
+  },
+  {
+   "backend": "brian2/numpy",
+   "median": 0.14266293100081384,
+   "sd": 0.010979325325366263,
+   "cv": 7.695990295687693,
+   "setup": 0.010695917007979006,
+   "rss": 628.796875,
+   "cpu": 99.98493402610265,
+   "spikes": 108,
+   "energy": 7.838474984999975
+  },
+  {
+   "backend": "brian2/cpp_standalone",
+   "median": 1.6694740019738674,
+   "sd": 0.06625314387785487,
+   "cv": 3.9685040796994664,
+   "setup": 0.01139795797644183,
+   "rss": 638.70703125,
+   "cpu": 794.1406530140272,
+   "spikes": 105,
+   "energy": 734.7171921650005
+  }
+ ],
+ "spread_runtime": 103.71646795082947,
+ "spread_memory": 7.637911025145067,
+ "shapiro": {
+  "brian2/cpp_standalone": 0.7354906476844587,
+  "brian2/cython": 0.14901782498821786,
+  "brian2/numpy": 0.957213981627195,
+  "nengo/reference": 0.3696920950250984,
+  "nest/threads1": 0.037893623797609896,
+  "nest/threads2": 0.37364660214130074,
+  "nest/threads4": 0.6243314280832515,
+  "reference/scalar": 0.852876066932298,
+  "reference/vectorised": 0.8363929066331038,
+  "snntorch/cpu": 0.31439282471635743,
+  "spikingjelly/cpu": 0.6666426538136043
+ },
+ "levene": {
+  "W": 6.354423311280389,
+  "p": 5.960330449793524e-06
+ },
+ "anova": {
+  "F": 1898.7788830287798,
+  "df1": 10,
+  "df2": 17.219238399839394,
+  "p": 3.93087032897862e-24,
+  "eta_sq": 0.9985708683537727
+ },
+ "pairwise": [
+  {
+   "a": "brian2/cython",
+   "b": "snntorch/cpu",
+   "t": 96.79460222098443,
+   "p_raw": 1.0063268053263634e-12,
+   "p_holm": 5.5347974292949983e-11,
+   "d": 61.21828164566074
+  },
+  {
+   "a": "brian2/cython",
+   "b": "nengo/reference",
+   "t": 125.19788974767965,
+   "p_raw": 3.569076750635242e-09,
+   "p_holm": 1.9273014453430306e-07,
+   "d": 79.18209796986223
+  },
+  {
+   "a": "nengo/reference",
+   "b": "reference/scalar",
+   "t": -27.72277694804152,
+   "p_raw": 3.6651509478097835e-09,
+   "p_holm": 1.9425300023391854e-07,
+   "d": -17.53342364412452
+  },
+  {
+   "a": "nest/threads1",
+   "b": "reference/scalar",
+   "t": -46.86283234128886,
+   "p_raw": 3.6857346107646635e-09,
+   "p_holm": 1.9425300023391854e-07,
+   "d": -29.6386575610148
+  },
+  {
+   "a": "brian2/cython",
+   "b": "reference/scalar",
+   "t": 116.68563184220372,
+   "p_raw": 7.041435262955876e-09,
+   "p_holm": 3.5911319841074967e-07,
+   "d": 73.79847336744658
+  },
+  {
+   "a": "reference/scalar",
+   "b": "spikingjelly/cpu",
+   "t": 26.101340802800088,
+   "p_raw": 7.193113797237574e-09,
+   "p_holm": 3.596556898618787e-07,
+   "d": 16.507937384227223
+  },
+  {
+   "a": "brian2/cython",
+   "b": "spikingjelly/cpu",
+   "t": 125.19947619035537,
+   "p_raw": 7.920908233204478e-09,
+   "p_holm": 3.881245034270194e-07,
+   "d": 79.18310132430874
+  },
+  {
+   "a": "brian2/cython",
+   "b": "nest/threads1",
+   "t": 130.91461328061902,
+   "p_raw": 1.2648689158118881e-08,
+   "p_holm": 6.071370795897063e-07,
+   "d": 82.79767139337683
+  },
+  {
+   "a": "brian2/cython",
+   "b": "nest/threads4",
+   "t": 131.9908646904453,
+   "p_raw": 1.64529352437364e-08,
+   "p_holm": 7.732879564556109e-07,
+   "d": 83.47835255138051
+  },
+  {
+   "a": "brian2/cython",
+   "b": "reference/vectorised",
+   "t": 132.8584888229577,
+   "p_raw": 1.6751316895912327e-08,
+   "p_holm": 7.732879564556109e-07,
+   "d": 84.02708623371389
+  },
+  {
+   "a": "brian2/cython",
+   "b": "nest/threads2",
+   "t": 132.17374434935917,
+   "p_raw": 1.823751124448601e-08,
+   "p_holm": 8.206880060018704e-07,
+   "d": 83.59401580335701
+  },
+  {
+   "a": "nest/threads4",
+   "b": "reference/scalar",
+   "t": -52.465550129737125,
+   "p_raw": 6.113017894139443e-08,
+   "p_holm": 2.689727873421355e-06,
+   "d": -33.18212742074239
+  },
+  {
+   "a": "reference/scalar",
+   "b": "reference/vectorised",
+   "t": 56.37444313142905,
+   "p_raw": 7.956347040408018e-08,
+   "p_holm": 3.421229227375448e-06,
+   "d": 35.65432842379016
+  },
+  {
+   "a": "nest/threads2",
+   "b": "reference/scalar",
+   "t": -53.92446795185542,
+   "p_raw": 2.4106680553979713e-07,
+   "p_holm": 1.012480583267148e-05,
+   "d": -34.10482806812362
+  },
+  {
+   "a": "nest/threads1",
+   "b": "spikingjelly/cpu",
+   "t": -19.00297394243916,
+   "p_raw": 3.517167110298682e-07,
+   "p_holm": 1.4420385152224596e-05,
+   "d": -12.018535994987436
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "brian2/numpy",
+   "t": 51.52729076137138,
+   "p_raw": 4.5472165088324963e-07,
+   "p_holm": 1.8188866035329986e-05,
+   "d": 32.588720092737056
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "reference/vectorised",
+   "t": 56.99148378925339,
+   "p_raw": 5.675034677942625e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 36.044579201320865
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "nest/threads4",
+   "t": 56.96571823048756,
+   "p_raw": 5.685080448755485e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 36.02828363114348
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "nest/threads2",
+   "t": 56.964088718868,
+   "p_raw": 5.686262989846702e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 36.02725303750517
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "nest/threads1",
+   "t": 56.950722499760836,
+   "p_raw": 5.689603841112341e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 36.01879949828847
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "nengo/reference",
+   "t": 56.85801695113223,
+   "p_raw": 5.719388853248076e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 35.9601673612081
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "spikingjelly/cpu",
+   "t": 56.80362721135733,
+   "p_raw": 5.745400102359141e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 35.925768269401594
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "snntorch/cpu",
+   "t": 56.553415752893635,
+   "p_raw": 5.769930716985419e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 35.76752064831801
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "reference/scalar",
+   "t": 56.542388667105165,
+   "p_raw": 5.849984457690919e-07,
+   "p_holm": 2.2132635243976237e-05,
+   "d": 35.76054650690888
+  },
+  {
+   "a": "brian2/cpp_standalone",
+   "b": "brian2/cython",
+   "t": 52.53347565265555,
+   "p_raw": 7.661139386683283e-07,
+   "p_holm": 2.3749532098718178e-05,
+   "d": 33.22508729347842
+  },
+  {
+   "a": "reference/vectorised",
+   "b": "spikingjelly/cpu",
+   "t": -27.279144914751292,
+   "p_raw": 1.3682060524446226e-06,
+   "p_holm": 4.104618157333868e-05,
+   "d": -17.252846110482775
+  },
+  {
+   "a": "nest/threads4",
+   "b": "spikingjelly/cpu",
+   "t": -23.12757835187417,
+   "p_raw": 1.7580725710482395e-06,
+   "p_holm": 5.0984104560398946e-05,
+   "d": -14.627164871185105
+  },
+  {
+   "a": "nest/threads2",
+   "b": "spikingjelly/cpu",
+   "t": -23.871328974125866,
+   "p_raw": 6.290697998214359e-06,
+   "p_holm": 0.00017613954395000205,
+   "d": -15.09755406668168
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "reference/vectorised",
+   "t": 28.73052646721252,
+   "p_raw": 8.706028347542844e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 18.170780402428502
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "nest/threads4",
+   "t": 28.574497882958386,
+   "p_raw": 8.88749760399271e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 18.07209926116159
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "nest/threads2",
+   "t": 28.566043167238554,
+   "p_raw": 8.921323854296436e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 18.06675202943281
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "nest/threads1",
+   "t": 28.480262337732935,
+   "p_raw": 8.940968252334461e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 18.012499469269546
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "snntorch/cpu",
+   "t": 25.907256494482603,
+   "p_raw": 8.989330065515675e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 16.3851876897509
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "nengo/reference",
+   "t": 27.902722865628107,
+   "p_raw": 9.362309206422339e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 17.647231435169033
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "spikingjelly/cpu",
+   "t": 27.58487281102003,
+   "p_raw": 9.99600485306637e-06,
+   "p_holm": 0.00023506276538365678,
+   "d": 17.446205409774954
+  },
+  {
+   "a": "brian2/numpy",
+   "b": "reference/scalar",
+   "t": 26.004754996202635,
+   "p_raw": 1.2522371381377855e-05,
+   "p_holm": 0.0002504474276275571,
+   "d": 16.44685115652873
+  },
+  {
+   "a": "nest/threads2",
+   "b": "reference/vectorised",
+   "t": 9.849485068756092,
+   "p_raw": 1.7260896386812945e-05,
+   "p_holm": 0.00032795703134944597,
+   "d": 6.2293613194178805
+  },
+  {
+   "a": "nengo/reference",
+   "b": "reference/vectorised",
+   "t": 14.99062070680402,
+   "p_raw": 4.71245375056842e-05,
+   "p_holm": 0.0008482416751023156,
+   "d": 9.480900994636773
+  },
+  {
+   "a": "reference/vectorised",
+   "b": "snntorch/cpu",
+   "t": -16.999099918440972,
+   "p_raw": 6.24835087010937e-05,
+   "p_holm": 0.001062219647918593,
+   "d": -10.751174783011201
+  },
+  {
+   "a": "nest/threads1",
+   "b": "snntorch/cpu",
+   "t": -15.213875672099137,
+   "p_raw": 7.466133220549755e-05,
+   "p_holm": 0.0011945813152879608,
+   "d": -9.62209983249166
+  },
+  {
+   "a": "nest/threads4",
+   "b": "reference/vectorised",
+   "t": 7.509692691448333,
+   "p_raw": 7.577200893169481e-05,
+   "p_holm": 0.0011945813152879608,
+   "d": 4.749546686579362
+  },
+  {
+   "a": "nest/threads4",
+   "b": "snntorch/cpu",
+   "t": -15.939606395180812,
+   "p_raw": 7.805532300553397e-05,
+   "p_holm": 0.0011945813152879608,
+   "d": -10.081092243071463
+  },
+  {
+   "a": "nengo/reference",
+   "b": "nest/threads1",
+   "t": 9.63646948541592,
+   "p_raw": 8.422154975207301e-05,
+   "p_holm": 0.0011945813152879608,
+   "d": 6.094638435325008
+  },
+  {
+   "a": "nest/threads2",
+   "b": "snntorch/cpu",
+   "t": -15.920639753830535,
+   "p_raw": 8.56340186190888e-05,
+   "p_holm": 0.0011945813152879608,
+   "d": -10.06909668582538
+  },
+  {
+   "a": "nengo/reference",
+   "b": "nest/threads4",
+   "t": 11.935313713608215,
+   "p_raw": 0.00010293219690125916,
+   "p_holm": 0.0011945813152879608,
+   "d": 7.548555184728912
+  },
+  {
+   "a": "nengo/reference",
+   "b": "snntorch/cpu",
+   "t": -11.097300856350564,
+   "p_raw": 0.00011240325444277086,
+   "p_holm": 0.0011945813152879608,
+   "d": -7.0185493172409625
+  },
+  {
+   "a": "nest/threads1",
+   "b": "reference/vectorised",
+   "t": 8.505264886958766,
+   "p_raw": 0.00012869530647036925,
+   "p_holm": 0.0011945813152879608,
+   "d": 5.379201829168848
+  },
+  {
+   "a": "nengo/reference",
+   "b": "nest/threads2",
+   "t": 12.045716173265996,
+   "p_raw": 0.000178048045610517,
+   "p_holm": 0.001424384364884136,
+   "d": 7.618379831089599
+  },
+  {
+   "a": "snntorch/cpu",
+   "b": "spikingjelly/cpu",
+   "t": 9.184831161476367,
+   "p_raw": 0.00041817736367645206,
+   "p_holm": 0.0029272415457351642,
+   "d": 5.80899727887102
+  },
+  {
+   "a": "nengo/reference",
+   "b": "spikingjelly/cpu",
+   "t": -5.178624276250643,
+   "p_raw": 0.0010447922692512087,
+   "p_holm": 0.006268753615507252,
+   "d": -3.27524957183861
+  },
+  {
+   "a": "nest/threads1",
+   "b": "nest/threads4",
+   "t": 2.986246364338809,
+   "p_raw": 0.021556146285778784,
+   "p_holm": 0.10778073142889392,
+   "d": 1.8886680331415315
+  },
+  {
+   "a": "nest/threads1",
+   "b": "nest/threads2",
+   "t": 2.877832607315072,
+   "p_raw": 0.033041268782082224,
+   "p_holm": 0.1321650751283289,
+   "d": 1.8201011527633144
+  },
+  {
+   "a": "brian2/cython",
+   "b": "brian2/numpy",
+   "t": -1.9671702189075604,
+   "p_raw": 0.11527482592660439,
+   "p_holm": 0.3458244777798132,
+   "d": -1.2441476873999837
+  },
+  {
+   "a": "reference/scalar",
+   "b": "snntorch/cpu",
+   "t": 1.0299754679845399,
+   "p_raw": 0.35252763935155723,
+   "p_holm": 0.7050552787031145,
+   "d": 0.6514136825857966
+  },
+  {
+   "a": "nest/threads2",
+   "b": "nest/threads4",
+   "t": 0.5684507559183066,
+   "p_raw": 0.5880136706918836,
+   "p_holm": 0.7050552787031145,
+   "d": 0.35951982526925785
+  }
+ ],
+ "scaling": {
+  "brian2/cpp_standalone": {
+   "k": 0.0005413255399543754,
+   "se": 0.0027266797345468228,
+   "r2": 0.012967580054967561,
+   "ci": [
+    -0.008136186306947636,
+    0.009218837386856386
+   ],
+   "n": 5,
+   "times": {
+    "100": 1.6782299099722877,
+    "500": 1.6631955829798244,
+    "1000": 1.6596848749904893,
+    "5000": 1.656238815980032,
+    "10000": 1.691107627004385
+   }
+  },
+  "brian2/cython": {
+   "k": 0.048299523281518174,
+   "se": 0.039736385244144884,
+   "r2": 0.32997382336624337,
+   "ci": [
+    -0.07815938912406281,
+    0.17475843568709917
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.13373039197176695,
+    "500": 0.1363186200032942,
+    "1000": 0.19427777000237256,
+    "5000": 0.16387976397527382,
+    "10000": 0.16518216498661786
+   }
+  },
+  "brian2/numpy": {
+   "k": 0.023053248115082532,
+   "se": 0.008956960360724577,
+   "r2": 0.6882904767575633,
+   "ci": [
+    -0.005451797291482995,
+    0.05155829352164806
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.12908410996897146,
+    "500": 0.13474520802265033,
+    "1000": 0.14393425901653245,
+    "5000": 0.13837800599867478,
+    "10000": 0.14660814497619867
+   }
+  },
+  "nengo/reference": {
+   "k": 1.5503731299167938,
+   "se": 0.19271046014129453,
+   "r2": 0.9557022201285236,
+   "ci": [
+    0.9370824380505007,
+    2.1636638217830866
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.005002229998353869,
+    "500": 0.01214563800022006,
+    "1000": 0.1240166780189611,
+    "5000": 1.252326954039745,
+    "10000": 4.529698936035857
+   }
+  },
+  "nest/threads1": {
+   "k": 1.1986109245856096,
+   "se": 0.07183470925646697,
+   "r2": 0.9893394698281202,
+   "ci": [
+    0.9700008195211971,
+    1.427221029650022
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.0025730509660206735,
+    "500": 0.012758391036186367,
+    "1000": 0.02575409598648548,
+    "5000": 0.19787658099085093,
+    "10000": 0.6805725760059431
+   }
+  },
+  "nest/threads2": {
+   "k": 1.1510554078545447,
+   "se": 0.09115171611913063,
+   "r2": 0.9815343751272149,
+   "ci": [
+    0.8609699656708976,
+    1.441140850038192
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.002280400018207729,
+    "500": 0.009406984027009457,
+    "1000": 0.01886499999091029,
+    "5000": 0.12934619095176458,
+    "10000": 0.4984003930003382
+   }
+  },
+  "nest/threads4": {
+   "k": 1.1949920549270845,
+   "se": 0.09969803811319652,
+   "r2": 0.97954549125794,
+   "ci": [
+    0.8777084018896526,
+    1.5122757079645164
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.0019791880040429533,
+    "500": 0.008041954948566854,
+    "1000": 0.016090521006844938,
+    "5000": 0.13401183497626334,
+    "10000": 0.5041211790521629
+   }
+  },
+  "reference/scalar": {
+   "k": 0.9929613994049639,
+   "se": 0.0018511198958992372,
+   "r2": 0.9999895739190613,
+   "ci": [
+    0.9870703097316211,
+    0.9988524890783066
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.015318706980906427,
+    "500": 0.07567590498365462,
+    "1000": 0.15032237203558907,
+    "5000": 0.7376351420534775,
+    "10000": 1.4923480240395293
+   }
+  },
+  "reference/vectorised": {
+   "k": 0.7345908921292477,
+   "se": 0.058553611688328955,
+   "r2": 0.9812958695294165,
+   "ci": [
+    0.5482471669506758,
+    0.9209346173078196
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.0013270950294099748,
+    "500": 0.0028618520009331405,
+    "1000": 0.004998380958568305,
+    "5000": 0.018494479008950293,
+    "10000": 0.03749485203297809
+   }
+  },
+  "snntorch/cpu": {
+   "k": 0.8951387200606464,
+   "se": 0.20344453308627386,
+   "r2": 0.8658273716558886,
+   "ci": [
+    0.24768741740995226,
+    1.5425900227113405
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.013220185996033251,
+    "500": 0.019246507959906012,
+    "1000": 0.023007392999716103,
+    "5000": 0.20704749203287065,
+    "10000": 0.7638407269841991
+   }
+  },
+  "spikingjelly/cpu": {
+   "k": 1.0259069952591944,
+   "se": 0.14033922166542903,
+   "r2": 0.9468452123906641,
+   "ci": [
+    0.5792849577835806,
+    1.4725290327348082
+   ],
+   "n": 5,
+   "times": {
+    "100": 0.006895365018863231,
+    "500": 0.018254515016451478,
+    "1000": 0.026494805002585053,
+    "5000": 0.2177683569607325,
+    "10000": 0.784182662027888
+   }
+  }
+ },
+ "reversal": {
+  "reversed": true,
+  "order_low": [
+   "reference/vectorised",
+   "nest/threads4",
+   "nest/threads2",
+   "nest/threads1",
+   "nengo/reference",
+   "spikingjelly/cpu",
+   "snntorch/cpu",
+   "reference/scalar",
+   "brian2/numpy",
+   "brian2/cython",
+   "brian2/cpp_standalone"
+  ],
+  "order_high": [
+   "reference/vectorised",
+   "brian2/numpy",
+   "brian2/cython",
+   "nest/threads2",
+   "nest/threads4",
+   "nest/threads1",
+   "snntorch/cpu",
+   "spikingjelly/cpu",
+   "reference/scalar",
+   "brian2/cpp_standalone",
+   "nengo/reference"
+  ]
+ },
+ "memory": {
+  "brian2/cpp_standalone": {
+   "100": 638.70703125,
+   "500": 638.74609375,
+   "1000": 638.8515625,
+   "5000": 639.51171875,
+   "10000": 644.32421875
+  },
+  "brian2/cython": {
+   "100": 639.78515625,
+   "500": 639.78515625,
+   "1000": 639.78515625,
+   "5000": 639.78515625,
+   "10000": 644.140625
+  },
+  "brian2/numpy": {
+   "100": 628.8203125,
+   "500": 629.3984375,
+   "1000": 630.15625,
+   "5000": 635.18359375,
+   "10000": 641.68359375
+  },
+  "nengo/reference": {
+   "100": 640.72265625,
+   "500": 650.14453125,
+   "1000": 681.54296875,
+   "5000": 1059.3671875,
+   "10000": 2203.7734375
+  },
+  "nest/threads1": {
+   "100": 90.90234375,
+   "500": 123.40625,
+   "1000": 163.79296875,
+   "5000": 487.73046875,
+   "10000": 886.40234375
+  },
+  "nest/threads2": {
+   "100": 91.859375,
+   "500": 124.7109375,
+   "1000": 165.7421875,
+   "5000": 491.49609375,
+   "10000": 897.6328125
+  },
+  "nest/threads4": {
+   "100": 93.5,
+   "500": 127.34765625,
+   "1000": 169.59375,
+   "5000": 505.28125,
+   "10000": 923.3125
+  },
+  "reference/scalar": {
+   "100": 694.125,
+   "500": 694.125,
+   "1000": 694.125,
+   "5000": 694.34765625,
+   "10000": 694.421875
+  },
+  "reference/vectorised": {
+   "100": 693.43359375,
+   "500": 693.43359375,
+   "1000": 693.45703125,
+   "5000": 694.19140625,
+   "10000": 694.125
+  },
+  "snntorch/cpu": {
+   "100": 687.9375,
+   "500": 687.9375,
+   "1000": 688.0,
+   "5000": 783.37109375,
+   "10000": 1069.47265625
+  },
+  "spikingjelly/cpu": {
+   "100": 691.75390625,
+   "500": 692.41015625,
+   "1000": 692.48046875,
+   "5000": 788.2734375,
+   "10000": 1074.90234375
+  }
+ },
+ "energy": {
+  "brian2/cpp_standalone": {
+   "100": 726.8863416099996,
+   "500": 728.9237310300031,
+   "1000": 728.616959565,
+   "5000": 727.2795139499999,
+   "10000": 722.7898225900049
+  },
+  "brian2/cython": {
+   "100": 7.356522580000034,
+   "500": 7.499927544999991,
+   "1000": 10.686800025000307,
+   "5000": 9.015664020000075,
+   "10000": 9.08740052000013
+  },
+  "brian2/numpy": {
+   "100": 7.100717030000041,
+   "500": 7.412112180000037,
+   "1000": 7.915283640000084,
+   "5000": 7.610921065000067,
+   "10000": 8.0632849549999
+  },
+  "nengo/reference": {
+   "100": 0.2775962199996229,
+   "500": 0.6694151199974385,
+   "1000": 209.55016714500516,
+   "5000": 2177.9658695850026,
+   "10000": 7891.4327764250065
+  },
+  "nest/threads1": {
+   "100": 0.1427033299999847,
+   "500": 0.7033849900000355,
+   "1000": 1.4174086300000432,
+   "5000": 10.884223239999999,
+   "10000": 37.433071169999934
+  },
+  "nest/threads2": {
+   "100": 0.3419892850000173,
+   "500": 0.9672581050000106,
+   "1000": 2.139115055000045,
+   "5000": 14.085311625000045,
+   "10000": 54.69404655000006
+  },
+  "nest/threads4": {
+   "100": 0.41519522000001974,
+   "500": 1.7505892800000211,
+   "1000": 3.5097486599999828,
+   "5000": 29.265586955000053,
+   "10000": 110.78079693999975
+  },
+  "reference/scalar": {
+   "100": 0.8447399400029099,
+   "500": 4.16258029001483,
+   "1000": 8.271445215013955,
+   "5000": 40.56719931000998,
+   "10000": 82.07331670999338
+  },
+  "reference/vectorised": {
+   "100": 0.07470495999086778,
+   "500": 0.1600348750184821,
+   "1000": 0.2769198299870368,
+   "5000": 1.01900826498877,
+   "10000": 2.0640605149992552
+  },
+  "snntorch/cpu": {
+   "100": 0.7266703949812836,
+   "500": 1.0602583749960104,
+   "1000": 1.267063214997961,
+   "5000": 11.389190229999713,
+   "10000": 41.988063424998934
+  },
+  "spikingjelly/cpu": {
+   "100": 0.3814093800087904,
+   "500": 7.0807204050151995,
+   "1000": 7.101277094991474,
+   "5000": 20.13810281999668,
+   "10000": 57.44833611001013
+  }
+ },
+ "rq2": [
+  {
+   "backend": "brian2/cpp_standalone",
+   "rho": -0.39999999999999997,
+   "p": 0.5166666666666667,
+   "compile_dominated": true
+  },
+  {
+   "backend": "brian2/cython",
+   "rho": 0.7,
+   "p": 0.23333333333333334,
+   "compile_dominated": false
+  },
+  {
+   "backend": "brian2/numpy",
+   "rho": 0.8999999999999998,
+   "p": 0.08333333333333333,
+   "compile_dominated": false
+  },
+  {
+   "backend": "nengo/reference",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "nest/threads1",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "nest/threads2",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "nest/threads4",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "reference/scalar",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "reference/vectorised",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "snntorch/cpu",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  },
+  {
+   "backend": "spikingjelly/cpu",
+   "rho": 0.9999999999999999,
+   "p": 0.016666666666666666,
+   "compile_dominated": false
+  }
+ ],
+ "rq2_pooled": {
+  "rho": 0.7692936533535396,
+  "p": 6.726473656524236e-11,
+  "n": 50
+ },
+ "training": [
+  {
+   "id": 376,
+   "run_group": "3dd09b61bd76-fb0ab3",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "numpy",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 1591.981105545671,
+   "runtime_mean_s": 1591.981105545671,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 1591.981105545671,
+   "runtime_max_s": 1591.981105545671,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.8,
+   "framework_version": "2.9.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T09:31:45.769676+00:00"
+  },
+  {
+   "id": 389,
+   "run_group": "3dd09b61bd76-fb0ab3",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "cython",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 1062.34483900965,
+   "runtime_mean_s": 1062.34483900965,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 1062.34483900965,
+   "runtime_max_s": 1062.34483900965,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.7,
+   "framework_version": "2.9.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T09:36:30.577335+00:00"
+  },
+  {
+   "id": 402,
+   "run_group": "3dd09b61bd76-fb0ab3",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "cpp_standalone",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 1606.184611071687,
+   "runtime_mean_s": 1606.184611071687,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 1606.184611071687,
+   "runtime_max_s": 1606.184611071687,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.8,
+   "framework_version": "2.9.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T11:17:17.203863+00:00"
+  },
+  {
+   "id": 439,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads1",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 407.8926496226729,
+   "runtime_mean_s": 407.8926496226729,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 407.8926496226729,
+   "runtime_max_s": 407.8926496226729,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.5,
+   "framework_version": "3.10.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T13:45:24.035665+00:00"
+  },
+  {
+   "id": 452,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads2",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 226.88327139200192,
+   "runtime_mean_s": 226.88327139200192,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 226.88327139200192,
+   "runtime_max_s": 226.88327139200192,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.5,
+   "framework_version": "3.10.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T13:58:29.353159+00:00"
+  },
+  {
+   "id": 465,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads4",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 131.09901155000261,
+   "runtime_mean_s": 131.09901155000261,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 131.09901155000261,
+   "runtime_max_s": 131.09901155000261,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 7.4,
+   "framework_version": "3.10.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-08-26T14:06:17.472485+00:00"
+  },
+  {
+   "id": 478,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nengo",
+   "backend": "reference",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 0.8724265170021681,
+   "runtime_mean_s": 0.8724265170021681,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 0.8724265170021681,
+   "runtime_max_s": 0.8724265170021681,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 85.5,
+   "framework_version": "4.1.0",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; NEF decoder solving (LstsqL2), a single closed-form solve. 'Epochs' does not apply natively to this framework; the reported per-epoch figure is the cost of one complete solve.",
+   "source": "measured",
+   "created_at": "2026-08-26T14:07:16.031240+00:00"
+  },
+  {
+   "id": 491,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "snntorch",
+   "backend": "cpu",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 14.497395290670587,
+   "runtime_mean_s": 14.497395290670587,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 14.497395290670587,
+   "runtime_max_s": 14.497395290670587,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 93.19999814033508,
+   "framework_version": "1.0.0 (torch 2.13.0+cu130)",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; Surrogate-gradient BPTT (fast-sigmoid), Adam, rate-coded Poisson input over a 25 ms window, spike-count readout as logits.",
+   "source": "measured",
+   "created_at": "2026-08-26T14:08:23.419239+00:00"
+  },
+  {
+   "id": 504,
+   "run_group": "3dd09b61bd76-1ca062",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "spikingjelly",
+   "backend": "cpu",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 13.792003025999293,
+   "runtime_mean_s": 13.792003025999293,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 13.792003025999293,
+   "runtime_max_s": 13.792003025999293,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 94.0999984741211,
+   "framework_version": "present (torch 2.13.0+cu130)",
+   "notes": "preset=paper; hidden=256; train_n=6000; test_n=1000; epochs=3; Surrogate-gradient BPTT (ATan surrogate), Adam, rate-coded Poisson input over a 25 ms window, spike-count readout as logits, identical procedure to snnTorch.",
+   "source": "measured",
+   "created_at": "2026-08-26T14:09:29.966424+00:00"
+  },
+  {
+   "id": 529,
+   "run_group": "3dd09b61bd76-7e77f3",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nengo",
+   "backend": "reference",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 3.5381047160190064,
+   "runtime_mean_s": 3.5381047160190064,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 3.5381047160190064,
+   "runtime_max_s": 3.5381047160190064,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 85.44,
+   "framework_version": "4.1.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; NEF decoder solving (LstsqL2), a single closed-form solve. 'Epochs' does not apply natively to this simulator; the reported per-epoch figure is the cost of one complete solve.",
+   "source": "measured",
+   "created_at": "2026-09-12T01:04:42.327457+00:00"
+  },
+  {
+   "id": 530,
+   "run_group": "3dd09b61bd76-4923eb",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "snntorch",
+   "backend": "cpu",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 92.11039698870154,
+   "runtime_mean_s": 92.11039698870154,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 92.11039698870154,
+   "runtime_max_s": 92.11039698870154,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 97.24000096321106,
+   "framework_version": "1.0.0 (torch 2.13.0+cu130)",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; Surrogate-gradient BPTT (fast-sigmoid), Adam, rate-coded Poisson input over a 25 ms window, spike-count readout as logits.",
+   "source": "measured",
+   "created_at": "2026-09-12T01:20:14.651245+00:00"
+  },
+  {
+   "id": 531,
+   "run_group": "3dd09b61bd76-5f535d",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "spikingjelly",
+   "backend": "cpu",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 89.23114044109825,
+   "runtime_mean_s": 89.23114044109825,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 89.23114044109825,
+   "runtime_max_s": 89.23114044109825,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 97.46000170707703,
+   "framework_version": "present (torch 2.13.0+cu130)",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; Surrogate-gradient BPTT (ATan surrogate), Adam, rate-coded Poisson input over a 25 ms window, spike-count readout as logits, identical procedure to snnTorch.",
+   "source": "measured",
+   "created_at": "2026-09-12T01:35:17.005018+00:00"
+  },
+  {
+   "id": 532,
+   "run_group": "3dd09b61bd76-839650",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads4",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 1253.4817223346647,
+   "runtime_mean_s": 1253.4817223346647,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 1253.4817223346647,
+   "runtime_max_s": 1253.4817223346647,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 8.39,
+   "framework_version": "3.10.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-12T08:05:37.513996+00:00"
+  },
+  {
+   "id": 533,
+   "run_group": "3dd09b61bd76-12a177",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads2",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 2308.0402836538005,
+   "runtime_mean_s": 2308.0402836538005,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 2308.0402836538005,
+   "runtime_max_s": 2308.0402836538005,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 8.32,
+   "framework_version": "3.10.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-12T12:05:56.219096+00:00"
+  },
+  {
+   "id": 534,
+   "run_group": "3dd09b61bd76-2c2743",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "nest",
+   "backend": "threads1",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 4408.500153251429,
+   "runtime_mean_s": 4408.500153251429,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 4408.500153251429,
+   "runtime_max_s": 4408.500153251429,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 8.41,
+   "framework_version": "3.10.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; STDP via nest stdp_synapse with neuron-labelling readout, trained with nest.Prepare/Run rather than repeated nest.Simulate(), checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-13T00:42:34.796161+00:00"
+  },
+  {
+   "id": 535,
+   "run_group": "3dd09b61bd76-f0e5cd",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "cython",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 12610.628432850053,
+   "runtime_mean_s": 12610.628432850053,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 12610.628432850053,
+   "runtime_max_s": 12610.628432850053,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 9.91,
+   "framework_version": "2.9.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-14T14:55:05.538506+00:00"
+  },
+  {
+   "id": 536,
+   "run_group": "3dd09b61bd76-414e8c",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "numpy",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 13723.459419517541,
+   "runtime_mean_s": 13723.459419517541,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 13723.459419517541,
+   "runtime_max_s": 13723.459419517541,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 9.63,
+   "framework_version": "2.9.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-17T20:34:04.211396+00:00"
+  },
+  {
+   "id": 537,
+   "run_group": "3dd09b61bd76-964ace",
+   "machine_id": "LT68 | Linux 6.18.33.2-microsoft-standard-WSL2 x86_64 (WSL2) | Intel(R) Core(TM) i9-14900HX | 32 logical cores",
+   "framework": "brian2",
+   "backend": "cpp_standalone",
+   "task": "training",
+   "network_size": 256,
+   "phase": "train",
+   "n_runs": 1,
+   "runtime_median_s": 13840.180786125886,
+   "runtime_mean_s": 13840.180786125886,
+   "runtime_sd_s": 0.0,
+   "runtime_min_s": 13840.180786125886,
+   "runtime_max_s": 13840.180786125886,
+   "cv_pct": 0.0,
+   "peak_rss_mb": null,
+   "cpu_pct": null,
+   "spikes": 0,
+   "energy_median_j": null,
+   "energy_sd_j": null,
+   "eflop": null,
+   "compile_dominated": 0,
+   "accuracy_pct": 9.6,
+   "framework_version": "2.9.0",
+   "notes": "preset=full; hidden=256; train_n=60000; test_n=10000; epochs=10; Unsupervised STDP, neuron-labelling readout, spike-count vote, checkpointed across process restarts so a full-size run can span multiple invocations.",
+   "source": "measured",
+   "created_at": "2026-09-19T15:27:24.883131+00:00"
+  }
+ ]
+}

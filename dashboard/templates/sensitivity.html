@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-title">Experiment 4 — how much does the answer depend on how we asked?</div>
+  <div class="card-sub">
+    The other three experiments ask how fast, how large and how accurate
+    each simulator is. This one asks something different: whether those
+    answers survive a change in the question. A benchmark whose ranking
+    flips when the network size or the metric changes has not produced a
+    recommendation, it has produced an artefact of its own configuration —
+    and knowing which of the two you are holding is the point.
+  </div>
+  <div class="note" style="max-width:none">
+    The statistic is <b>Kendall's &tau;</b>, the rank correlation between
+    two orderings of the same backends. &tau;&nbsp;=&nbsp;1 means the two
+    orderings agree exactly, 0 means they are unrelated, and &minus;1 means
+    one is the reverse of the other.
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Rank order: smallest network measured vs largest</div>
+  <div class="card-sub">
+    One line per backend, connecting its speed rank (1 = fastest) at the
+    smallest network size to its rank at the largest. A flat line means that
+    backend's position held; a line that crosses many others means it did not.
+  </div>
+  <div class="chart-wrap"><canvas id="rankSlopeChart" height="290"></canvas></div>
+    <div class="fig-table" id="rankSlopeChartTable"></div>
+  <div class="chart-result" id="rankSlopeResult"></div>
+</div>
+
+<div class="card">
+  <div class="card-title">Does the ordering depend on the network size measured?</div>
+  <div class="card-sub">
+    Each tile compares the runtime ordering at that network size against
+    the ordering at the largest size measured.
+  </div>
+  <div class="tau-grid" id="tauSize"></div>
+  <div class="caveat" id="sizeReading"></div>
+</div>
+
+<div class="card">
+  <div class="card-title">Does the ordering depend on the metric chosen?</div>
+  <div class="card-sub">
+    Each tile compares the ordering under that metric against the ordering
+    by runtime, both at the largest network size.
+  </div>
+  <div class="tau-grid" id="tauMetric"></div>
+  <div class="caveat" id="metricReading"></div>
+</div>
+
+<details class="card disclosure-card">
+  <summary>Objective O2 — the energy proxy against the EFLOP metric</summary>
+  <div class="disclosure-card-body">
+    <div class="card-sub" style="margin-bottom:12px">
+      The stated objective is to assess how far the utilisation-weighted
+      energy proxy agrees with an operation-count metric, by rank correlation.
+    </div>
+    <div id="o2Body"></div>
+  </div>
+</details>
+{% endblock %}
